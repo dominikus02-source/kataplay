@@ -70,6 +70,25 @@ class AppColors {
   static const Color cardGreen = Color(0xFF66BB6A);      // Green card
   static const Color cardPurple = Color(0xFFAB47BC);     // Purple card
 
+  // === DARK LEARNING THEME (Duolingo-style) ===
+  static const Color learningBg = Color(0xFF1A1E2E);        // Dark navy background
+  static const Color learningSurface = Color(0xFF2C3044);   // Dark surface for cards
+  static const Color learningSurfaceLight = Color(0xFF374151); // Lighter dark surface
+  static const Color learningBorder = Color(0xFF4B5563);    // Subtle border
+  static const Color learningTextPrimary = Color(0xFFFFFFFF); // White text
+  static const Color learningTextSecondary = Color(0xFF9CA3AF); // Gray secondary text
+  static const Color learningCorrect = Color(0xFF4CAF50);   // Green for correct
+  static const Color learningWrong = Color(0xFFE53935);     // Red for wrong
+  static const Color learningCombo = Color(0xFFFF9800);     // Orange for combo bar
+  static const Color learningComboBg = Color(0xFF374151);   // Combo bar background
+  static const Color learningCheckBtn = Color(0xFF4CAF50);  // Green PERIKSA/LANJUTKAN btn
+  static const Color learningCheckBtnDisabled = Color(0xFF4B5563); // Disabled check btn
+  static const Color learningTileSelected = Color(0xFF4CAF50); // Green border for selected tile
+  static const Color learningTileBg = Color(0xFF2C3044);    // Dark tile background
+  static const Color learningBubbleBg = Color(0xFF374151);  // Speech bubble background
+  static const Color learningFeedbackBg = Color(0xFF1B5E20); // Green feedback bar bg
+  static const Color learningFeedbackWrongBg = Color(0xFF7F1D1D); // Red feedback bar bg
+
   // === SOFT SHADOWS (child-friendly) ===
   static const Color shadowLight = Color(0x1A000000);
   static const Color shadowMedium = Color(0x26000000);

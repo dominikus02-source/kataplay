@@ -64,6 +64,8 @@ class LearningSessionNotifier extends StateNotifier<LearningSessionState> {
       sessionTitle: sessionTitle ?? 'Petualangan Kata',
       islandId: islandId,
       levelNumber: levelNumber,
+      comboCount: 0,
+      maxCombo: 0,
     );
 
     _startTimer();
@@ -74,14 +76,37 @@ class LearningSessionNotifier extends StateNotifier<LearningSessionState> {
     state = state.copyWith(phase: LearningSessionPhase.question);
   }
 
-  /// Submit an answer for the current question
-  void submitAnswer(String selectedAnswerId) {
+  /// Select an answer (but don't submit yet — user must tap PERIKSA)
+  void selectAnswer(String answerId) {
+    state = state.copyWith(selectedAnswerId: answerId);
+  }
+
+  /// Clear the current answer selection
+  void clearSelection() {
+    state = state.copyWith(clearSelectedAnswer: true);
+  }
+
+  /// Check/submit the currently selected answer (PERIKSA button)
+  void checkAnswer() {
+    final selectedId = state.selectedAnswerId;
+    if (selectedId == null) return;
+
     final question = state.currentQuestion;
     if (question == null) return;
 
-    final isCorrect = question.correctOptionIds.contains(selectedAnswerId);
+    final isCorrect = question.correctOptionIds.contains(selectedId);
+    _processAnswer(isCorrect: isCorrect, selectedId: selectedId);
+  }
 
-    _processAnswer(isCorrect: isCorrect, selectedId: selectedAnswerId);
+  /// Submit an answer directly (for types that auto-submit or for compatibility)
+  void submitAnswer(String answerId) {
+    final question = state.currentQuestion;
+    if (question == null) return;
+
+    final isCorrect = question.correctOptionIds.contains(answerId);
+    // Also store as selectedAnswerId for feedback rendering
+    state = state.copyWith(selectedAnswerId: answerId);
+    _processAnswer(isCorrect: isCorrect, selectedId: answerId);
   }
 
   /// Submit a free-text answer (for fill-in-the-blank)
@@ -137,8 +162,17 @@ class LearningSessionNotifier extends StateNotifier<LearningSessionState> {
       selectedAnswerId: selectedId,
     );
 
+    // Update combo
+    final newComboCount = isCorrect ? state.comboCount + 1 : 0;
+    final newMaxCombo = newComboCount > state.maxCombo ? newComboCount : state.maxCombo;
+
+    // Check if this is a combo milestone (every 5 correct in a row)
+    final isComboMilestone = isCorrect && newComboCount > 0 && newComboCount % 5 == 0;
+
     state = state.copyWith(
-      phase: LearningSessionPhase.feedback,
+      phase: isComboMilestone
+          ? LearningSessionPhase.combo
+          : LearningSessionPhase.feedback,
       lastAnswerCorrect: isCorrect,
       feedbackMessage: feedbackMessage,
       attempts: [...state.attempts, attempt],
@@ -153,6 +187,10 @@ class LearningSessionNotifier extends StateNotifier<LearningSessionState> {
       totalCoinsEarned: isCorrect
           ? state.totalCoinsEarned + question.coinReward
           : state.totalCoinsEarned,
+      comboCount: newComboCount,
+      maxCombo: newMaxCombo,
+      // Keep selectedAnswerId during feedback so renderer can show correct/wrong borders
+      // It will be cleared when moving to the next question
     );
   }
 
@@ -172,7 +210,13 @@ class LearningSessionNotifier extends StateNotifier<LearningSessionState> {
       showHint: false,
       feedbackMessage: null,
       lastAnswerCorrect: null,
+      clearSelectedAnswer: true,
     );
+  }
+
+  /// Skip combo celebration and go directly to next question
+  void skipComboCelebration() {
+    nextQuestion();
   }
 
   /// Show hint for the current question

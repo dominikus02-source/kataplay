@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../../features/learning/data/models/question_model.dart';
 import '../../theme/app_colors.dart';
 
@@ -31,16 +32,19 @@ enum CharacterDisplayType {
 
 /// Reusable character illustration widget
 /// Handles image loading with emoji fallback
+/// Supports both light and dark themes
 class CharacterIllustration extends StatelessWidget {
   final CharacterType character;
   final double size;
   final String? mood; // Only used for Zelby emoji fallback
+  final bool isDarkTheme;
 
   const CharacterIllustration({
     super.key,
     required this.character,
     this.size = 64,
     this.mood,
+    this.isDarkTheme = false,
   });
 
   @override
@@ -66,7 +70,8 @@ class CharacterIllustration extends StatelessWidget {
   }
 
   Widget _buildEmojiFallback(BuildContext context) {
-    final bgColor = Color(character.colorValue).withOpacity(0.15);
+    final bgColor = Color(character.colorValue).withOpacity(isDarkTheme ? 0.25 : 0.15);
+    final borderColor = Color(character.colorValue).withOpacity(isDarkTheme ? 0.5 : 0.3);
 
     return Container(
       width: size,
@@ -74,13 +79,18 @@ class CharacterIllustration extends StatelessWidget {
       decoration: BoxDecoration(
         color: bgColor,
         shape: BoxShape.circle,
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.shadowLight,
-            blurRadius: 8,
-            offset: const Offset(0, 3),
-          ),
-        ],
+        border: isDarkTheme
+            ? Border.all(color: borderColor, width: 2)
+            : null,
+        boxShadow: isDarkTheme
+            ? []
+            : [
+                BoxShadow(
+                  color: AppColors.shadowLight,
+                  blurRadius: 8,
+                  offset: const Offset(0, 3),
+                ),
+              ],
       ),
       child: Center(
         child: Text(
@@ -198,12 +208,14 @@ class CharacterMessages {
 
 /// Character Coach Bubble — a speech bubble paired with a character
 /// Used for hints, encouragement, and feedback
+/// Supports both light and dark themes
 class CharacterCoachBubble extends StatelessWidget {
   final CharacterType character;
   final String message;
   final double characterSize;
   final bool showCharacter;
   final VoidCallback? onTap;
+  final bool isDarkTheme;
 
   const CharacterCoachBubble({
     super.key,
@@ -212,30 +224,39 @@ class CharacterCoachBubble extends StatelessWidget {
     this.characterSize = 48,
     this.showCharacter = true,
     this.onTap,
+    this.isDarkTheme = false,
   });
 
   @override
   Widget build(BuildContext context) {
     final accentColor = Color(character.colorValue);
 
+    final bgColor = isDarkTheme ? AppColors.learningBubbleBg : Colors.white;
+    final textColor = isDarkTheme ? Colors.white : AppColors.textPrimary;
+    final borderColor = isDarkTheme
+        ? accentColor.withOpacity(0.4)
+        : accentColor.withOpacity(0.3);
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: bgColor,
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: accentColor.withOpacity(0.3),
+            color: borderColor,
             width: 2,
           ),
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.shadowLight,
-              blurRadius: 8,
-              offset: const Offset(0, 3),
-            ),
-          ],
+          boxShadow: isDarkTheme
+              ? []
+              : [
+                  BoxShadow(
+                    color: AppColors.shadowLight,
+                    blurRadius: 8,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
         ),
         child: Row(
           children: [
@@ -243,6 +264,7 @@ class CharacterCoachBubble extends StatelessWidget {
               CharacterIllustration(
                 character: character,
                 size: characterSize,
+                isDarkTheme: isDarkTheme,
               ),
               const SizedBox(width: 12),
             ],
@@ -253,7 +275,7 @@ class CharacterCoachBubble extends StatelessWidget {
                 children: [
                   Text(
                     character.displayName,
-                    style: TextStyle(
+                    style: GoogleFonts.nunito(
                       fontSize: 12,
                       fontWeight: FontWeight.w700,
                       color: accentColor,
@@ -262,10 +284,10 @@ class CharacterCoachBubble extends StatelessWidget {
                   const SizedBox(height: 4),
                   Text(
                     message,
-                    style: TextStyle(
+                    style: GoogleFonts.nunito(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
-                      color: AppColors.textPrimary,
+                      color: textColor,
                       height: 1.3,
                     ),
                   ),

@@ -6,6 +6,7 @@ enum LearningSessionPhase {
   question,     // Showing a question
   feedback,     // Showing correct/wrong feedback
   completed,    // All questions answered - celebration
+  combo,        // Combo milestone celebration (e.g., 5/10 streak)
 }
 
 /// Tracks progress for a single question within a session
@@ -59,6 +60,9 @@ class LearningSessionState {
   final bool showHint;
   final String? feedbackMessage;
   final bool? lastAnswerCorrect;
+  final int comboCount;        // Current consecutive correct streak
+  final int maxCombo;          // Best combo in this session
+  final String? selectedAnswerId; // Currently selected answer (before PERIKSA)
 
   const LearningSessionState({
     this.phase = LearningSessionPhase.intro,
@@ -78,6 +82,9 @@ class LearningSessionState {
     this.showHint = false,
     this.feedbackMessage,
     this.lastAnswerCorrect,
+    this.comboCount = 0,
+    this.maxCombo = 0,
+    this.selectedAnswerId,
   });
 
   /// Current question (null if out of bounds)
@@ -112,12 +119,18 @@ class LearningSessionState {
   /// Whether it's a perfect run
   bool get isPerfect => wrongCount == 0 && correctCount == questions.length;
 
+  /// Whether an answer is currently selected (for PERIKSA button state)
+  bool get hasSelectedAnswer => selectedAnswerId != null;
+
   /// Total questions count
   int get totalQuestions => questions.length;
 
   /// Questions remaining
   int get questionsRemaining =>
       questions.length - currentQuestionIndex;
+
+  /// Whether the current combo qualifies for a celebration
+  bool get isComboMilestone => comboCount > 0 && comboCount % 5 == 0;
 
   LearningSessionState copyWith({
     LearningSessionPhase? phase,
@@ -137,6 +150,10 @@ class LearningSessionState {
     bool? showHint,
     String? feedbackMessage,
     bool? lastAnswerCorrect,
+    int? comboCount,
+    int? maxCombo,
+    String? selectedAnswerId,
+    bool clearSelectedAnswer = false,
   }) {
     return LearningSessionState(
       phase: phase ?? this.phase,
@@ -156,6 +173,9 @@ class LearningSessionState {
       showHint: showHint ?? this.showHint,
       feedbackMessage: feedbackMessage ?? this.feedbackMessage,
       lastAnswerCorrect: lastAnswerCorrect ?? this.lastAnswerCorrect,
+      comboCount: comboCount ?? this.comboCount,
+      maxCombo: maxCombo ?? this.maxCombo,
+      selectedAnswerId: clearSelectedAnswer ? null : (selectedAnswerId ?? this.selectedAnswerId),
     );
   }
 }

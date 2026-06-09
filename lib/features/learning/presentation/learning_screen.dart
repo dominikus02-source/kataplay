@@ -3,18 +3,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:confetti/confetti.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/constants/app_strings.dart';
-import '../../../shared/widgets/primary_button.dart';
 import '../../../shared/widgets/character/character_components.dart';
 import '../data/models/question_model.dart';
 import '../data/models/learning_session_model.dart';
 import '../providers/learning_provider.dart';
 import 'renderers/question_renderer.dart';
 
-/// Learning Screen — Premium Duolingo/Lingokids style
-/// Shows one question at a time with progress bar, lives, XP, character coach
+/// Learning Screen — Premium Duolingo/Lingokids Dark Theme
+/// Dark navy background, combo streak, speech bubbles, PERIKSA button flow
 class LearningScreen extends ConsumerStatefulWidget {
   final String islandId;
   final int levelNumber;
@@ -36,17 +36,12 @@ class LearningScreen extends ConsumerStatefulWidget {
 class _LearningScreenState extends ConsumerState<LearningScreen>
     with TickerProviderStateMixin {
   late ConfettiController _confettiController;
-  late AnimationController _feedbackController;
   late AnimationController _heartShakeController;
 
   @override
   void initState() {
     super.initState();
     _confettiController = ConfettiController(duration: const Duration(seconds: 3));
-    _feedbackController = AnimationController(
-      duration: const Duration(milliseconds: 500),
-      vsync: this,
-    );
     _heartShakeController = AnimationController(
       duration: const Duration(milliseconds: 600),
       vsync: this,
@@ -66,7 +61,6 @@ class _LearningScreenState extends ConsumerState<LearningScreen>
   @override
   void dispose() {
     _confettiController.dispose();
-    _feedbackController.dispose();
     _heartShakeController.dispose();
     super.dispose();
   }
@@ -83,7 +77,7 @@ class _LearningScreenState extends ConsumerState<LearningScreen>
         }
       },
       child: Scaffold(
-        backgroundColor: AppColors.background,
+        backgroundColor: AppColors.learningBg,
         body: SafeArea(
           child: _buildBody(sessionState),
         ),
@@ -104,17 +98,17 @@ class _LearningScreenState extends ConsumerState<LearningScreen>
       case LearningSessionPhase.question:
         return _QuestionView(
           sessionState: state,
-          onAnswer: (answerId) {
-            ref.read(learningSessionProvider.notifier).submitAnswer(answerId);
-            _feedbackController.forward(from: 0);
+          onSelectAnswer: (answerId) {
+            ref.read(learningSessionProvider.notifier).selectAnswer(answerId);
+          },
+          onCheckAnswer: () {
+            ref.read(learningSessionProvider.notifier).checkAnswer();
           },
           onTextAnswer: (answer) {
             ref.read(learningSessionProvider.notifier).submitTextAnswer(answer);
-            _feedbackController.forward(from: 0);
           },
           onSequenceAnswer: (positions) {
             ref.read(learningSessionProvider.notifier).submitSequence(positions);
-            _feedbackController.forward(from: 0);
           },
           onShowHint: () {
             ref.read(learningSessionProvider.notifier).showHint();
@@ -123,9 +117,7 @@ class _LearningScreenState extends ConsumerState<LearningScreen>
 
       case LearningSessionPhase.feedback:
         final lastCorrect = state.lastAnswerCorrect ?? false;
-        if (lastCorrect) {
-          // No confetti for single answer - only for session completion
-        } else {
+        if (!lastCorrect) {
           _heartShakeController.forward(from: 0);
         }
 
@@ -133,6 +125,14 @@ class _LearningScreenState extends ConsumerState<LearningScreen>
           sessionState: state,
           onContinue: () {
             ref.read(learningSessionProvider.notifier).nextQuestion();
+          },
+        );
+
+      case LearningSessionPhase.combo:
+        return _ComboCelebrationView(
+          sessionState: state,
+          onContinue: () {
+            ref.read(learningSessionProvider.notifier).skipComboCelebration();
           },
         );
 
@@ -153,38 +153,53 @@ class _LearningScreenState extends ConsumerState<LearningScreen>
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
+        backgroundColor: AppColors.learningSurface,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-        title: const Text('Keluar dari belajar?'),
-        content: const Text(
+        title: Text(
+          'Keluar dari belajar?',
+          style: _darkTextStyle(20, FontWeight.w700, Colors.white),
+        ),
+        content: Text(
           'Progres belajarmu tidak akan disimpan. Yakin ingin keluar?',
+          style: _darkTextStyle(14, FontWeight.w500, AppColors.learningTextSecondary),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text('Lanjut Belajar'),
+            child: Text(
+              'Lanjut Belajar',
+              style: _darkTextStyle(14, FontWeight.w600, AppColors.learningCorrect),
+            ),
           ),
           ElevatedButton(
             onPressed: () {
               Navigator.pop(ctx);
               context.goNamed('home');
             },
-            style: ElevatedButton.styleFrom(backgroundColor: AppColors.error),
-            child: const Text('Keluar'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.learningWrong,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            ),
+            child: const Text('Keluar', style: TextStyle(color: Colors.white)),
           ),
         ],
       ),
     );
   }
+
+  static TextStyle _darkTextStyle(double size, FontWeight weight, Color color) {
+    return GoogleFonts.nunito(fontSize: size, fontWeight: weight, color: color);
+  }
 }
 
 // ============================================================
-// TOP BAR — Progress, Lives, XP
+// DARK TOP BAR — Close, KOMBO progress, Lives
 // ============================================================
 
-class _TopBar extends StatelessWidget {
+class _DarkTopBar extends StatelessWidget {
   final LearningSessionState sessionState;
 
-  const _TopBar({required this.sessionState});
+  const _DarkTopBar({required this.sessionState});
 
   @override
   Widget build(BuildContext context) {
@@ -192,58 +207,85 @@ class _TopBar extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Row(
         children: [
-          // Close button
+          // Close button (X)
           GestureDetector(
             onTap: () => _showExitConfirmation(context),
-            child: Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(
-                color: AppColors.surfaceVariant,
-                shape: BoxShape.circle,
-              ),
-              child: const Icon(Icons.close_rounded, size: 24),
+            child: const Icon(
+              Icons.close_rounded,
+              color: AppColors.learningTextSecondary,
+              size: 28,
             ),
           ),
 
           const SizedBox(width: 12),
 
-          // Progress bar
+          // KOMBO progress bar with orange fill
           Expanded(
-            child: Container(
-              height: 16,
-              decoration: BoxDecoration(
-                color: AppColors.surfaceVariant,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: Stack(
-                  children: [
-                    FractionallySizedBox(
-                      widthFactor: sessionState.progress.clamp(0.0, 1.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          gradient: const LinearGradient(
-                            colors: [AppColors.primary, AppColors.primaryLight],
+            child: Column(
+              children: [
+                // Combo indicator
+                if (sessionState.comboCount > 0)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 4),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'KOMBO',
+                          style: GoogleFonts.nunito(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w800,
+                            color: AppColors.learningCombo,
+                            letterSpacing: 1.2,
                           ),
-                          borderRadius: BorderRadius.circular(8),
                         ),
-                      ).animate(target: sessionState.progress > 0 ? 1 : 0)
-                          .fadeIn(duration: 300.ms),
+                        const SizedBox(width: 4),
+                        Text(
+                          'x${sessionState.comboCount}',
+                          style: GoogleFonts.fredoka(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.learningCombo,
+                          ),
+                        ),
+                      ],
                     ),
-                    // Star markers at 25%, 50%, 75%
-                    ..._buildStarMarkers(sessionState.questions.length),
-                  ],
+                  ),
+                // Progress bar
+                Container(
+                  height: 14,
+                  decoration: BoxDecoration(
+                    color: AppColors.learningComboBg,
+                    borderRadius: BorderRadius.circular(7),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(7),
+                    child: Stack(
+                      children: [
+                        // Orange progress fill
+                        FractionallySizedBox(
+                          widthFactor: sessionState.progress.clamp(0.0, 1.0),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              gradient: const LinearGradient(
+                                colors: [AppColors.learningCombo, Color(0xFFFFB74D)],
+                              ),
+                              borderRadius: BorderRadius.circular(7),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
           ),
 
           const SizedBox(width: 12),
 
           // Lives (hearts)
-          _LivesDisplay(
+          _DarkLivesDisplay(
             livesRemaining: sessionState.livesRemaining,
             maxLives: sessionState.maxLives,
           ),
@@ -252,42 +294,32 @@ class _TopBar extends StatelessWidget {
     );
   }
 
-  List<Widget> _buildStarMarkers(int totalQuestions) {
-    if (totalQuestions == 0) return [];
-    final markers = <Widget>[];
-    for (final fraction in [0.25, 0.5, 0.75]) {
-      markers.add(
-        Positioned(
-          left: fraction * (MediaQuery.of(context).size.width - 160),
-          top: -1,
-          child: const Text('⭐', style: TextStyle(fontSize: 10)),
-        ),
-      );
-    }
-    return markers;
-  }
-
   void _showExitConfirmation(BuildContext context) {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
+        backgroundColor: AppColors.learningSurface,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-        title: const Text('Keluar dari belajar?'),
-        content: const Text(
-          'Progres belajarmu tidak akan disimpan. Yakin ingin keluar?',
+        title: Text(
+          'Keluar dari belajar?',
+          style: GoogleFonts.fredoka(fontSize: 20, fontWeight: FontWeight.w700, color: Colors.white),
+        ),
+        content: Text(
+          'Progres belajarmu tidak akan disimpan.',
+          style: GoogleFonts.nunito(fontSize: 14, color: AppColors.learningTextSecondary),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text('Lanjut Belajar'),
+            child: Text('Lanjut', style: GoogleFonts.nunito(fontWeight: FontWeight.w700, color: AppColors.learningCorrect)),
           ),
           ElevatedButton(
             onPressed: () {
               Navigator.pop(ctx);
               context.goNamed('home');
             },
-            style: ElevatedButton.styleFrom(backgroundColor: AppColors.error),
-            child: const Text('Keluar'),
+            style: ElevatedButton.styleFrom(backgroundColor: AppColors.learningWrong),
+            child: const Text('Keluar', style: TextStyle(color: Colors.white)),
           ),
         ],
       ),
@@ -295,12 +327,12 @@ class _TopBar extends StatelessWidget {
   }
 }
 
-/// Animated hearts/lives display
-class _LivesDisplay extends StatelessWidget {
+/// Animated hearts/lives display — dark theme
+class _DarkLivesDisplay extends StatelessWidget {
   final int livesRemaining;
   final int maxLives;
 
-  const _LivesDisplay({
+  const _DarkLivesDisplay({
     required this.livesRemaining,
     required this.maxLives,
   });
@@ -311,8 +343,8 @@ class _LivesDisplay extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
         color: livesRemaining <= 1
-            ? AppColors.error.withOpacity(0.1)
-            : AppColors.surfaceVariant,
+            ? AppColors.learningWrong.withOpacity(0.2)
+            : AppColors.learningSurfaceLight,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
@@ -321,14 +353,13 @@ class _LivesDisplay extends StatelessWidget {
           final isFilled = index < livesRemaining;
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 1),
-            child: Text(
-              isFilled ? '❤️' : '🩶',
-              style: const TextStyle(fontSize: 18),
-            ).animate(target: isFilled ? 0 : 1).scale(
-                  begin: const Offset(1.3, 1.3),
-                  end: const Offset(1, 1),
-                  duration: 300.ms,
-                ),
+            child: Icon(
+              isFilled ? Icons.favorite_rounded : Icons.favorite_border_rounded,
+              color: isFilled
+                  ? (livesRemaining <= 1 ? AppColors.learningWrong : Colors.redAccent)
+                  : AppColors.learningBorder,
+              size: 18,
+            ),
           );
         }),
       ),
@@ -363,7 +394,7 @@ class _IntroView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // Character greeting
-            CharacterIllustration(character: character, size: 100)
+            CharacterIllustration(character: character, size: 100, isDarkTheme: true)
                 .animate()
                 .scale(
                   begin: const Offset(0.5, 0.5),
@@ -374,8 +405,8 @@ class _IntroView extends StatelessWidget {
 
             const SizedBox(height: 24),
 
-            // Greeting bubble
-            CharacterCoachBubble(
+            // Greeting bubble — dark theme speech bubble
+            _DarkSpeechBubble(
               character: character,
               message: CharacterMessages.getGreeting(character),
             ).animate().fadeIn(delay: 400.ms).slideY(begin: 0.2, end: 0),
@@ -385,9 +416,11 @@ class _IntroView extends StatelessWidget {
             // Session title
             Text(
               sessionState.sessionTitle,
-              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                    color: AppColors.primary,
-                  ),
+              style: GoogleFonts.fredoka(
+                fontSize: 28,
+                fontWeight: FontWeight.w700,
+                color: Colors.white,
+              ),
               textAlign: TextAlign.center,
             ).animate().fadeIn(delay: 600.ms),
 
@@ -395,18 +428,37 @@ class _IntroView extends StatelessWidget {
 
             Text(
               '${sessionState.questions.length} soal menanti!',
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    color: AppColors.textSecondary,
-                  ),
+              style: GoogleFonts.nunito(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                color: AppColors.learningTextSecondary,
+              ),
             ).animate().fadeIn(delay: 700.ms),
 
             const SizedBox(height: 40),
 
-            // Start button
-            PrimaryButton(
-              label: 'Ayo Mulai!',
-              icon: Icons.play_arrow_rounded,
-              onPressed: onStart,
+            // Start button — green Duolingo style
+            SizedBox(
+              width: double.infinity,
+              height: 56,
+              child: ElevatedButton(
+                onPressed: onStart,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.learningCheckBtn,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                ),
+                child: Text(
+                  'AYO MULAI!',
+                  style: GoogleFonts.nunito(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w800,
+                    color: Colors.white,
+                    letterSpacing: 1.2,
+                  ),
+                ),
+              ),
             ).animate().fadeIn(delay: 800.ms).slideY(begin: 0.2, end: 0),
           ],
         ),
@@ -416,19 +468,21 @@ class _IntroView extends StatelessWidget {
 }
 
 // ============================================================
-// QUESTION VIEW — The main question display
+// QUESTION VIEW — The main Duolingo-style question display
 // ============================================================
 
 class _QuestionView extends StatelessWidget {
   final LearningSessionState sessionState;
-  final Function(String) onAnswer;
+  final Function(String) onSelectAnswer;
+  final VoidCallback onCheckAnswer;
   final Function(String) onTextAnswer;
   final Function(List<int>) onSequenceAnswer;
   final VoidCallback onShowHint;
 
   const _QuestionView({
     required this.sessionState,
-    required this.onAnswer,
+    required this.onSelectAnswer,
+    required this.onCheckAnswer,
     required this.onTextAnswer,
     required this.onSequenceAnswer,
     required this.onShowHint,
@@ -438,8 +492,11 @@ class _QuestionView extends StatelessWidget {
   Widget build(BuildContext context) {
     final question = sessionState.currentQuestion;
     if (question == null) {
-      return const Center(
-        child: Text('Tidak ada soal', style: TextStyle(fontSize: 18)),
+      return Center(
+        child: Text(
+          'Tidak ada soal',
+          style: GoogleFonts.nunito(fontSize: 18, color: Colors.white54),
+        ),
       );
     }
 
@@ -447,118 +504,86 @@ class _QuestionView extends StatelessWidget {
 
     return Column(
       children: [
-        // Top bar with progress & lives
-        _TopBar(sessionState: sessionState),
+        // Top bar with KOMBO progress & lives
+        _DarkTopBar(sessionState: sessionState),
 
-        const SizedBox(height: 8),
+        const SizedBox(height: 12),
 
-        // XP indicator
+        // Instruction line
+        if (question.instruction != null)
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Text(
+              question.instruction!,
+              style: GoogleFonts.nunito(
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+                color: Colors.white,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+
+        const SizedBox(height: 12),
+
+        // Character + Speech bubble (question text)
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                decoration: BoxDecoration(
-                  color: AppColors.coinGold.withOpacity(0.15),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Text('🪙', style: TextStyle(fontSize: 14)),
-                    const SizedBox(width: 4),
-                    Text(
-                      '${sessionState.totalCoinsEarned}',
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 14,
-                        color: AppColors.coinGold,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: 8),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                decoration: BoxDecoration(
-                  color: AppColors.primary.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Text('⭐', style: TextStyle(fontSize: 14)),
-                    const SizedBox(width: 4),
-                    Text(
-                      '${sessionState.totalXpEarned} XP',
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 14,
-                        color: AppColors.primary,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+          child: _QuestionSpeechBubble(
+            character: character,
+            question: question,
+            showHint: sessionState.showHint,
           ),
         ),
 
         const SizedBox(height: 12),
 
-        // Coach bubble (greeting/hint)
-        if (sessionState.showHint && question.hint != null)
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: CharacterCoachBubble(
-              character: character,
-              message: question.hint!,
-            ).animate().fadeIn(duration: 300.ms).slideY(begin: 0.1, end: 0),
-          )
-        else
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: CharacterCoachBubble(
-              character: character,
-              message: CharacterMessages.getGreeting(character),
-              characterSize: 36,
-            ),
-          ),
-
-        const SizedBox(height: 16),
-
-        // Question content area (scrollable to prevent overflow)
+        // Question content area (renderers)
         Expanded(
           child: SingleChildScrollView(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
               children: [
-                // Question card
-                _QuestionCard(
+                // Emoji / visual (if present)
+                if (question.emoji != null) ...[
+                  Center(
+                    child: Text(
+                      question.emoji!,
+                      style: const TextStyle(fontSize: 56),
+                    ).animate().scale(
+                          begin: const Offset(0.8, 0.8),
+                          end: const Offset(1, 1),
+                          duration: 400.ms,
+                          curve: Curves.elasticOut,
+                        ),
+                  ),
+                  const SizedBox(height: 12),
+                ],
+
+                // Question renderer — delegates to type-specific widget
+                QuestionRenderer(
                   question: question,
-                  onAnswer: onAnswer,
+                  selectedAnswerId: sessionState.selectedAnswerId,
+                  onAnswer: onSelectAnswer,
                   onTextAnswer: onTextAnswer,
                   onSequenceAnswer: onSequenceAnswer,
                 ),
 
-                const SizedBox(height: 16),
+                const SizedBox(height: 12),
 
-                // Hint button (if hint available)
+                // Hint button (if hint available and not yet shown)
                 if (question.hint != null && !sessionState.showHint)
                   TextButton.icon(
                     onPressed: onShowHint,
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.lightbulb_outline_rounded,
-                      color: AppColors.accent,
+                      color: AppColors.learningCombo,
                       size: 20,
                     ),
                     label: Text(
                       'Butuh petunjuk?',
-                      style: TextStyle(
-                        color: AppColors.accent,
+                      style: GoogleFonts.nunito(
+                        color: AppColors.learningCombo,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -567,99 +592,132 @@ class _QuestionView extends StatelessWidget {
             ),
           ),
         ),
+
+        // Bottom action button — PERIKSA or LANJUTKAN
+        _BottomActionButton(
+          hasSelection: sessionState.hasSelectedAnswer,
+          onCheck: onCheckAnswer,
+          questionType: question.questionType,
+        ),
       ],
     );
   }
 }
 
-/// Question card that delegates to the appropriate renderer
-class _QuestionCard extends StatelessWidget {
+/// Character + speech bubble for question text — Duolingo style
+class _QuestionSpeechBubble extends StatelessWidget {
+  final CharacterType character;
   final Question question;
-  final Function(String) onAnswer;
-  final Function(String) onTextAnswer;
-  final Function(List<int>) onSequenceAnswer;
+  final bool showHint;
 
-  const _QuestionCard({
+  const _QuestionSpeechBubble({
+    required this.character,
     required this.question,
-    required this.onAnswer,
-    required this.onTextAnswer,
-    required this.onSequenceAnswer,
+    this.showHint = false,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(24),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.shadowMedium,
-            blurRadius: 16,
-            offset: const Offset(0, 6),
-          ),
-        ],
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          // Instruction line (small, above question)
-          if (question.instruction != null)
-            Text(
-              question.instruction!,
-              style: TextStyle(
-                fontSize: 13,
-                fontWeight: FontWeight.w600,
-                color: AppColors.textSecondary,
+    final displayText = showHint && question.hint != null
+        ? question.hint!
+        : question.questionText;
+
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Character on the left
+        CharacterIllustration(character: character, size: 56, isDarkTheme: true),
+
+        const SizedBox(width: 10),
+
+        // Speech bubble on the right
+        Expanded(
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            decoration: BoxDecoration(
+              color: AppColors.learningBubbleBg,
+              borderRadius: BorderRadius.circular(16),
+              // Tail on left side (pointing to character)
+              border: Border.all(
+                color: AppColors.learningBorder.withOpacity(0.3),
+                width: 1,
               ),
             ),
-
-          const SizedBox(height: 8),
-
-          // Emoji / visual (if present)
-          if (question.emoji != null) ...[
-            Center(
-              child: Text(
-                question.emoji!,
-                style: const TextStyle(fontSize: 56),
-              ).animate().scale(
-                    begin: const Offset(0.8, 0.8),
-                    end: const Offset(1, 1),
-                    duration: 400.ms,
-                    curve: Curves.elasticOut,
-                  ),
+            child: Text(
+              displayText,
+              style: GoogleFonts.nunito(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                color: Colors.white,
+                height: 1.4,
+              ),
             ),
-            const SizedBox(height: 12),
-          ],
-
-          // Question text
-          Text(
-            question.questionText,
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  height: 1.3,
-                ),
-            textAlign: TextAlign.center,
           ),
+        ),
+      ],
+    );
+  }
+}
 
-          const SizedBox(height: 20),
+/// Bottom action button — PERIKSA (check) when answer selected, disabled otherwise
+class _BottomActionButton extends StatelessWidget {
+  final bool hasSelection;
+  final VoidCallback onCheck;
+  final QuestionType questionType;
 
-          // Question renderer — delegates to type-specific widget
-          QuestionRenderer(
-            question: question,
-            onAnswer: onAnswer,
-            onTextAnswer: onTextAnswer,
-            onSequenceAnswer: onSequenceAnswer,
+  const _BottomActionButton({
+    required this.hasSelection,
+    required this.onCheck,
+    required this.questionType,
+  });
+
+  /// Some question types don't use the PERIKSA button (they auto-submit)
+  bool get usesCheckButton =>
+      questionType == QuestionType.multipleChoice ||
+      questionType == QuestionType.trueFalse ||
+      questionType == QuestionType.matchWordImage ||
+      questionType == QuestionType.pickCorrectImage ||
+      questionType == QuestionType.listenAndChoose ||
+      questionType == QuestionType.pickInitialLetter ||
+      questionType == QuestionType.dragAndDrop;
+
+  @override
+  Widget build(BuildContext context) {
+    if (!usesCheckButton) return const SizedBox.shrink();
+
+    return Container(
+      padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+      child: SizedBox(
+        width: double.infinity,
+        height: 56,
+        child: ElevatedButton(
+          onPressed: hasSelection ? onCheck : null,
+          style: ElevatedButton.styleFrom(
+            backgroundColor: hasSelection
+                ? AppColors.learningCheckBtn
+                : AppColors.learningCheckBtnDisabled,
+            disabledBackgroundColor: AppColors.learningCheckBtnDisabled,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
           ),
-        ],
+          child: Text(
+            'PERIKSA',
+            style: GoogleFonts.nunito(
+              fontSize: 18,
+              fontWeight: FontWeight.w800,
+              color: hasSelection ? Colors.white : AppColors.learningTextSecondary,
+              letterSpacing: 1.2,
+            ),
+          ),
+        ),
       ),
     );
   }
 }
 
 // ============================================================
-// FEEDBACK VIEW — Correct / Wrong feedback
+// FEEDBACK VIEW — Duolingo bottom bar style
 // ============================================================
 
 class _FeedbackView extends StatelessWidget {
@@ -678,129 +736,287 @@ class _FeedbackView extends StatelessWidget {
     final character = question?.effectiveCharacter ?? CharacterType.zelby;
     final feedbackMsg = sessionState.feedbackMessage ?? (isCorrect ? 'Benar!' : 'Coba lagi!');
 
-    final accentColor = isCorrect ? AppColors.success : AppColors.error;
-    final bgColor = isCorrect
-        ? AppColors.success.withOpacity(0.05)
-        : AppColors.error.withOpacity(0.05);
+    final barBgColor = isCorrect
+        ? AppColors.learningFeedbackBg
+        : AppColors.learningFeedbackWrongBg;
+    final accentColor = isCorrect ? AppColors.learningCorrect : AppColors.learningWrong;
 
-    return Container(
-      color: bgColor,
-      child: Column(
-        children: [
-          // Top bar
-          _TopBar(sessionState: sessionState),
+    return Column(
+      children: [
+        // Top bar
+        _DarkTopBar(sessionState: sessionState),
 
-          const Spacer(),
-
-          // Feedback icon
-          Container(
-            width: 100,
-            height: 100,
-            decoration: BoxDecoration(
-              color: accentColor.withOpacity(0.15),
-              shape: BoxShape.circle,
-            ),
-            child: Center(
-              child: Text(
-                isCorrect ? '✅' : '💪',
-                style: const TextStyle(fontSize: 48),
-              ),
-            ),
-          ).animate().scale(
-                begin: const Offset(0.5, 0.5),
-                end: const Offset(1, 1),
-                duration: 500.ms,
-                curve: Curves.elasticOut,
-              ),
-
-          const SizedBox(height: 24),
-
-          // Feedback title
-          Text(
-            isCorrect ? 'Benar!' : 'Belum tepat!',
-            style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                  color: accentColor,
-                ),
-          ).animate().fadeIn(delay: 200.ms),
-
-          const SizedBox(height: 12),
-
-          // Feedback message
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 40),
-            child: Text(
-              feedbackMsg,
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    color: AppColors.textSecondary,
-                    height: 1.4,
+        // Main area stays the same (question still visible)
+        Expanded(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              children: [
+                if (question != null)
+                  QuestionRenderer(
+                    question: question,
+                    selectedAnswerId: sessionState.selectedAnswerId,
+                    isAnswered: true,
+                    isCorrect: isCorrect,
+                    onAnswer: (_) {},
+                    onTextAnswer: (_) {},
+                    onSequenceAnswer: (_) {},
                   ),
-              textAlign: TextAlign.center,
+              ],
             ),
-          ).animate().fadeIn(delay: 300.ms),
+          ),
+        ),
 
-          const SizedBox(height: 24),
-
-          // Character coach bubble
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: CharacterCoachBubble(
-              character: character,
-              message: isCorrect
-                  ? CharacterMessages.getCorrectPraise(character)
-                  : CharacterMessages.getWrongComfort(character),
-            ),
-          ).animate().fadeIn(delay: 400.ms).slideY(begin: 0.15, end: 0),
-
-          // XP earned (only if correct)
-          if (isCorrect && question != null) ...[
-            const SizedBox(height: 16),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              decoration: BoxDecoration(
-                color: AppColors.coinGold.withOpacity(0.15),
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
+        // Feedback bar at bottom — Duolingo style
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.fromLTRB(20, 16, 20, 20),
+          decoration: BoxDecoration(
+            color: barBgColor,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Feedback title line
+              Row(
                 children: [
-                  const Text('🪙', style: TextStyle(fontSize: 20)),
-                  const SizedBox(width: 8),
-                  Text(
-                    '+${question.coinReward}',
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w800,
-                      fontSize: 18,
-                      color: AppColors.coinGold,
-                    ),
+                  Icon(
+                    isCorrect ? Icons.check_circle_rounded : Icons.cancel_rounded,
+                    color: accentColor,
+                    size: 28,
                   ),
-                  const SizedBox(width: 16),
-                  const Text('⭐', style: TextStyle(fontSize: 20)),
-                  const SizedBox(width: 8),
+                  const SizedBox(width: 10),
                   Text(
-                    '+${question.xpReward} XP',
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w800,
-                      fontSize: 18,
-                      color: AppColors.primary,
+                    isCorrect ? _getPraiseText() : 'Belum tepat!',
+                    style: GoogleFonts.fredoka(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
                     ),
                   ),
                 ],
               ),
-            ).animate().fadeIn(delay: 500.ms),
+
+              // Feedback message / translation
+              const SizedBox(height: 4),
+              Text(
+                feedbackMsg,
+                style: GoogleFonts.nunito(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white70,
+                ),
+              ),
+
+              const SizedBox(height: 16),
+
+              // LANJUTKAN button
+              SizedBox(
+                width: double.infinity,
+                height: 52,
+                child: ElevatedButton(
+                  onPressed: onContinue,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.learningCheckBtn,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                  ),
+                  child: Text(
+                    'LANJUTKAN',
+                    style: GoogleFonts.nunito(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w800,
+                      color: Colors.white,
+                      letterSpacing: 1.0,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  String _getPraiseText() {
+    final praises = ['Hebat!', 'Keren!', 'Luar biasa!', 'Mantap!', 'Bagus sekali!'];
+    final now = DateTime.now().millisecondsSinceEpoch;
+    return praises[now % praises.length];
+  }
+}
+
+// ============================================================
+// COMBO CELEBRATION VIEW — Milestone streak celebration
+// ============================================================
+
+class _ComboCelebrationView extends StatelessWidget {
+  final LearningSessionState sessionState;
+  final VoidCallback onContinue;
+
+  const _ComboCelebrationView({
+    required this.sessionState,
+    required this.onContinue,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final character = sessionState.questions.isNotEmpty
+        ? sessionState.questions.first.effectiveCharacter
+        : CharacterType.zelby;
+
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(32),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Character celebration
+            CharacterIllustration(character: character, size: 100, isDarkTheme: true)
+                .animate()
+                .scale(
+                  begin: const Offset(0.5, 0.5),
+                  end: const Offset(1, 1),
+                  duration: 600.ms,
+                  curve: Curves.elasticOut,
+                ),
+
+            const SizedBox(height: 24),
+
+            // Combo title
+            Text(
+              'Kamu menciptakan kombo!',
+              style: GoogleFonts.fredoka(
+                fontSize: 28,
+                fontWeight: FontWeight.w700,
+                color: Colors.cyanAccent,
+              ),
+              textAlign: TextAlign.center,
+            ).animate().fadeIn(delay: 200.ms),
+
+            const SizedBox(height: 8),
+
+            Text(
+              '${sessionState.comboCount} jawaban benar berturut-turut! Lanjut!',
+              style: GoogleFonts.nunito(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                color: AppColors.learningTextSecondary,
+              ),
+              textAlign: TextAlign.center,
+            ).animate().fadeIn(delay: 400.ms),
+
+            const SizedBox(height: 32),
+
+            // Stats cards row
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                _ComboStatCard(
+                  title: 'TOTAL XP',
+                  value: '${sessionState.totalXpEarned}',
+                  icon: Icons.bolt_rounded,
+                  color: Colors.amber,
+                ),
+                _ComboStatCard(
+                  title: 'KOMBO',
+                  value: 'x${sessionState.comboCount}',
+                  icon: Icons.track_changes_rounded,
+                  color: Colors.cyanAccent,
+                ),
+                _ComboStatCard(
+                  title: 'CEPAT',
+                  value: _formatDuration(sessionState.elapsed),
+                  icon: Icons.timer_rounded,
+                  color: Colors.tealAccent,
+                ),
+              ],
+            ).animate().fadeIn(delay: 500.ms).slideY(begin: 0.2, end: 0),
+
+            const SizedBox(height: 40),
+
+            // Continue button
+            SizedBox(
+              width: double.infinity,
+              height: 56,
+              child: ElevatedButton(
+                onPressed: onContinue,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.lightBlueAccent,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                ),
+                child: Text(
+                  'Klaim XP',
+                  style: GoogleFonts.nunito(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w800,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ).animate().fadeIn(delay: 700.ms),
           ],
+        ),
+      ),
+    );
+  }
 
-          const Spacer(),
+  String _formatDuration(Duration d) {
+    final minutes = d.inMinutes;
+    final seconds = d.inSeconds % 60;
+    return '$minutes:${seconds.toString().padLeft(2, '0')}';
+  }
+}
 
-          // Continue button
-          Padding(
-            padding: const EdgeInsets.all(24),
-            child: PrimaryButton(
-              label: 'Lanjut',
-              icon: Icons.arrow_forward_rounded,
-              onPressed: onContinue,
-              backgroundColor: accentColor,
+class _ComboStatCard extends StatelessWidget {
+  final String title;
+  final String value;
+  final IconData icon;
+  final Color color;
+
+  const _ComboStatCard({
+    required this.title,
+    required this.value,
+    required this.icon,
+    required this.color,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 100,
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: AppColors.learningSurface,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: color.withOpacity(0.3), width: 1),
+      ),
+      child: Column(
+        children: [
+          Text(
+            title,
+            style: GoogleFonts.nunito(
+              fontSize: 10,
+              fontWeight: FontWeight.w800,
+              color: AppColors.learningTextSecondary,
+              letterSpacing: 0.8,
             ),
-          ).animate().fadeIn(delay: 600.ms),
+          ),
+          const SizedBox(height: 6),
+          Icon(icon, color: color, size: 22),
+          const SizedBox(height: 6),
+          Text(
+            value,
+            style: GoogleFonts.fredoka(
+              fontSize: 18,
+              fontWeight: FontWeight.w700,
+              color: Colors.white,
+            ),
+          ),
         ],
       ),
     );
@@ -840,11 +1056,11 @@ class _CompletionView extends StatelessWidget {
             confettiController: confettiController,
             blastDirectionality: BlastDirectionality.explosive,
             colors: const [
-              AppColors.primary,
-              AppColors.secondary,
-              AppColors.accent,
+              AppColors.learningCorrect,
+              Colors.cyanAccent,
+              AppColors.learningCombo,
               AppColors.coinGold,
-              AppColors.success,
+              Colors.pinkAccent,
             ],
             maxBlastForce: 20,
             minBlastForce: 5,
@@ -862,7 +1078,7 @@ class _CompletionView extends StatelessWidget {
                 const SizedBox(height: 32),
 
                 // Character celebration
-                CharacterIllustration(character: character, size: 100)
+                CharacterIllustration(character: character, size: 100, isDarkTheme: true)
                     .animate()
                     .scale(
                       begin: const Offset(0.5, 0.5),
@@ -876,11 +1092,13 @@ class _CompletionView extends StatelessWidget {
                 // Title
                 Text(
                   isSuccessful
-                      ? (sessionState.isPerfect ? 'Sempurna! 🌟' : 'Bagus Sekali!')
+                      ? (sessionState.isPerfect ? 'Sempurna!' : 'Bagus Sekali!')
                       : 'Jangan Menyerah!',
-                  style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                        color: isSuccessful ? AppColors.primary : AppColors.secondary,
-                      ),
+                  style: GoogleFonts.fredoka(
+                    fontSize: 32,
+                    fontWeight: FontWeight.w700,
+                    color: isSuccessful ? AppColors.learningCorrect : Colors.orangeAccent,
+                  ),
                 ).animate().fadeIn(delay: 300.ms),
 
                 const SizedBox(height: 8),
@@ -890,52 +1108,123 @@ class _CompletionView extends StatelessWidget {
                   isSuccessful
                       ? 'Kamu sudah menyelesaikan ${sessionState.correctCount} dari ${sessionState.totalQuestions} soal!'
                       : 'Coba lagi, kamu pasti bisa!',
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        color: AppColors.textSecondary,
-                      ),
+                  style: GoogleFonts.nunito(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.learningTextSecondary,
+                  ),
                   textAlign: TextAlign.center,
                 ).animate().fadeIn(delay: 500.ms),
 
                 const SizedBox(height: 32),
 
                 // Stars earned
-                _StarsDisplay(stars: sessionState.starsEarned)
+                _DarkStarsDisplay(stars: sessionState.starsEarned)
                     .animate()
                     .fadeIn(delay: 600.ms),
 
                 const SizedBox(height: 32),
 
-                // Rewards card
-                _CompletionRewardsCard(sessionState: sessionState)
-                    .animate()
-                    .slideY(begin: 0.3, end: 0, delay: 700.ms)
-                    .fadeIn(),
+                // Stats cards row (like Duolingo completion)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    _ComboStatCard(
+                      title: 'BENAR',
+                      value: '${sessionState.correctCount}',
+                      icon: Icons.check_circle_rounded,
+                      color: AppColors.learningCorrect,
+                    ),
+                    _ComboStatCard(
+                      title: 'KOMBO',
+                      value: 'x${sessionState.maxCombo}',
+                      icon: Icons.track_changes_rounded,
+                      color: Colors.cyanAccent,
+                    ),
+                    _ComboStatCard(
+                      title: 'XP',
+                      value: '${sessionState.totalXpEarned}',
+                      icon: Icons.bolt_rounded,
+                      color: Colors.amber,
+                    ),
+                  ],
+                ).animate().fadeIn(delay: 700.ms).slideY(begin: 0.2, end: 0),
 
                 const SizedBox(height: 32),
 
-                // Character message
-                CharacterCoachBubble(
-                  character: character,
-                  message: isSuccessful
-                      ? CharacterMessages.getCorrectPraise(character)
-                      : CharacterMessages.getWrongComfort(character),
+                // Rewards row
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                  decoration: BoxDecoration(
+                    color: AppColors.learningSurface,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      _DarkRewardItem(
+                        icon: Icons.monetization_on_rounded,
+                        value: '+${sessionState.totalCoinsEarned}',
+                        label: 'Koin',
+                        color: AppColors.coinGold,
+                      ),
+                      _DarkRewardItem(
+                        icon: Icons.star_rounded,
+                        value: '+${sessionState.totalXpEarned}',
+                        label: 'XP',
+                        color: AppColors.learningCombo,
+                      ),
+                    ],
+                  ),
                 ).animate().fadeIn(delay: 800.ms),
 
                 const SizedBox(height: 32),
 
                 // Action buttons
-                PrimaryButton(
-                  label: AppStrings.playAgain,
-                  icon: Icons.replay_rounded,
-                  onPressed: onRetry,
+                SizedBox(
+                  width: double.infinity,
+                  height: 56,
+                  child: ElevatedButton(
+                    onPressed: onRetry,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.learningCheckBtn,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                    ),
+                    child: Text(
+                      AppStrings.playAgain,
+                      style: GoogleFonts.nunito(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w800,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
                 ).animate().fadeIn(delay: 900.ms),
 
                 const SizedBox(height: 12),
 
-                PrimaryButton(
-                  label: AppStrings.backToHome,
-                  onPressed: onGoHome,
-                  isSecondary: true,
+                SizedBox(
+                  width: double.infinity,
+                  height: 52,
+                  child: OutlinedButton(
+                    onPressed: onGoHome,
+                    style: OutlinedButton.styleFrom(
+                      side: const BorderSide(color: AppColors.learningBorder, width: 2),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                    ),
+                    child: Text(
+                      AppStrings.backToHome,
+                      style: GoogleFonts.nunito(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.learningTextSecondary,
+                      ),
+                    ),
+                  ),
                 ).animate().fadeIn(delay: 1000.ms),
               ],
             ),
@@ -946,11 +1235,11 @@ class _CompletionView extends StatelessWidget {
   }
 }
 
-/// Stars display for completion screen
-class _StarsDisplay extends StatelessWidget {
+/// Stars display for completion screen — dark theme
+class _DarkStarsDisplay extends StatelessWidget {
   final int stars;
 
-  const _StarsDisplay({required this.stars});
+  const _DarkStarsDisplay({required this.stars});
 
   @override
   Widget build(BuildContext context) {
@@ -960,12 +1249,10 @@ class _StarsDisplay extends StatelessWidget {
         final isFilled = index < stars;
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8),
-          child: Text(
-            isFilled ? '⭐' : '☆',
-            style: TextStyle(
-              fontSize: 48,
-              color: isFilled ? AppColors.accent : AppColors.surfaceVariant,
-            ),
+          child: Icon(
+            isFilled ? Icons.star_rounded : Icons.star_border_rounded,
+            size: 48,
+            color: isFilled ? AppColors.coinGold : AppColors.learningBorder,
           ).animate(target: isFilled ? 1 : 0).scale(
                 begin: const Offset(0, 0),
                 end: const Offset(1, 1),
@@ -979,98 +1266,16 @@ class _StarsDisplay extends StatelessWidget {
   }
 }
 
-/// Rewards summary card on completion
-class _CompletionRewardsCard extends StatelessWidget {
-  final LearningSessionState sessionState;
-
-  const _CompletionRewardsCard({required this.sessionState});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(24),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(24),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.shadowMedium,
-            blurRadius: 16,
-            offset: const Offset(0, 6),
-          ),
-        ],
-      ),
-      child: Column(
-        children: [
-          Text(
-            'Hadiah Kamu',
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
-          const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              _RewardItem(
-                emoji: '✅',
-                label: 'Benar',
-                value: '${sessionState.correctCount}',
-                color: AppColors.success,
-              ),
-              _RewardItem(
-                emoji: '🪙',
-                label: AppStrings.coins,
-                value: '+${sessionState.totalCoinsEarned}',
-                color: AppColors.coinGold,
-              ),
-              _RewardItem(
-                emoji: '⭐',
-                label: AppStrings.xp,
-                value: '+${sessionState.totalXpEarned}',
-                color: AppColors.primary,
-              ),
-            ],
-          ),
-          if (sessionState.isPerfect) ...[
-            const SizedBox(height: 16),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              decoration: BoxDecoration(
-                color: AppColors.accent.withOpacity(0.15),
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Text('🌟', style: TextStyle(fontSize: 20)),
-                  const SizedBox(width: 8),
-                  Text(
-                    'Sempurna! Tidak ada kesalahan!',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.accent,
-                      fontSize: 14,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ],
-      ),
-    );
-  }
-}
-
-class _RewardItem extends StatelessWidget {
-  final String emoji;
-  final String label;
+class _DarkRewardItem extends StatelessWidget {
+  final IconData icon;
   final String value;
+  final String label;
   final Color color;
 
-  const _RewardItem({
-    required this.emoji,
-    required this.label,
+  const _DarkRewardItem({
+    required this.icon,
     required this.value,
+    required this.label,
     required this.color,
   });
 
@@ -1078,25 +1283,89 @@ class _RewardItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(emoji, style: const TextStyle(fontSize: 32)),
-        const SizedBox(height: 8),
+        Icon(icon, color: color, size: 32),
+        const SizedBox(height: 6),
         Text(
           value,
-          style: TextStyle(
-            fontWeight: FontWeight.w800,
+          style: GoogleFonts.fredoka(
             fontSize: 20,
-            color: color,
+            fontWeight: FontWeight.w700,
+            color: Colors.white,
           ),
         ),
         Text(
           label,
-          style: TextStyle(
+          style: GoogleFonts.nunito(
             fontSize: 12,
-            color: AppColors.textSecondary,
             fontWeight: FontWeight.w600,
+            color: AppColors.learningTextSecondary,
           ),
         ),
       ],
+    );
+  }
+}
+
+// ============================================================
+// DARK SPEECH BUBBLE — for intro and hints
+// ============================================================
+
+class _DarkSpeechBubble extends StatelessWidget {
+  final CharacterType character;
+  final String message;
+
+  const _DarkSpeechBubble({
+    required this.character,
+    required this.message,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final accentColor = Color(character.colorValue);
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      decoration: BoxDecoration(
+        color: AppColors.learningBubbleBg,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: accentColor.withOpacity(0.4),
+          width: 2,
+        ),
+      ),
+      child: Row(
+        children: [
+          // Character avatar
+          CharacterIllustration(character: character, size: 40, isDarkTheme: true),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  character.displayName,
+                  style: GoogleFonts.nunito(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w700,
+                    color: accentColor,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  message,
+                  style: GoogleFonts.nunito(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
+                    height: 1.3,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

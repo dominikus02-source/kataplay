@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../data/models/question_model.dart';
 
 /// Main question renderer that delegates to type-specific sub-renderers
-/// Supports all 10 question types with consistent visual style
+/// Supports all 10 question types with Duolingo dark theme style
 class QuestionRenderer extends StatelessWidget {
   final Question question;
+  final String? selectedAnswerId;
+  final bool isAnswered;
+  final bool? isCorrect;
   final Function(String) onAnswer;
   final Function(String) onTextAnswer;
   final Function(List<int>) onSequenceAnswer;
@@ -13,6 +17,9 @@ class QuestionRenderer extends StatelessWidget {
   const QuestionRenderer({
     super.key,
     required this.question,
+    this.selectedAnswerId,
+    this.isAnswered = false,
+    this.isCorrect,
     required this.onAnswer,
     required this.onTextAnswer,
     required this.onSequenceAnswer,
@@ -25,30 +32,45 @@ class QuestionRenderer extends StatelessWidget {
         case QuestionType.multipleChoice:
           return _MultipleChoiceRenderer(
             question: question,
+            selectedAnswerId: selectedAnswerId,
+            isAnswered: isAnswered,
+            isCorrect: isCorrect,
             onAnswer: onAnswer,
           );
 
         case QuestionType.trueFalse:
           return _TrueFalseRenderer(
             question: question,
+            selectedAnswerId: selectedAnswerId,
+            isAnswered: isAnswered,
+            isCorrect: isCorrect,
             onAnswer: onAnswer,
           );
 
         case QuestionType.matchWordImage:
           return _MatchWordImageRenderer(
             question: question,
+            selectedAnswerId: selectedAnswerId,
+            isAnswered: isAnswered,
+            isCorrect: isCorrect,
             onAnswer: onAnswer,
           );
 
         case QuestionType.listenAndChoose:
           return _ListenAndChooseRenderer(
             question: question,
+            selectedAnswerId: selectedAnswerId,
+            isAnswered: isAnswered,
+            isCorrect: isCorrect,
             onAnswer: onAnswer,
           );
 
         case QuestionType.fillInTheBlank:
           return _FillInTheBlankRenderer(
             question: question,
+            selectedAnswerId: selectedAnswerId,
+            isAnswered: isAnswered,
+            isCorrect: isCorrect,
             onAnswer: onAnswer,
             onTextAnswer: onTextAnswer,
           );
@@ -62,12 +84,18 @@ class QuestionRenderer extends StatelessWidget {
         case QuestionType.pickCorrectImage:
           return _PickCorrectImageRenderer(
             question: question,
+            selectedAnswerId: selectedAnswerId,
+            isAnswered: isAnswered,
+            isCorrect: isCorrect,
             onAnswer: onAnswer,
           );
 
         case QuestionType.dragAndDrop:
           return _DragAndDropRenderer(
             question: question,
+            selectedAnswerId: selectedAnswerId,
+            isAnswered: isAnswered,
+            isCorrect: isCorrect,
             onAnswer: onAnswer,
           );
 
@@ -80,6 +108,9 @@ class QuestionRenderer extends StatelessWidget {
         case QuestionType.pickInitialLetter:
           return _PickInitialLetterRenderer(
             question: question,
+            selectedAnswerId: selectedAnswerId,
+            isAnswered: isAnswered,
+            isCorrect: isCorrect,
             onAnswer: onAnswer,
           );
       }
@@ -88,13 +119,13 @@ class QuestionRenderer extends StatelessWidget {
       return Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: AppColors.warning.withOpacity(0.1),
+          color: AppColors.learningWrong.withOpacity(0.15),
           borderRadius: BorderRadius.circular(16),
         ),
-        child: const Text(
+        child: Text(
           'Soal ini belum tersedia. Lewati ke soal berikutnya.',
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 14),
+          style: GoogleFonts.nunito(fontSize: 14, color: Colors.white54),
         ),
       );
     }
@@ -102,32 +133,73 @@ class QuestionRenderer extends StatelessWidget {
 }
 
 // ============================================================
-// SHARED: Answer Option Button
+// SHARED: Dark Answer Option Tile (Duolingo-style)
 // ============================================================
 
-class _AnswerOptionButton extends StatefulWidget {
+class _DarkAnswerTile extends StatefulWidget {
   final AnswerOption option;
   final bool isSelected;
+  final bool isAnswered;
+  final bool? isCorrect;
   final VoidCallback onTap;
-  final bool isLarge; // For true/false and letter options
+  final bool isLarge;
 
-  const _AnswerOptionButton({
+  const _DarkAnswerTile({
     required this.option,
     this.isSelected = false,
+    this.isAnswered = false,
+    this.isCorrect,
     required this.onTap,
     this.isLarge = false,
   });
 
   @override
-  State<_AnswerOptionButton> createState() => _AnswerOptionButtonState();
+  State<_DarkAnswerTile> createState() => _DarkAnswerTileState();
 }
 
-class _AnswerOptionButtonState extends State<_AnswerOptionButton> {
+class _DarkAnswerTileState extends State<_DarkAnswerTile> {
   double _scale = 1.0;
 
-  void _onTapDown(_) => setState(() => _scale = 0.95);
+  void _onTapDown(_) => setState(() => _scale = 0.97);
   void _onTapUp(_) => setState(() => _scale = 1.0);
   void _onTapCancel() => setState(() => _scale = 1.0);
+
+  /// Get the border color based on state
+  Color get _borderColor {
+    if (widget.isAnswered) {
+      if (widget.option.isCorrect) return AppColors.learningCorrect;
+      if (widget.isSelected && !widget.option.isCorrect) return AppColors.learningWrong;
+      return AppColors.learningBorder;
+    }
+    if (widget.isSelected) return AppColors.learningTileSelected;
+    return AppColors.learningBorder;
+  }
+
+  double get _borderWidth {
+    if (widget.isAnswered && (widget.option.isCorrect || widget.isSelected)) return 2.5;
+    if (widget.isSelected) return 2.5;
+    return 1.5;
+  }
+
+  Color get _bgColor {
+    if (widget.isAnswered) {
+      if (widget.option.isCorrect) return AppColors.learningCorrect.withOpacity(0.15);
+      if (widget.isSelected) return AppColors.learningWrong.withOpacity(0.15);
+      return AppColors.learningTileBg;
+    }
+    if (widget.isSelected) return AppColors.learningTileSelected.withOpacity(0.1);
+    return AppColors.learningTileBg;
+  }
+
+  Color get _textColor {
+    if (widget.isAnswered) {
+      if (widget.option.isCorrect) return AppColors.learningCorrect;
+      if (widget.isSelected) return AppColors.learningWrong;
+      return AppColors.learningTextSecondary;
+    }
+    if (widget.isSelected) return AppColors.learningTileSelected;
+    return Colors.white;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -137,7 +209,7 @@ class _AnswerOptionButtonState extends State<_AnswerOptionButton> {
       onTapDown: _onTapDown,
       onTapUp: _onTapUp,
       onTapCancel: _onTapCancel,
-      onTap: widget.onTap,
+      onTap: widget.isAnswered ? null : widget.onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         curve: Curves.easeInOut,
@@ -147,15 +219,11 @@ class _AnswerOptionButtonState extends State<_AnswerOptionButton> {
           vertical: widget.isLarge ? 18 : 14,
         ),
         decoration: BoxDecoration(
-          color: widget.isSelected
-              ? AppColors.primary.withOpacity(0.1)
-              : AppColors.surfaceVariant.withOpacity(0.5),
-          borderRadius: BorderRadius.circular(widget.isLarge ? 20 : 16),
+          color: _bgColor,
+          borderRadius: BorderRadius.circular(widget.isLarge ? 16 : 12),
           border: Border.all(
-            color: widget.isSelected
-                ? AppColors.primary
-                : AppColors.surfaceVariant,
-            width: widget.isSelected ? 2.5 : 1.5,
+            color: _borderColor,
+            width: _borderWidth,
           ),
         ),
         child: Row(
@@ -170,16 +238,27 @@ class _AnswerOptionButtonState extends State<_AnswerOptionButton> {
             Expanded(
               child: Text(
                 option.text,
-                style: TextStyle(
+                style: GoogleFonts.nunito(
                   fontSize: widget.isLarge ? 20 : 16,
                   fontWeight: FontWeight.w700,
-                  color: widget.isSelected
-                      ? AppColors.primary
-                      : AppColors.textPrimary,
+                  color: _textColor,
                 ),
                 textAlign: option.emoji != null ? TextAlign.start : TextAlign.center,
               ),
             ),
+            // Show check/x icon after answer
+            if (widget.isAnswered) ...[
+              const SizedBox(width: 8),
+              Icon(
+                widget.option.isCorrect
+                    ? Icons.check_circle_rounded
+                    : (widget.isSelected ? Icons.cancel_rounded : null),
+                color: widget.option.isCorrect
+                    ? AppColors.learningCorrect
+                    : AppColors.learningWrong,
+                size: 22,
+              ),
+            ],
           ],
         ),
       ),
@@ -191,40 +270,35 @@ class _AnswerOptionButtonState extends State<_AnswerOptionButton> {
 // 1. MULTIPLE CHOICE
 // ============================================================
 
-class _MultipleChoiceRenderer extends StatefulWidget {
+class _MultipleChoiceRenderer extends StatelessWidget {
   final Question question;
+  final String? selectedAnswerId;
+  final bool isAnswered;
+  final bool? isCorrect;
   final Function(String) onAnswer;
 
   const _MultipleChoiceRenderer({
     required this.question,
+    this.selectedAnswerId,
+    this.isAnswered = false,
+    this.isCorrect,
     required this.onAnswer,
   });
 
   @override
-  State<_MultipleChoiceRenderer> createState() => _MultipleChoiceRendererState();
-}
-
-class _MultipleChoiceRendererState extends State<_MultipleChoiceRenderer> {
-  String? _selectedId;
-
-  @override
   Widget build(BuildContext context) {
-    final options = widget.question.options;
+    final options = question.options;
 
     return Column(
       children: [
         ...options.map((option) => Padding(
           padding: const EdgeInsets.only(bottom: 10),
-          child: _AnswerOptionButton(
+          child: _DarkAnswerTile(
             option: option,
-            isSelected: _selectedId == option.id,
-            onTap: () {
-              setState(() => _selectedId = option.id);
-              // Small delay for visual feedback before submitting
-              Future.delayed(const Duration(milliseconds: 300), () {
-                widget.onAnswer(option.id);
-              });
-            },
+            isSelected: selectedAnswerId == option.id,
+            isAnswered: isAnswered,
+            isCorrect: isCorrect,
+            onTap: () => onAnswer(option.id),
           ),
         )),
       ],
@@ -236,53 +310,71 @@ class _MultipleChoiceRendererState extends State<_MultipleChoiceRenderer> {
 // 2. TRUE / FALSE
 // ============================================================
 
-class _TrueFalseRenderer extends StatefulWidget {
+class _TrueFalseRenderer extends StatelessWidget {
   final Question question;
+  final String? selectedAnswerId;
+  final bool isAnswered;
+  final bool? isCorrect;
   final Function(String) onAnswer;
 
   const _TrueFalseRenderer({
     required this.question,
+    this.selectedAnswerId,
+    this.isAnswered = false,
+    this.isCorrect,
     required this.onAnswer,
   });
 
   @override
-  State<_TrueFalseRenderer> createState() => _TrueFalseRendererState();
-}
-
-class _TrueFalseRendererState extends State<_TrueFalseRenderer> {
-  String? _selectedId;
-
-  @override
   Widget build(BuildContext context) {
-    final options = widget.question.options;
+    final options = question.options;
 
     return Row(
       children: options.map((option) {
         final isBenar = option.text.toLowerCase().contains('benar');
+        final isSelected = selectedAnswerId == option.id;
+
+        Color borderColor;
+        double borderWidth;
+        Color bgColor;
+        Color textColor;
+
+        if (isAnswered) {
+          if (option.isCorrect) {
+            borderColor = AppColors.learningCorrect;
+            bgColor = AppColors.learningCorrect.withOpacity(0.15);
+            textColor = AppColors.learningCorrect;
+            borderWidth = 2.5;
+          } else if (isSelected) {
+            borderColor = AppColors.learningWrong;
+            bgColor = AppColors.learningWrong.withOpacity(0.15);
+            textColor = AppColors.learningWrong;
+            borderWidth = 2.5;
+          } else {
+            borderColor = AppColors.learningBorder;
+            bgColor = AppColors.learningTileBg;
+            textColor = AppColors.learningTextSecondary;
+            borderWidth = 1.5;
+          }
+        } else {
+          borderColor = isSelected ? AppColors.learningTileSelected : AppColors.learningBorder;
+          bgColor = isSelected ? AppColors.learningTileSelected.withOpacity(0.1) : AppColors.learningTileBg;
+          textColor = isSelected ? AppColors.learningTileSelected : Colors.white;
+          borderWidth = isSelected ? 2.5 : 1.5;
+        }
+
         return Expanded(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 6),
             child: GestureDetector(
-              onTap: () {
-                setState(() => _selectedId = option.id);
-                Future.delayed(const Duration(milliseconds: 300), () {
-                  widget.onAnswer(option.id);
-                });
-              },
+              onTap: isAnswered ? null : () => onAnswer(option.id),
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 200),
                 padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
                 decoration: BoxDecoration(
-                  color: _selectedId == option.id
-                      ? (isBenar ? AppColors.success : AppColors.error).withOpacity(0.1)
-                      : AppColors.surfaceVariant.withOpacity(0.5),
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(
-                    color: _selectedId == option.id
-                        ? (isBenar ? AppColors.success : AppColors.error)
-                        : AppColors.surfaceVariant,
-                    width: _selectedId == option.id ? 2.5 : 1.5,
-                  ),
+                  color: bgColor,
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(color: borderColor, width: borderWidth),
                 ),
                 child: Column(
                   children: [
@@ -293,12 +385,10 @@ class _TrueFalseRendererState extends State<_TrueFalseRenderer> {
                     const SizedBox(height: 8),
                     Text(
                       option.text,
-                      style: TextStyle(
+                      style: GoogleFonts.nunito(
                         fontSize: 20,
                         fontWeight: FontWeight.w800,
-                        color: _selectedId == option.id
-                            ? (isBenar ? AppColors.success : AppColors.error)
-                            : AppColors.textPrimary,
+                        color: textColor,
                       ),
                     ),
                   ],
@@ -313,79 +403,84 @@ class _TrueFalseRendererState extends State<_TrueFalseRenderer> {
 }
 
 // ============================================================
-// 3. MATCH WORD & IMAGE
+// 3. MATCH WORD & IMAGE — Dark grid style
 // ============================================================
 
-class _MatchWordImageRenderer extends StatefulWidget {
+class _MatchWordImageRenderer extends StatelessWidget {
   final Question question;
+  final String? selectedAnswerId;
+  final bool isAnswered;
+  final bool? isCorrect;
   final Function(String) onAnswer;
 
   const _MatchWordImageRenderer({
     required this.question,
+    this.selectedAnswerId,
+    this.isAnswered = false,
+    this.isCorrect,
     required this.onAnswer,
   });
 
   @override
-  State<_MatchWordImageRenderer> createState() => _MatchWordImageRendererState();
-}
-
-class _MatchWordImageRendererState extends State<_MatchWordImageRenderer> {
-  String? _selectedId;
-
-  @override
   Widget build(BuildContext context) {
-    final options = widget.question.options;
+    final options = question.options;
 
     return Wrap(
       spacing: 10,
       runSpacing: 10,
       alignment: WrapAlignment.center,
       children: options.map((option) {
-        final isSelected = _selectedId == option.id;
+        final isSelected = selectedAnswerId == option.id;
+
+        Color borderColor;
+        Color bgColor;
+        Color textColor;
+
+        if (isAnswered) {
+          if (option.isCorrect) {
+            borderColor = AppColors.learningCorrect;
+            bgColor = AppColors.learningCorrect.withOpacity(0.15);
+            textColor = AppColors.learningCorrect;
+          } else if (isSelected) {
+            borderColor = AppColors.learningWrong;
+            bgColor = AppColors.learningWrong.withOpacity(0.15);
+            textColor = AppColors.learningWrong;
+          } else {
+            borderColor = AppColors.learningBorder;
+            bgColor = AppColors.learningTileBg;
+            textColor = AppColors.learningTextSecondary;
+          }
+        } else {
+          borderColor = isSelected ? AppColors.learningTileSelected : AppColors.learningBorder;
+          bgColor = isSelected ? AppColors.learningTileSelected.withOpacity(0.1) : AppColors.learningTileBg;
+          textColor = isSelected ? AppColors.learningTileSelected : Colors.white;
+        }
+
         return GestureDetector(
-          onTap: () {
-            setState(() => _selectedId = option.id);
-            Future.delayed(const Duration(milliseconds: 300), () {
-              widget.onAnswer(option.id);
-            });
-          },
+          onTap: isAnswered ? null : () => onAnswer(option.id),
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 200),
             width: (MediaQuery.of(context).size.width - 72) / 2,
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: isSelected
-                  ? AppColors.primary.withOpacity(0.1)
-                  : Colors.white,
-              borderRadius: BorderRadius.circular(20),
+              color: bgColor,
+              borderRadius: BorderRadius.circular(16),
               border: Border.all(
-                color: isSelected ? AppColors.primary : AppColors.surfaceVariant,
-                width: isSelected ? 2.5 : 1.5,
+                color: borderColor,
+                width: isSelected || (isAnswered && option.isCorrect) ? 2.5 : 1.5,
               ),
-              boxShadow: isSelected
-                  ? []
-                  : [
-                      BoxShadow(
-                        color: AppColors.shadowLight,
-                        blurRadius: 4,
-                        offset: const Offset(0, 2),
-                      ),
-                    ],
             ),
             child: Column(
               children: [
                 if (option.emoji != null)
-                  Text(
-                    option.emoji!,
-                    style: const TextStyle(fontSize: 40),
-                  ),
+                  Text(option.emoji!, style: const TextStyle(fontSize: 40)),
                 const SizedBox(height: 8),
                 Text(
                   option.text,
-                  style: TextStyle(
+                  style: GoogleFonts.nunito(
                     fontSize: 14,
                     fontWeight: FontWeight.w700,
-                    color: isSelected ? AppColors.primary : AppColors.textPrimary,
+                    color: textColor,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -399,15 +494,21 @@ class _MatchWordImageRendererState extends State<_MatchWordImageRenderer> {
 }
 
 // ============================================================
-// 4. LISTEN AND CHOOSE
+// 4. LISTEN AND CHOOSE — Dark theme audio buttons
 // ============================================================
 
 class _ListenAndChooseRenderer extends StatefulWidget {
   final Question question;
+  final String? selectedAnswerId;
+  final bool isAnswered;
+  final bool? isCorrect;
   final Function(String) onAnswer;
 
   const _ListenAndChooseRenderer({
     required this.question,
+    this.selectedAnswerId,
+    this.isAnswered = false,
+    this.isCorrect,
     required this.onAnswer,
   });
 
@@ -416,7 +517,6 @@ class _ListenAndChooseRenderer extends StatefulWidget {
 }
 
 class _ListenAndChooseRendererState extends State<_ListenAndChooseRenderer> {
-  String? _selectedId;
   bool _isPlaying = false;
 
   void _playAudio() {
@@ -427,50 +527,91 @@ class _ListenAndChooseRendererState extends State<_ListenAndChooseRenderer> {
     });
   }
 
+  void _playSlowAudio() {
+    // Placeholder for slow audio playback
+    setState(() => _isPlaying = true);
+    Future.delayed(const Duration(seconds: 3), () {
+      if (mounted) setState(() => _isPlaying = false);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final options = widget.question.options;
 
     return Column(
       children: [
-        // Play audio button
-        GestureDetector(
-          onTap: _playAudio,
-          child: Container(
-            width: 72,
-            height: 72,
-            decoration: BoxDecoration(
-              color: AppColors.secondary.withOpacity(0.15),
-              shape: BoxShape.circle,
-            ),
-            child: _isPlaying
-                ? const Center(
-                    child: SizedBox(
-                      width: 28,
-                      height: 28,
-                      child: CircularProgressIndicator(
-                        color: AppColors.secondary,
-                        strokeWidth: 3,
+        // Audio playback buttons — Duolingo style (two buttons side by side)
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Normal speed
+            GestureDetector(
+              onTap: _isPlaying ? null : _playAudio,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                decoration: BoxDecoration(
+                  color: AppColors.learningSurface,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: AppColors.learningBorder, width: 1.5),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    _isPlaying
+                        ? const SizedBox(
+                            width: 20,
+                            height: 20,
+                            child: CircularProgressIndicator(
+                              color: Colors.cyanAccent,
+                              strokeWidth: 2.5,
+                            ),
+                          )
+                        : const Icon(Icons.volume_up_rounded, color: Colors.cyanAccent, size: 24),
+                    const SizedBox(width: 8),
+                    Text(
+                      'Putar',
+                      style: GoogleFonts.nunito(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white,
                       ),
                     ),
-                  )
-                : const Icon(
-                    Icons.volume_up_rounded,
-                    color: AppColors.secondary,
-                    size: 36,
-                  ),
-          ),
-        ),
+                  ],
+                ),
+              ),
+            ),
 
-        const SizedBox(height: 8),
+            const SizedBox(width: 12),
 
-        Text(
-          'Tekan untuk mendengarkan',
-          style: TextStyle(
-            fontSize: 12,
-            color: AppColors.textSecondary,
-            fontWeight: FontWeight.w600,
-          ),
+            // Slow speed
+            GestureDetector(
+              onTap: _isPlaying ? null : _playSlowAudio,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                decoration: BoxDecoration(
+                  color: AppColors.learningSurface,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: AppColors.learningBorder, width: 1.5),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(Icons.slow_motion_video_rounded, color: Colors.cyanAccent, size: 22),
+                    const SizedBox(width: 6),
+                    Text(
+                      'Lambat',
+                      style: GoogleFonts.nunito(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.learningTextSecondary,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
 
         const SizedBox(height: 16),
@@ -478,15 +619,12 @@ class _ListenAndChooseRendererState extends State<_ListenAndChooseRenderer> {
         // Options
         ...options.map((option) => Padding(
           padding: const EdgeInsets.only(bottom: 10),
-          child: _AnswerOptionButton(
+          child: _DarkAnswerTile(
             option: option,
-            isSelected: _selectedId == option.id,
-            onTap: () {
-              setState(() => _selectedId = option.id);
-              Future.delayed(const Duration(milliseconds: 300), () {
-                widget.onAnswer(option.id);
-              });
-            },
+            isSelected: widget.selectedAnswerId == option.id,
+            isAnswered: widget.isAnswered,
+            isCorrect: widget.isCorrect,
+            onTap: () => widget.onAnswer(option.id),
           ),
         )),
       ],
@@ -498,69 +636,64 @@ class _ListenAndChooseRendererState extends State<_ListenAndChooseRenderer> {
 // 5. FILL IN THE BLANK
 // ============================================================
 
-class _FillInTheBlankRenderer extends StatefulWidget {
+class _FillInTheBlankRenderer extends StatelessWidget {
   final Question question;
+  final String? selectedAnswerId;
+  final bool isAnswered;
+  final bool? isCorrect;
   final Function(String) onAnswer;
   final Function(String) onTextAnswer;
 
   const _FillInTheBlankRenderer({
     required this.question,
+    this.selectedAnswerId,
+    this.isAnswered = false,
+    this.isCorrect,
     required this.onAnswer,
     required this.onTextAnswer,
   });
 
   @override
-  State<_FillInTheBlankRenderer> createState() => _FillInTheBlankRendererState();
-}
-
-class _FillInTheBlankRendererState extends State<_FillInTheBlankRenderer> {
-  String? _selectedId;
-
-  @override
   Widget build(BuildContext context) {
-    final options = widget.question.options;
+    final options = question.options;
 
     // If options are provided, show them as choice chips
-    // Otherwise show a text field
     if (options.isNotEmpty) {
       return Column(
         children: [
           ...options.map((option) => Padding(
             padding: const EdgeInsets.only(bottom: 10),
-            child: _AnswerOptionButton(
+            child: _DarkAnswerTile(
               option: option,
-              isSelected: _selectedId == option.id,
-              onTap: () {
-                setState(() => _selectedId = option.id);
-                Future.delayed(const Duration(milliseconds: 300), () {
-                  widget.onAnswer(option.id);
-                });
-              },
+              isSelected: selectedAnswerId == option.id,
+              isAnswered: isAnswered,
+              isCorrect: isCorrect,
+              onTap: () => onAnswer(option.id),
             ),
           )),
         ],
       );
     }
 
-    // Text input fallback
-    return _TextInputAnswer(
+    // Text input fallback — dark theme
+    return _DarkTextInputAnswer(
       onSubmit: (answer) {
-        widget.onTextAnswer(answer);
+        onTextAnswer(answer);
       },
     );
   }
 }
 
-class _TextInputAnswer extends StatefulWidget {
+class _DarkTextInputAnswer extends StatefulWidget {
   final Function(String) onSubmit;
 
-  const _TextInputAnswer({required this.onSubmit});
+  const _DarkTextInputAnswer({required this.onSubmit});
 
   @override
-  State<_TextInputAnswer> createState() => _TextInputAnswerState();
+  State<_DarkTextInputAnswer> createState() => _DarkTextInputAnswerState();
 }
 
-class _TextInputAnswerState extends State<_TextInputAnswer> {
+class _DarkTextInputAnswerState extends State<_DarkTextInputAnswer> {
   final _controller = TextEditingController();
 
   @override
@@ -576,32 +709,47 @@ class _TextInputAnswerState extends State<_TextInputAnswer> {
         TextField(
           controller: _controller,
           textAlign: TextAlign.center,
-          style: const TextStyle(
+          style: GoogleFonts.nunito(
             fontSize: 20,
             fontWeight: FontWeight.w700,
+            color: Colors.white,
           ),
           decoration: InputDecoration(
             hintText: 'Ketik jawabanmu di sini...',
+            hintStyle: GoogleFonts.nunito(color: AppColors.learningTextSecondary),
             filled: true,
-            fillColor: AppColors.surfaceVariant.withOpacity(0.5),
+            fillColor: AppColors.learningTileBg,
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16),
+              borderSide: const BorderSide(color: AppColors.learningBorder, width: 1.5),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16),
+              borderSide: const BorderSide(color: AppColors.learningTileSelected, width: 2.5),
+            ),
           ),
           onSubmitted: widget.onSubmit,
         ),
         const SizedBox(height: 16),
         SizedBox(
           width: double.infinity,
+          height: 52,
           child: ElevatedButton(
             onPressed: () => widget.onSubmit(_controller.text),
             style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.primary,
-              padding: const EdgeInsets.symmetric(vertical: 16),
+              backgroundColor: AppColors.learningCheckBtn,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16),
               ),
             ),
-            child: const Text(
-              'Jawab',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+            child: Text(
+              'JAWAB',
+              style: GoogleFonts.nunito(
+                fontSize: 16,
+                fontWeight: FontWeight.w800,
+                color: Colors.white,
+                letterSpacing: 1.0,
+              ),
             ),
           ),
         ),
@@ -611,7 +759,7 @@ class _TextInputAnswerState extends State<_TextInputAnswer> {
 }
 
 // ============================================================
-// 6. ARRANGE WORDS
+// 6. ARRANGE WORDS — Dark word tiles
 // ============================================================
 
 class _ArrangeWordsRenderer extends StatefulWidget {
@@ -635,25 +783,24 @@ class _ArrangeWordsRendererState extends State<_ArrangeWordsRenderer> {
   void initState() {
     super.initState();
     _available = List.from(widget.question.fragments ?? []);
-    _available.shuffle(); // Randomize order
+    _available.shuffle();
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // Selected words area (sentence being built)
+        // Selected words area (sentence being built) — dark theme
         Container(
           minHeight: 56,
           width: double.infinity,
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: AppColors.primary.withOpacity(0.05),
+            color: AppColors.learningTileSelected.withOpacity(0.08),
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
-              color: AppColors.primary.withOpacity(0.2),
+              color: AppColors.learningTileSelected.withOpacity(0.3),
               width: 1.5,
-              style: BorderStyle.solid,
             ),
           ),
           child: Wrap(
@@ -663,14 +810,14 @@ class _ArrangeWordsRendererState extends State<_ArrangeWordsRenderer> {
                 ? [
                     Text(
                       'Sentuh kata di bawah untuk menyusun kalimat',
-                      style: TextStyle(
+                      style: GoogleFonts.nunito(
                         fontSize: 13,
-                        color: AppColors.textSecondary,
+                        color: AppColors.learningTextSecondary,
                         fontStyle: FontStyle.italic,
                       ),
                     ),
                   ]
-                : _selected.map((fragment) => _WordChip(
+                : _selected.map((fragment) => _DarkWordChip(
                       text: fragment.text,
                       isSelected: true,
                       onTap: () {
@@ -685,12 +832,12 @@ class _ArrangeWordsRendererState extends State<_ArrangeWordsRenderer> {
 
         const SizedBox(height: 16),
 
-        // Available words to pick from
+        // Available words to pick from — dark tiles
         Wrap(
           spacing: 8,
           runSpacing: 8,
           alignment: WrapAlignment.center,
-          children: _available.map((fragment) => _WordChip(
+          children: _available.map((fragment) => _DarkWordChip(
                 text: fragment.text,
                 isSelected: false,
                 onTap: () {
@@ -704,10 +851,11 @@ class _ArrangeWordsRendererState extends State<_ArrangeWordsRenderer> {
 
         const SizedBox(height: 16),
 
-        // Submit button (only when all words are selected)
+        // Submit button
         if (_available.isEmpty && _selected.isNotEmpty)
           SizedBox(
             width: double.infinity,
+            height: 52,
             child: ElevatedButton(
               onPressed: () {
                 widget.onSequenceAnswer(
@@ -715,15 +863,19 @@ class _ArrangeWordsRendererState extends State<_ArrangeWordsRenderer> {
                 );
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.primary,
-                padding: const EdgeInsets.symmetric(vertical: 16),
+                backgroundColor: AppColors.learningCheckBtn,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
                 ),
               ),
-              child: const Text(
-                'Cek Jawaban',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+              child: Text(
+                'CEK JAWABAN',
+                style: GoogleFonts.nunito(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w800,
+                  color: Colors.white,
+                  letterSpacing: 1.0,
+                ),
               ),
             ),
           ),
@@ -732,12 +884,12 @@ class _ArrangeWordsRendererState extends State<_ArrangeWordsRenderer> {
   }
 }
 
-class _WordChip extends StatelessWidget {
+class _DarkWordChip extends StatelessWidget {
   final String text;
   final bool isSelected;
   final VoidCallback onTap;
 
-  const _WordChip({
+  const _DarkWordChip({
     required this.text,
     required this.isSelected,
     required this.onTap,
@@ -752,27 +904,20 @@ class _WordChip extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         decoration: BoxDecoration(
           color: isSelected
-              ? AppColors.primary
-              : Colors.white,
+              ? AppColors.learningTileSelected
+              : AppColors.learningTileBg,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: isSelected ? AppColors.primary : AppColors.surfaceVariant,
+            color: isSelected ? AppColors.learningTileSelected : AppColors.learningBorder,
             width: 1.5,
           ),
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.shadowLight,
-              blurRadius: 4,
-              offset: const Offset(0, 2),
-            ),
-          ],
         ),
         child: Text(
           text,
-          style: TextStyle(
+          style: GoogleFonts.nunito(
             fontSize: 16,
             fontWeight: FontWeight.w700,
-            color: isSelected ? Colors.white : AppColors.textPrimary,
+            color: isSelected ? Colors.white : Colors.white,
           ),
         ),
       ),
@@ -781,28 +926,27 @@ class _WordChip extends StatelessWidget {
 }
 
 // ============================================================
-// 7. PICK CORRECT IMAGE
+// 7. PICK CORRECT IMAGE — Dark grid
 // ============================================================
 
-class _PickCorrectImageRenderer extends StatefulWidget {
+class _PickCorrectImageRenderer extends StatelessWidget {
   final Question question;
+  final String? selectedAnswerId;
+  final bool isAnswered;
+  final bool? isCorrect;
   final Function(String) onAnswer;
 
   const _PickCorrectImageRenderer({
     required this.question,
+    this.selectedAnswerId,
+    this.isAnswered = false,
+    this.isCorrect,
     required this.onAnswer,
   });
 
   @override
-  State<_PickCorrectImageRenderer> createState() => _PickCorrectImageRendererState();
-}
-
-class _PickCorrectImageRendererState extends State<_PickCorrectImageRenderer> {
-  String? _selectedId;
-
-  @override
   Widget build(BuildContext context) {
-    final options = widget.question.options;
+    final options = question.options;
 
     return GridView.count(
       shrinkWrap: true,
@@ -812,41 +956,56 @@ class _PickCorrectImageRendererState extends State<_PickCorrectImageRenderer> {
       mainAxisSpacing: 10,
       childAspectRatio: 1.1,
       children: options.map((option) {
-        final isSelected = _selectedId == option.id;
+        final isSelected = selectedAnswerId == option.id;
+
+        Color borderColor;
+        Color bgColor;
+        Color textColor;
+
+        if (isAnswered) {
+          if (option.isCorrect) {
+            borderColor = AppColors.learningCorrect;
+            bgColor = AppColors.learningCorrect.withOpacity(0.15);
+            textColor = AppColors.learningCorrect;
+          } else if (isSelected) {
+            borderColor = AppColors.learningWrong;
+            bgColor = AppColors.learningWrong.withOpacity(0.15);
+            textColor = AppColors.learningWrong;
+          } else {
+            borderColor = AppColors.learningBorder;
+            bgColor = AppColors.learningTileBg;
+            textColor = AppColors.learningTextSecondary;
+          }
+        } else {
+          borderColor = isSelected ? AppColors.learningTileSelected : AppColors.learningBorder;
+          bgColor = isSelected ? AppColors.learningTileSelected.withOpacity(0.1) : AppColors.learningTileBg;
+          textColor = isSelected ? AppColors.learningTileSelected : Colors.white;
+        }
+
         return GestureDetector(
-          onTap: () {
-            setState(() => _selectedId = option.id);
-            Future.delayed(const Duration(milliseconds: 300), () {
-              widget.onAnswer(option.id);
-            });
-          },
+          onTap: isAnswered ? null : () => onAnswer(option.id),
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 200),
             decoration: BoxDecoration(
-              color: isSelected
-                  ? AppColors.primary.withOpacity(0.1)
-                  : Colors.white,
-              borderRadius: BorderRadius.circular(20),
+              color: bgColor,
+              borderRadius: BorderRadius.circular(16),
               border: Border.all(
-                color: isSelected ? AppColors.primary : AppColors.surfaceVariant,
-                width: isSelected ? 2.5 : 1.5,
+                color: borderColor,
+                width: isSelected || (isAnswered && option.isCorrect) ? 2.5 : 1.5,
               ),
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 if (option.emoji != null)
-                  Text(
-                    option.emoji!,
-                    style: const TextStyle(fontSize: 44),
-                  ),
+                  Text(option.emoji!, style: const TextStyle(fontSize: 44)),
                 const SizedBox(height: 8),
                 Text(
                   option.text,
-                  style: TextStyle(
+                  style: GoogleFonts.nunito(
                     fontSize: 14,
                     fontWeight: FontWeight.w700,
-                    color: isSelected ? AppColors.primary : AppColors.textPrimary,
+                    color: textColor,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -863,39 +1022,35 @@ class _PickCorrectImageRendererState extends State<_PickCorrectImageRenderer> {
 // 8. DRAG & DROP (simplified as tap-to-select matching)
 // ============================================================
 
-class _DragAndDropRenderer extends StatefulWidget {
+class _DragAndDropRenderer extends StatelessWidget {
   final Question question;
+  final String? selectedAnswerId;
+  final bool isAnswered;
+  final bool? isCorrect;
   final Function(String) onAnswer;
 
   const _DragAndDropRenderer({
     required this.question,
+    this.selectedAnswerId,
+    this.isAnswered = false,
+    this.isCorrect,
     required this.onAnswer,
   });
 
   @override
-  State<_DragAndDropRenderer> createState() => _DragAndDropRendererState();
-}
-
-class _DragAndDropRendererState extends State<_DragAndDropRenderer> {
-  String? _selectedId;
-
-  @override
   Widget build(BuildContext context) {
-    final options = widget.question.options;
+    final options = question.options;
 
     return Column(
       children: [
         ...options.map((option) => Padding(
           padding: const EdgeInsets.only(bottom: 10),
-          child: _AnswerOptionButton(
+          child: _DarkAnswerTile(
             option: option,
-            isSelected: _selectedId == option.id,
-            onTap: () {
-              setState(() => _selectedId = option.id);
-              Future.delayed(const Duration(milliseconds: 300), () {
-                widget.onAnswer(option.id);
-              });
-            },
+            isSelected: selectedAnswerId == option.id,
+            isAnswered: isAnswered,
+            isCorrect: isCorrect,
+            onTap: () => onAnswer(option.id),
           ),
         )),
       ],
@@ -904,7 +1059,7 @@ class _DragAndDropRendererState extends State<_DragAndDropRenderer> {
 }
 
 // ============================================================
-// 9. ORDER STORY
+// 9. ORDER STORY — Dark theme
 // ============================================================
 
 class _OrderStoryRenderer extends StatefulWidget {
@@ -941,10 +1096,10 @@ class _OrderStoryRendererState extends State<_OrderStoryRenderer> {
           width: double.infinity,
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: AppColors.secondary.withOpacity(0.05),
+            color: AppColors.learningTileSelected.withOpacity(0.08),
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
-              color: AppColors.secondary.withOpacity(0.2),
+              color: AppColors.learningTileSelected.withOpacity(0.3),
               width: 1.5,
             ),
           ),
@@ -955,9 +1110,9 @@ class _OrderStoryRendererState extends State<_OrderStoryRenderer> {
                 ? [
                     Text(
                       'Sentuh kalimat di bawah untuk mengurutkan cerita',
-                      style: TextStyle(
+                      style: GoogleFonts.nunito(
                         fontSize: 13,
-                        color: AppColors.textSecondary,
+                        color: AppColors.learningTextSecondary,
                         fontStyle: FontStyle.italic,
                       ),
                     ),
@@ -965,7 +1120,7 @@ class _OrderStoryRendererState extends State<_OrderStoryRenderer> {
                 : _selected.asMap().entries.map((entry) {
                     final index = entry.key;
                     final step = entry.value;
-                    return _StoryStepChip(
+                    return _DarkStoryStepChip(
                       number: index + 1,
                       text: step.text,
                       emoji: step.emoji,
@@ -995,9 +1150,9 @@ class _OrderStoryRendererState extends State<_OrderStoryRenderer> {
             child: Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: AppColors.learningTileBg,
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: AppColors.surfaceVariant, width: 1.5),
+                border: Border.all(color: AppColors.learningBorder, width: 1.5),
               ),
               child: Row(
                 children: [
@@ -1008,13 +1163,18 @@ class _OrderStoryRendererState extends State<_OrderStoryRenderer> {
                   Expanded(
                     child: Text(
                       step.text,
-                      style: const TextStyle(
+                      style: GoogleFonts.nunito(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
+                        color: Colors.white,
                       ),
                     ),
                   ),
-                  const Icon(Icons.add_circle_outline_rounded, size: 20),
+                  const Icon(
+                    Icons.add_circle_outline_rounded,
+                    size: 20,
+                    color: AppColors.learningTileSelected,
+                  ),
                 ],
               ),
             ),
@@ -1027,6 +1187,7 @@ class _OrderStoryRendererState extends State<_OrderStoryRenderer> {
         if (_available.isEmpty && _selected.isNotEmpty)
           SizedBox(
             width: double.infinity,
+            height: 52,
             child: ElevatedButton(
               onPressed: () {
                 widget.onSequenceAnswer(
@@ -1034,15 +1195,19 @@ class _OrderStoryRendererState extends State<_OrderStoryRenderer> {
                 );
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.secondary,
-                padding: const EdgeInsets.symmetric(vertical: 16),
+                backgroundColor: AppColors.learningCheckBtn,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
                 ),
               ),
-              child: const Text(
-                'Cek Urutan',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+              child: Text(
+                'CEK URUTAN',
+                style: GoogleFonts.nunito(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w800,
+                  color: Colors.white,
+                  letterSpacing: 1.0,
+                ),
               ),
             ),
           ),
@@ -1051,13 +1216,13 @@ class _OrderStoryRendererState extends State<_OrderStoryRenderer> {
   }
 }
 
-class _StoryStepChip extends StatelessWidget {
+class _DarkStoryStepChip extends StatelessWidget {
   final int number;
   final String text;
   final String? emoji;
   final VoidCallback onTap;
 
-  const _StoryStepChip({
+  const _DarkStoryStepChip({
     required this.number,
     required this.text,
     this.emoji,
@@ -1071,7 +1236,7 @@ class _StoryStepChip extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
-          color: AppColors.secondary,
+          color: AppColors.learningTileSelected,
           borderRadius: BorderRadius.circular(12),
         ),
         child: Row(
@@ -1087,10 +1252,10 @@ class _StoryStepChip extends StatelessWidget {
               child: Center(
                 child: Text(
                   '$number',
-                  style: const TextStyle(
+                  style: GoogleFonts.nunito(
                     fontSize: 12,
                     fontWeight: FontWeight.w800,
-                    color: AppColors.secondary,
+                    color: AppColors.learningTileSelected,
                   ),
                 ),
               ),
@@ -1103,7 +1268,7 @@ class _StoryStepChip extends StatelessWidget {
             Flexible(
               child: Text(
                 text,
-                style: const TextStyle(
+                style: GoogleFonts.nunito(
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
                   color: Colors.white,
@@ -1120,68 +1285,78 @@ class _StoryStepChip extends StatelessWidget {
 }
 
 // ============================================================
-// 10. PICK INITIAL LETTER
+// 10. PICK INITIAL LETTER — Dark circle buttons
 // ============================================================
 
-class _PickInitialLetterRenderer extends StatefulWidget {
+class _PickInitialLetterRenderer extends StatelessWidget {
   final Question question;
+  final String? selectedAnswerId;
+  final bool isAnswered;
+  final bool? isCorrect;
   final Function(String) onAnswer;
 
   const _PickInitialLetterRenderer({
     required this.question,
+    this.selectedAnswerId,
+    this.isAnswered = false,
+    this.isCorrect,
     required this.onAnswer,
   });
 
   @override
-  State<_PickInitialLetterRenderer> createState() => _PickInitialLetterRendererState();
-}
-
-class _PickInitialLetterRendererState extends State<_PickInitialLetterRenderer> {
-  String? _selectedId;
-
-  @override
   Widget build(BuildContext context) {
-    final options = widget.question.options;
+    final options = question.options;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: options.map((option) {
-        final isSelected = _selectedId == option.id;
+        final isSelected = selectedAnswerId == option.id;
+
+        Color borderColor;
+        Color bgColor;
+        Color textColor;
+
+        if (isAnswered) {
+          if (option.isCorrect) {
+            borderColor = AppColors.learningCorrect;
+            bgColor = AppColors.learningCorrect.withOpacity(0.2);
+            textColor = AppColors.learningCorrect;
+          } else if (isSelected) {
+            borderColor = AppColors.learningWrong;
+            bgColor = AppColors.learningWrong.withOpacity(0.2);
+            textColor = AppColors.learningWrong;
+          } else {
+            borderColor = AppColors.learningBorder;
+            bgColor = AppColors.learningTileBg;
+            textColor = AppColors.learningTextSecondary;
+          }
+        } else {
+          borderColor = isSelected ? AppColors.learningTileSelected : AppColors.learningBorder;
+          bgColor = isSelected ? AppColors.learningTileSelected.withOpacity(0.15) : AppColors.learningTileBg;
+          textColor = isSelected ? AppColors.learningTileSelected : Colors.white;
+        }
+
         return GestureDetector(
-          onTap: () {
-            setState(() => _selectedId = option.id);
-            Future.delayed(const Duration(milliseconds: 300), () {
-              widget.onAnswer(option.id);
-            });
-          },
+          onTap: isAnswered ? null : () => onAnswer(option.id),
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 200),
             width: 60,
             height: 60,
             decoration: BoxDecoration(
-              color: isSelected
-                  ? AppColors.primary
-                  : Colors.white,
+              color: bgColor,
               shape: BoxShape.circle,
               border: Border.all(
-                color: isSelected ? AppColors.primary : AppColors.surfaceVariant,
-                width: isSelected ? 2.5 : 1.5,
+                color: borderColor,
+                width: isSelected || (isAnswered && option.isCorrect) ? 2.5 : 1.5,
               ),
-              boxShadow: [
-                BoxShadow(
-                  color: AppColors.shadowLight,
-                  blurRadius: 4,
-                  offset: const Offset(0, 2),
-                ),
-              ],
             ),
             child: Center(
               child: Text(
                 option.text,
-                style: TextStyle(
+                style: GoogleFonts.fredoka(
                   fontSize: 28,
                   fontWeight: FontWeight.w800,
-                  color: isSelected ? Colors.white : AppColors.textPrimary,
+                  color: textColor,
                 ),
               ),
             ),
