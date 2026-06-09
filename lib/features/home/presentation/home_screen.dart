@@ -3,6 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/constants/app_strings.dart';
+import '../../../core/theme/app_colors.dart';
+import '../../../core/providers/app_providers.dart';
+import '../data/models/user_progress_model.dart';
 import '../../../shared/widgets/zelby_avatar.dart';
 import '../../../shared/widgets/coin_display.dart';
 import '../../../shared/widgets/streak_display.dart';
@@ -15,6 +18,7 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final userProgress = ref.watch(userProgressProvider);
     final greeting = _getGreeting();
 
     return SafeArea(
@@ -39,7 +43,7 @@ class HomeScreen extends ConsumerWidget {
                             ),
                       ),
                       Text(
-                        'Zelby menantimu!',
+                        '${userProgress.playerName} menantimu!',
                         style: Theme.of(context).textTheme.headlineMedium,
                       ),
                     ],
@@ -54,11 +58,11 @@ class HomeScreen extends ConsumerWidget {
             Row(
               children: [
                 Expanded(
-                  child: StreakDisplay(days: 5), // TODO: from Riverpod state
+                  child: StreakDisplay(days: userProgress.streakDays),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
-                  child: CoinDisplay(amount: 245), // TODO: from Riverpod state
+                  child: CoinDisplay(amount: userProgress.coins),
                 ),
               ],
             ),
@@ -66,7 +70,7 @@ class HomeScreen extends ConsumerWidget {
             const SizedBox(height: 32),
 
             // Daily Quest Card
-            _DailyQuestCard(),
+            const _DailyQuestCard(),
 
             const SizedBox(height: 32),
 
@@ -95,12 +99,12 @@ class HomeScreen extends ConsumerWidget {
             const SizedBox(height: 40),
 
             // Zelby encouragement
-            const Center(
+            Center(
               child: ZelbyAvatar(
                 size: 56,
-                mood: 'curious',
+                mood: userProgress.streakDays >= 3 ? 'excited' : 'curious',
                 showSpeechBubble: true,
-                speechText: 'Hari ini kita akan belajar 5 kata baru, yuk!',
+                speechText: _getEncouragement(userProgress),
               ),
             ),
           ],
@@ -115,11 +119,31 @@ class HomeScreen extends ConsumerWidget {
     if (hour < 15) return AppStrings.goodAfternoon;
     return AppStrings.goodEvening;
   }
+
+  String _getEncouragement(UserProgress userProgress) {
+    if (!userProgress.hasPlayedToday) {
+      return 'Hari ini kita akan belajar 5 kata baru, yuk!';
+    }
+    if (userProgress.streakDays >= 7) {
+      return 'Streak ${userProgress.streakDays} hari! Kamu luar biasa!';
+    }
+    if (userProgress.streakDays >= 3) {
+      return 'Streak ${userProgress.streakDays} hari! Terus semangat ya!';
+    }
+    return 'Ayo main game untuk tambah streak-mu!';
+  }
 }
 
-class _DailyQuestCard extends StatelessWidget {
+class _DailyQuestCard extends ConsumerWidget {
+  const _DailyQuestCard();
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final quests = ref.watch(dailyQuestProvider);
+    final questNotifier = ref.read(dailyQuestProvider.notifier);
+    final progress = questNotifier.overallProgress;
+    final completedCount = questNotifier.completedCount;
+
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -144,28 +168,60 @@ class _DailyQuestCard extends StatelessWidget {
                 AppStrings.dailyQuest,
                 style: Theme.of(context).textTheme.titleMedium,
               ),
+              const Spacer(),
+              Text(
+                '$completedCount/${quests.length} selesai',
+                style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                      color: completedCount == quests.length
+                          ? Colors.green
+                          : Colors.grey[600],
+                    ),
+              ),
             ],
           ),
           const SizedBox(height: 14),
-          const LinearProgressIndicator(
-            value: 0.6,
+          LinearProgressIndicator(
+            value: progress,
             minHeight: 10,
-            backgroundColor: Color(0xFFF5EDE3),
-            color: Color(0xFF0B7A5C),
-            borderRadius: BorderRadius.all(Radius.circular(10)),
+            backgroundColor: const Color(0xFFF5EDE3),
+            color: completedCount == quests.length
+                ? Colors.green
+                : const Color(0xFF0B7A5C),
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
           ),
-          const SizedBox(height: 10),
-          Text(
-            'Selesaikan 2 mini game hari ini',
-            style: Theme.of(context).textTheme.bodyMedium,
-          ),
-          const SizedBox(height: 4),
-          Text(
-            '2/3 selesai',
-            style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                  color: Colors.grey[600],
-                ),
-          ),
+          const SizedBox(height: 14),
+          // Show first 2 quests
+          if (quests.isNotEmpty)
+            ...quests.take(2).map((quest) => Padding(
+                  padding: const EdgeInsets.only(bottom: 6),
+                  child: Row(
+                    children: [
+                      Icon(
+                        quest.isCompleted
+                            ? Icons.check_circle_rounded
+                            : Icons.radio_button_unchecked_rounded,
+                        size: 18,
+                        color: quest.isCompleted
+                            ? Colors.green
+                            : Colors.grey[400],
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          quest.description,
+                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                decoration: quest.isCompleted
+                                    ? TextDecoration.lineThrough
+                                    : null,
+                                color: quest.isCompleted
+                                    ? Colors.grey
+                                    : AppColors.textPrimary,
+                              ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )),
         ],
       ),
     );

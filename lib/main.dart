@@ -4,15 +4,23 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 import 'core/router/app_router.dart';
 import 'core/theme/app_theme.dart';
+import 'core/data/hive_boxes.dart';
+import 'core/error/error_handler.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  // Initialize global error handler
+  KataPlayErrorHandler.init();
+
   // Initialize Hive for offline storage
   await Hive.initFlutter();
-  // Open boxes for user progress, rewards, etc. (will be registered in later phases)
-  await Hive.openBox('user_progress');
-  await Hive.openBox('game_progress');
+
+  // Open all required boxes
+  await Hive.openBox(HiveBoxes.userProgress);
+  await Hive.openBox(HiveBoxes.gameProgress);
+  await Hive.openBox(HiveBoxes.onboarding);
+  await Hive.openBox(HiveBoxes.settings);
 
   runApp(
     const ProviderScope(

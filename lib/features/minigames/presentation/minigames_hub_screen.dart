@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+
 import '../../../core/constants/app_strings.dart';
+import '../../../core/providers/app_providers.dart';
 import '../../../shared/widgets/primary_button.dart';
 import '../../../shared/widgets/zelby_avatar.dart';
 
 /// Hub for all Mini Games
-/// Currently shows 3 planned games (MVP implements "Cocokkan Kata" first)
-class MinigamesHubScreen extends StatelessWidget {
+/// Currently shows 3 planned games with "Cocokkan Kata" active
+class MinigamesHubScreen extends ConsumerWidget {
   const MinigamesHubScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(AppStrings.playMiniGames),
@@ -51,12 +54,19 @@ class MinigamesHubScreen extends StatelessWidget {
 
               const Spacer(),
 
-              const Center(
-                child: ZelbyAvatar(
-                  size: 64,
-                  mood: 'excited',
-                  showSpeechBubble: true,
-                  speechText: 'Cocokkan Kata paling seru loh!',
+              Center(
+                child: Consumer(
+                  builder: (context, ref, _) {
+                    final progress = ref.watch(userProgressProvider);
+                    return ZelbyAvatar(
+                      size: 64,
+                      mood: 'excited',
+                      showSpeechBubble: true,
+                      speechText: progress.totalGamesPlayed > 0
+                          ? 'Sudah ${progress.totalGamesPlayed} game dimainkan!'
+                          : 'Cocokkan Kata paling seru loh!',
+                    );
+                  },
                 ),
               ),
             ],
@@ -117,7 +127,8 @@ class _GameCard extends StatelessWidget {
                 const Icon(Icons.arrow_forward_rounded, color: Color(0xFF0B7A5C))
               else
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                   decoration: BoxDecoration(
                     color: Colors.amber.shade100,
                     borderRadius: BorderRadius.circular(12),

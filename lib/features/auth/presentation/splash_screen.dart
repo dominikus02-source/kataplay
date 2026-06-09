@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 import '../../../core/constants/app_strings.dart';
+import '../../../core/providers/app_providers.dart';
 import '../../../shared/widgets/zelby_avatar.dart';
 
-/// Splash Screen with simple Zelby animation
-class SplashScreen extends StatefulWidget {
+/// Splash Screen with Zelby animation
+/// Now checks onboarding state to navigate correctly
+class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
 
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
+  ConsumerState<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends ConsumerState<SplashScreen> {
   @override
   void initState() {
     super.initState();
@@ -21,11 +24,20 @@ class _SplashScreenState extends State<SplashScreen> {
     // Auto navigate after 2.2 seconds
     Future.delayed(const Duration(milliseconds: 2200), () {
       if (mounted) {
-        // For MVP: always go to onboarding first time
-        // Later: check Hive if user has completed onboarding
-        context.goNamed('onboarding');
+        _navigate();
       }
     });
+  }
+
+  void _navigate() {
+    final isOnboardingComplete = ref.read(onboardingCompleteProvider);
+    if (isOnboardingComplete) {
+      // Record daily play when app opens
+      ref.read(userProgressProvider.notifier).recordDailyPlay();
+      context.goNamed('home');
+    } else {
+      context.goNamed('onboarding');
+    }
   }
 
   @override

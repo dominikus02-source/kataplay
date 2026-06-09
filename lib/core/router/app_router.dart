@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../features/home/presentation/home_screen.dart';
 import '../../features/adventure/presentation/pulau_kata_screen.dart';
 import '../../features/minigames/presentation/minigames_hub_screen.dart';
+import '../../features/minigames/presentation/cocokkan_kata_screen.dart';
 import '../../features/rewards/presentation/collection_screen.dart';
 import '../../features/profile/presentation/profile_screen.dart';
 import '../../features/auth/presentation/splash_screen.dart';
@@ -66,7 +67,12 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/game/matching',
         name: 'game-matching',
-        builder: (context, state) => const PlaceholderGameScreen(title: 'Cocokkan Kata'),
+        builder: (context, state) {
+          final level = state.uri.queryParameters['level'];
+          return CocokkanKataScreen(
+            level: level != null ? int.tryParse(level) ?? 1 : 1,
+          );
+        },
       ),
       GoRoute(
         path: '/reward',
@@ -78,46 +84,62 @@ final appRouterProvider = Provider<GoRouter>((ref) {
     // Error handling
     errorBuilder: (context, state) => Scaffold(
       body: Center(
-        child: Text(
-          'Halaman tidak ditemukan\n${state.error}',
-          textAlign: TextAlign.center,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text(
+              '🤔',
+              style: TextStyle(fontSize: 64),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'Halaman tidak ditemukan',
+              style: Theme.of(context).textTheme.headlineSmall,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Coba kembali ke beranda ya!',
+              style: Theme.of(context).textTheme.bodyMedium,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 24),
+            ElevatedButton(
+              onPressed: () => context.goNamed('home'),
+              child: const Text('Kembali ke Beranda'),
+            ),
+          ],
         ),
       ),
     ),
   );
 });
 
-// Temporary placeholder screens until we build the real ones
-class PlaceholderGameScreen extends StatelessWidget {
-  final String title;
-  const PlaceholderGameScreen({super.key, required this.title});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: Center(
-        child: Text(
-          '$title\n\n(Mini game akan dibangun di Phase 4)',
-          textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.headlineMedium,
-        ),
-      ),
-    );
-  }
-}
-
+/// Placeholder reward screen (will be built in Phase 2)
 class PlaceholderRewardScreen extends StatelessWidget {
   const PlaceholderRewardScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: const Text('Hadiah')),
       body: Center(
-        child: Text(
-          '🎉 Layar Reward & Celebration\n\n(Phase 5)',
-          textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.headlineMedium,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text('🎉', style: TextStyle(fontSize: 64)),
+            const SizedBox(height: 16),
+            Text(
+              'Layar Reward & Celebration',
+              style: Theme.of(context).textTheme.headlineSmall,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Hadir di update berikutnya!',
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+          ],
         ),
       ),
     );

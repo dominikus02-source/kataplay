@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../core/constants/app_strings.dart';
+import '../../../core/providers/app_providers.dart';
 import '../../../shared/widgets/primary_button.dart';
 import '../../../shared/widgets/zelby_avatar.dart';
 
 /// Beautiful 4-slide onboarding with Zelby
-class OnboardingScreen extends StatefulWidget {
+/// Now saves onboarding completion to Hive
+class OnboardingScreen extends ConsumerStatefulWidget {
   const OnboardingScreen({super.key});
 
   @override
-  State<OnboardingScreen> createState() => _OnboardingScreenState();
+  ConsumerState<OnboardingScreen> createState() => _OnboardingScreenState();
 }
 
-class _OnboardingScreenState extends State<OnboardingScreen> {
+class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
 
@@ -56,9 +59,20 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     }
   }
 
-  void _finishOnboarding() {
-    // TODO: Save to Hive that onboarding is done
-    context.goNamed('home');
+  void _finishOnboarding() async {
+    // Save onboarding completion to Hive
+    final repository = ref.read(onboardingRepositoryProvider);
+    await repository.completeOnboarding(
+      playerName: 'Petualang',
+      playerAge: 6,
+    );
+
+    // Update the onboarding state provider
+    ref.read(onboardingCompleteProvider.notifier).state = true;
+
+    if (mounted) {
+      context.goNamed('home');
+    }
   }
 
   @override
