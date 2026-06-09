@@ -6,6 +6,7 @@ import '../../features/home/presentation/home_screen.dart';
 import '../../features/adventure/presentation/pulau_kata_screen.dart';
 import '../../features/minigames/presentation/minigames_hub_screen.dart';
 import '../../features/minigames/presentation/cocokkan_kata_screen.dart';
+import '../../features/learning/presentation/learning_screen.dart';
 import '../../features/rewards/presentation/collection_screen.dart';
 import '../../features/profile/presentation/profile_screen.dart';
 import '../../features/auth/presentation/splash_screen.dart';
@@ -71,6 +72,22 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           final level = state.uri.queryParameters['level'];
           return CocokkanKataScreen(
             level: level != null ? int.tryParse(level) ?? 1 : 1,
+          );
+        },
+      ),
+      GoRoute(
+        path: '/learning',
+        name: 'learning',
+        builder: (context, state) {
+          final islandId = state.uri.queryParameters['island'] ?? 'awal';
+          final level = state.uri.queryParameters['level'] ?? '1';
+          final difficulty = state.uri.queryParameters['difficulty'] ?? '1';
+          final title = state.uri.queryParameters['title'];
+          return LearningScreen(
+            islandId: islandId,
+            levelNumber: int.tryParse(level) ?? 1,
+            difficulty: int.tryParse(difficulty) ?? 1,
+            sessionTitle: title,
           );
         },
       ),

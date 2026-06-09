@@ -47,6 +47,7 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/images/characters/
     - assets/animations/
 
   # Note: For production, download Fredoka & Nunito fonts and add to assets/fonts

@@ -55,15 +55,13 @@ class PulauKataScreen extends ConsumerWidget {
                       totalLevels: island.totalLevels,
                       onTap: island.isUnlocked
                           ? () {
-                              // Navigate to island content
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                    'Pulau ${island.name} - ${island.levelsCompleted}/${island.totalLevels} level selesai',
-                                  ),
-                                  backgroundColor: AppColors.primary,
-                                ),
-                              );
+                              // Navigate to learning screen for this island
+                              context.goNamed('learning', queryParameters: {
+                                'island': '${island.id}',
+                                'level': '${island.levelsCompleted + 1}',
+                                'difficulty': '${(island.levelsCompleted ~/ 2) + 1}',
+                                'title': 'Pulau ${island.name}',
+                              });
                             }
                           : null,
                     );

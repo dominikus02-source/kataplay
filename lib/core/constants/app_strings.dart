@@ -83,6 +83,28 @@ class AppStrings {
   static const String backToHome = 'Kembali ke Beranda';
   static const String playAgain = 'Main Lagi';
 
+  // === LEARNING ===
+  static const String learningTitle = 'Petualangan Kata';
+  static const String learningStart = 'Ayo Mulai!';
+  static const String learningContinue = 'Lanjut';
+  static const String learningHint = 'Butuh petunjuk?';
+  static const String learningCheck = 'Cek Jawaban';
+  static const String learningCheckOrder = 'Cek Urutan';
+  static const String learningAnswer = 'Jawab';
+  static const String learningExitTitle = 'Keluar dari belajar?';
+  static const String learningExitDesc = 'Progres belajarmu tidak akan disimpan. Yakin ingin keluar?';
+  static const String learningKeepLearning = 'Lanjut Belajar';
+  static const String learningExit = 'Keluar';
+  static const String learningNoQuestions = 'Tidak ada soal';
+  static const String learningPerfect = 'Sempurna!';
+  static const String learningGreat = 'Bagus Sekali!';
+  static const String learningDontGiveUp = 'Jangan Menyerah!';
+  static const String learningRewardsTitle = 'Hadiah Kamu';
+  static const String learningCorrectLabel = 'Benar';
+  static const String learningListen = 'Tekan untuk mendengarkan';
+  static const String learningArrangeHint = 'Sentuh kata di bawah untuk menyusun kalimat';
+  static const String learningOrderHint = 'Sentuh kalimat di bawah untuk mengurutkan cerita';
+
   // === PROFILE & PARENT ===
   static const String myProfile = 'Profilku';
   static const String parentDashboard = 'Dashboard Orang Tua';
