@@ -25,14 +25,22 @@ class AppConstants {
   static const int streakMilestone2 = 7;
   static const int streakMilestone3 = 14;
 
-  // === WORLD MAP (Pulau Kata) ===
+  // === WORLD MAP (Pulau Kata) - Matches reference design ===
   static const int totalIslands = 6;
   static const List<String> islandNames = [
-    'Pulau Awal',
-    'Pulau Hewan',
-    'Pulau Warna',
-    'Pulau Makanan',
-    'Pulau Keluarga',
-    'Pulau Petualangan',
+    'Desa Huruf',       // Letter Village (TK A)
+    'Kebun Kata',       // Word Garden (TK B)
+    'Hutan Kalimat',    // Sentence Forest (SD 1)
+    'Lembah Cerita',    // Story Valley (SD 2)
+    'Gunung Bahasa',    // Language Mountain (SD 3)
+    'Kota Pengetahuan', // Knowledge City (SD 4)
+  ];
+  static const List<String> islandLabels = [
+    'TK A',
+    'TK B',
+    'SD 1',
+    'SD 2',
+    'SD 3',
+    'SD 4',
   ];
 }

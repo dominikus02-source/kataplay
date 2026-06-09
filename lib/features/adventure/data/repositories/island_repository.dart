@@ -101,7 +101,9 @@ class IslandRepository {
   }
 
   /// Initialize default islands with first island unlocked
+  /// Level counts match reference design: TK=150, SD=200-250
   List<IslandProgress> _initDefaultIslands() {
+    final levelCounts = [150, 150, 200, 200, 250, 250];
     final islands = List.generate(
       AppConstants.totalIslands,
       (index) => IslandProgress(
@@ -109,8 +111,8 @@ class IslandRepository {
         name: AppConstants.islandNames[index],
         isUnlocked: index == 0, // Only first island unlocked
         isCompleted: false,
-        totalLevels: 5,
-        maxStars: 15,
+        totalLevels: levelCounts[index],
+        maxStars: levelCounts[index] * 3, // 3 stars per level
       ),
     );
 

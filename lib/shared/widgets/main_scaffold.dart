@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../core/constants/app_strings.dart';
+import '../../core/theme/app_colors.dart';
 
 /// Main bottom navigation shell for KataPlay.
-/// 5 tabs: Beranda, Pulau, Main, Koleksi, Profil
+/// 4 tabs: Belajar, Progress, Profil, Setelan
+/// Matches reference design with purple active state
 class MainScaffold extends StatelessWidget {
   final Widget child;
 
@@ -24,10 +25,9 @@ class MainScaffold extends StatelessWidget {
   int _calculateIndex(BuildContext context) {
     final location = GoRouterState.of(context).uri.path;
     if (location.startsWith('/home')) return 0;
-    if (location.startsWith('/pulau')) return 1;
-    if (location.startsWith('/main')) return 2;
-    if (location.startsWith('/koleksi')) return 3;
-    if (location.startsWith('/profil')) return 4;
+    if (location.startsWith('/progress')) return 1;
+    if (location.startsWith('/profil')) return 2;
+    if (location.startsWith('/setelan')) return 3;
     return 0;
   }
 
@@ -37,16 +37,13 @@ class MainScaffold extends StatelessWidget {
         context.goNamed('home');
         break;
       case 1:
-        context.goNamed('pulau');
+        context.goNamed('progress');
         break;
       case 2:
-        context.goNamed('main');
+        context.goNamed('profil');
         break;
       case 3:
-        context.goNamed('koleksi');
-        break;
-      case 4:
-        context.goNamed('profil');
+        context.goNamed('setelan');
         break;
     }
   }
@@ -63,8 +60,6 @@ class _KataPlayBottomNav extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -78,40 +73,33 @@ class _KataPlayBottomNav extends StatelessWidget {
       ),
       child: SafeArea(
         child: SizedBox(
-          height: 72,
+          height: 68,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               _NavItem(
-                icon: Icons.home_rounded,
-                label: AppStrings.navHome,
+                icon: Icons.menu_book_rounded,
+                label: 'Belajar',
                 isActive: currentIndex == 0,
                 onTap: () => onTap(0),
               ),
               _NavItem(
-                icon: Icons.explore_rounded,
-                label: AppStrings.navIsland,
+                icon: Icons.bar_chart_rounded,
+                label: 'Progress',
                 isActive: currentIndex == 1,
                 onTap: () => onTap(1),
               ),
               _NavItem(
-                icon: Icons.sports_esports_rounded,
-                label: AppStrings.navPlay,
+                icon: Icons.person_rounded,
+                label: 'Profil',
                 isActive: currentIndex == 2,
                 onTap: () => onTap(2),
-                isCenter: true,
               ),
               _NavItem(
-                icon: Icons.collections_rounded,
-                label: AppStrings.navCollection,
+                icon: Icons.settings_rounded,
+                label: 'Setelan',
                 isActive: currentIndex == 3,
                 onTap: () => onTap(3),
-              ),
-              _NavItem(
-                icon: Icons.person_rounded,
-                label: AppStrings.navProfile,
-                isActive: currentIndex == 4,
-                onTap: () => onTap(4),
               ),
             ],
           ),
@@ -126,53 +114,50 @@ class _NavItem extends StatelessWidget {
   final String label;
   final bool isActive;
   final VoidCallback onTap;
-  final bool isCenter;
 
   const _NavItem({
     required this.icon,
     required this.label,
     required this.isActive,
     required this.onTap,
-    this.isCenter = false,
   });
 
   @override
   Widget build(BuildContext context) {
-    final color = isActive ? Theme.of(context).colorScheme.primary : Colors.grey[600];
-
     return GestureDetector(
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-        child: Column(
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 250),
+        curve: Curves.easeInOut,
+        padding: EdgeInsets.symmetric(
+          horizontal: isActive ? 16 : 12,
+          vertical: 6,
+        ),
+        margin: const EdgeInsets.symmetric(vertical: 4),
+        decoration: BoxDecoration(
+          color: isActive ? AppColors.primary : Colors.transparent,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Container(
-              padding: isCenter ? const EdgeInsets.all(8) : EdgeInsets.zero,
-              decoration: isCenter && isActive
-                  ? BoxDecoration(
-                      color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
-                      shape: BoxShape.circle,
-                    )
-                  : null,
-              child: Icon(
-                icon,
-                size: isCenter ? 32 : 26,
-                color: isCenter && isActive
-                    ? Theme.of(context).colorScheme.primary
-                    : color,
-              ),
+            Icon(
+              icon,
+              size: 22,
+              color: isActive ? Colors.white : Colors.grey[500],
             ),
-            const SizedBox(height: 2),
-            Text(
-              label,
-              style: TextStyle(
-                fontSize: 11,
-                fontWeight: isActive ? FontWeight.w700 : FontWeight.w500,
-                color: color,
+            if (isActive) ...[
+              const SizedBox(width: 6),
+              Text(
+                label,
+                style: const TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.white,
+                ),
               ),
-            ),
+            ],
           ],
         ),
       ),

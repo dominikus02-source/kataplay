@@ -12,7 +12,8 @@ import '../data/models/matching_game_model.dart';
 import '../providers/matching_game_provider.dart';
 
 /// Cocokkan Kata - Picture Match Game
-/// Match words with their corresponding emoji/images
+/// Redesigned to match reference: vibrant card layout, mascot at top,
+/// colorful 2x2 animal buttons, pink content area
 class CocokkanKataScreen extends ConsumerStatefulWidget {
   final int level;
 
@@ -25,11 +26,22 @@ class CocokkanKataScreen extends ConsumerStatefulWidget {
 class _CocokkanKataScreenState extends ConsumerState<CocokkanKataScreen> {
   late ConfettiController _confettiController;
 
+  // Card background colors for variety
+  final List<Color> _cardColors = [
+    AppColors.cardTeal,
+    AppColors.cardBlue,
+    AppColors.cardOrange,
+    AppColors.cardGreen,
+    AppColors.cardPurple,
+    AppColors.buttonOrange,
+    AppColors.pink,
+    AppColors.primary,
+  ];
+
   @override
   void initState() {
     super.initState();
     _confettiController = ConfettiController(duration: const Duration(seconds: 2));
-    // Start the game after frame renders
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(matchingGameProvider.notifier).startGame(level: widget.level);
     });
@@ -53,36 +65,22 @@ class _CocokkanKataScreenState extends ConsumerState<CocokkanKataScreen> {
         }
       },
       child: Scaffold(
-        backgroundColor: AppColors.background,
-        appBar: _buildAppBar(gameState),
-        body: _buildBody(gameState),
-      ),
-    );
-  }
-
-  PreferredSizeWidget _buildAppBar(MatchingGameState gameState) {
-    return AppBar(
-      backgroundColor: AppColors.background,
-      elevation: 0,
-      leading: IconButton(
-        icon: const Icon(Icons.arrow_back_rounded),
-        onPressed: () => _showExitConfirmation(context),
-      ),
-      title: Text(
-        '${AppStrings.gameMatchingTitle} - Level ${gameState.currentLevel}',
-        style: const TextStyle(fontSize: 18),
-      ),
-      actions: [
-        // Timer display
-        if (gameState.phase == GamePhase.playing)
-          Padding(
-            padding: const EdgeInsets.only(right: 16),
-            child: _TimerDisplay(
-              remaining: gameState.timeRemaining,
-              total: gameState.timeLimit.inSeconds,
+        body: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Color(0xFFFFF176), // Yellow top
+                AppColors.pinkBg,  // Pink bottom
+              ],
             ),
           ),
-      ],
+          child: SafeArea(
+            child: _buildBody(gameState),
+          ),
+        ),
+      ),
     );
   }
 
@@ -97,24 +95,13 @@ class _CocokkanKataScreenState extends ConsumerState<CocokkanKataScreen> {
       case GamePhase.showingResult:
         return Column(
           children: [
-            // Score bar
-            _ScoreBar(gameState: gameState),
-            const SizedBox(height: 12),
-            // Game grid
+            // Top bar
+            _buildTopBar(gameState),
+            const SizedBox(height: 8),
+            // Game card area
             Expanded(
-              child: _GameGrid(gameState: gameState),
+              child: _buildGameCard(gameState),
             ),
-            // Zelby encouragement
-            if (gameState.correctMatches > 0 && gameState.correctMatches % 2 == 0)
-              Padding(
-                padding: const EdgeInsets.only(bottom: 16),
-                child: ZelbyAvatar(
-                  size: 48,
-                  mood: 'excited',
-                  showSpeechBubble: true,
-                  speechText: _getEncouragement(gameState.correctMatches),
-                ),
-              ),
           ],
         );
 
@@ -134,15 +121,125 @@ class _CocokkanKataScreenState extends ConsumerState<CocokkanKataScreen> {
     }
   }
 
-  String _getEncouragement(int matches) {
-    final encouragements = [
-      'Keren! Teruskan!',
-      'Hebat sekali!',
-      'Zelby bangga denganmu!',
-      'Kamu pintar sekali!',
-      'Semakin banyak yang cocok!',
-    ];
-    return encouragements[matches % encouragements.length];
+  Widget _buildTopBar(MatchingGameState gameState) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: Row(
+        children: [
+          // Back button
+          GestureDetector(
+            onTap: () => _showExitConfirmation(context),
+            child: Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.8),
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(Icons.arrow_back_rounded, size: 22),
+            ),
+          ),
+          const SizedBox(width: 12),
+          // Level title
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              decoration: BoxDecoration(
+                color: const Color(0xFFFFEE58), // Yellow header
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Text(
+                '${AppStrings.gameMatchingTitle} - Level ${gameState.currentLevel}',
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w800,
+                  color: AppColors.textPrimary,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+          const SizedBox(width: 12),
+          // Timer
+          if (gameState.phase == GamePhase.playing)
+            _TimerDisplay(
+              remaining: gameState.timeRemaining,
+              total: gameState.timeLimit.inSeconds,
+            ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildGameCard(MatchingGameState gameState) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(28),
+        border: Border.all(color: Colors.white, width: 3),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.08),
+            blurRadius: 16,
+            offset: const Offset(0, 6),
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          // Mascot at top
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            decoration: BoxDecoration(
+              color: AppColors.pinkBg,
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(26)),
+            ),
+            child: Column(
+              children: [
+                // Zelby mascot
+                const ZelbyAvatar(size: 64, mood: 'excited')
+                    .animate(onPlay: (c) => c.repeat(reverse: true))
+                    .shake(hz: 2, rotation: 0.03, duration: 2000.ms),
+                const SizedBox(height: 8),
+                // Score bar
+                _ScoreBar(gameState: gameState),
+              ],
+            ),
+          ),
+
+          // Game grid
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(12),
+              child: _buildVibrantGrid(gameState),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildVibrantGrid(MatchingGameState gameState) {
+    return GridView.builder(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: gameState.gridColumns,
+        crossAxisSpacing: 10,
+        mainAxisSpacing: 10,
+        childAspectRatio: 0.9,
+      ),
+      itemCount: gameState.cards.length,
+      itemBuilder: (context, index) {
+        final card = gameState.cards[index];
+        final colorIndex = index % _cardColors.length;
+        return _VibrantCardWidget(
+          card: card,
+          backgroundColor: _cardColors[colorIndex],
+          onTap: () => ref.read(matchingGameProvider.notifier).onCardTapped(card.id),
+        );
+      },
+    );
   }
 
   void _showExitConfirmation(BuildContext context) {
@@ -186,13 +283,12 @@ class _TimerDisplay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isLow = remaining <= 10;
-    final progress = total > 0 ? remaining / total : 0.0;
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
-        color: isLow ? AppColors.error.withOpacity(0.1) : AppColors.primary.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(20),
+        color: isLow ? AppColors.error.withOpacity(0.15) : Colors.white.withOpacity(0.8),
+        borderRadius: BorderRadius.circular(16),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -202,7 +298,7 @@ class _TimerDisplay extends StatelessWidget {
             size: 20,
             color: isLow ? AppColors.error : AppColors.primary,
           ),
-          const SizedBox(width: 6),
+          const SizedBox(width: 4),
           Text(
             '${remaining}s',
             style: TextStyle(
@@ -273,14 +369,14 @@ class _ScoreItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(14),
         boxShadow: [
           BoxShadow(
             color: AppColors.shadowLight,
-            blurRadius: 6,
+            blurRadius: 4,
             offset: const Offset(0, 2),
           ),
         ],
@@ -288,29 +384,15 @@ class _ScoreItem extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(icon, style: const TextStyle(fontSize: 20)),
-          const SizedBox(width: 6),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                value,
-                style: TextStyle(
-                  fontWeight: FontWeight.w800,
-                  fontSize: 16,
-                  color: color,
-                ),
-              ),
-              Text(
-                label,
-                style: TextStyle(
-                  fontSize: 10,
-                  color: AppColors.textSecondary,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ],
+          Text(icon, style: const TextStyle(fontSize: 16)),
+          const SizedBox(width: 4),
+          Text(
+            value,
+            style: TextStyle(
+              fontWeight: FontWeight.w800,
+              fontSize: 14,
+              color: color,
+            ),
           ),
         ],
       ),
@@ -319,60 +401,28 @@ class _ScoreItem extends StatelessWidget {
 }
 
 // ============================================================
-// GAME GRID
+// VIBRANT CARD WIDGET (replaces _MatchCardWidget)
 // ============================================================
 
-class _GameGrid extends ConsumerWidget {
-  final MatchingGameState gameState;
-
-  const _GameGrid({required this.gameState});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: gameState.gridColumns,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
-          childAspectRatio: 0.85,
-        ),
-        itemCount: gameState.cards.length,
-        itemBuilder: (context, index) {
-          final card = gameState.cards[index];
-          return _MatchCardWidget(
-            card: card,
-            onTap: () => ref.read(matchingGameProvider.notifier).onCardTapped(card.id),
-          );
-        },
-      ),
-    );
-  }
-}
-
-// ============================================================
-// INDIVIDUAL CARD
-// ============================================================
-
-class _MatchCardWidget extends StatefulWidget {
+class _VibrantCardWidget extends StatefulWidget {
   final MatchCard card;
+  final Color backgroundColor;
   final VoidCallback onTap;
 
-  const _MatchCardWidget({
+  const _VibrantCardWidget({
     required this.card,
+    required this.backgroundColor,
     required this.onTap,
   });
 
   @override
-  State<_MatchCardWidget> createState() => _MatchCardWidgetState();
+  State<_VibrantCardWidget> createState() => _VibrantCardWidgetState();
 }
 
-class _MatchCardWidgetState extends State<_MatchCardWidget>
+class _VibrantCardWidgetState extends State<_VibrantCardWidget>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _scaleAnimation;
-  late Animation<double> _flipAnimation;
 
   @override
   void initState() {
@@ -384,13 +434,10 @@ class _MatchCardWidgetState extends State<_MatchCardWidget>
     _scaleAnimation = Tween<double>(begin: 0.8, end: 1.0).animate(
       CurvedAnimation(parent: _controller, curve: Curves.elasticOut),
     );
-    _flipAnimation = Tween<double>(begin: 0, end: 1).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
-    );
   }
 
   @override
-  void didUpdateWidget(covariant _MatchCardWidget oldWidget) {
+  void didUpdateWidget(covariant _VibrantCardWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.card.isRevealed && !oldWidget.card.isRevealed) {
       _controller.forward();
@@ -398,7 +445,6 @@ class _MatchCardWidgetState extends State<_MatchCardWidget>
       _controller.reverse();
     }
     if (widget.card.isMatched && !oldWidget.card.isMatched) {
-      // Celebration animation
       _controller.forward();
     }
   }
@@ -431,24 +477,22 @@ class _MatchCardWidgetState extends State<_MatchCardWidget>
           curve: Curves.easeInOut,
           decoration: BoxDecoration(
             color: card.isMatched
-                ? AppColors.success.withOpacity(0.15)
+                ? AppColors.success.withOpacity(0.2)
                 : card.isRevealed
-                    ? Colors.white
-                    : AppColors.primary,
+                    ? widget.backgroundColor
+                    : widget.backgroundColor,
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
               color: card.isMatched
                   ? AppColors.success
-                  : card.isRevealed
-                      ? AppColors.primary.withOpacity(0.3)
-                      : AppColors.primaryDark,
+                  : Colors.white.withOpacity(0.3),
               width: card.isMatched ? 3 : 2,
             ),
             boxShadow: [
               BoxShadow(
                 color: card.isMatched
                     ? AppColors.success.withOpacity(0.2)
-                    : AppColors.shadowLight,
+                    : widget.backgroundColor.withOpacity(0.3),
                 blurRadius: 8,
                 offset: const Offset(0, 3),
               ),
@@ -469,15 +513,10 @@ class _MatchCardWidgetState extends State<_MatchCardWidget>
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          '🧩',
-          style: TextStyle(fontSize: 32, color: Colors.white.withOpacity(0.7)),
-        ),
-        const SizedBox(height: 4),
-        Text(
           '?',
           style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w800,
+            fontSize: 32,
+            fontWeight: FontWeight.w900,
             color: Colors.white.withOpacity(0.8),
           ),
         ),
@@ -488,14 +527,14 @@ class _MatchCardWidgetState extends State<_MatchCardWidget>
   Widget _buildRevealedContent(MatchCard card, bool isWord) {
     if (isWord) {
       return Padding(
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.all(6),
         child: FittedBox(
           child: Text(
             card.display,
-            style: TextStyle(
-              fontSize: 20,
+            style: const TextStyle(
+              fontSize: 18,
               fontWeight: FontWeight.w800,
-              color: card.isMatched ? AppColors.success : AppColors.textPrimary,
+              color: Colors.white,
             ),
             textAlign: TextAlign.center,
           ),
@@ -544,11 +583,12 @@ class _GameCompleteView extends StatelessWidget {
             confettiController: confettiController,
             blastDirectionality: BlastDirectionality.explosive,
             colors: const [
-              AppColors.primary,
-              AppColors.secondary,
-              AppColors.accent,
-              AppColors.coinGold,
-              AppColors.success,
+              AppColors.confettiPurple,
+              AppColors.confettiPink,
+              AppColors.confettiBlue,
+              AppColors.confettiGreen,
+              AppColors.confettiOrange,
+              AppColors.confettiYellow,
             ],
             maxBlastForce: 20,
             minBlastForce: 5,
@@ -579,14 +619,12 @@ class _GameCompleteView extends StatelessWidget {
 
                 // Title
                 Text(
-                  gameState.isPerfect
-                      ? AppStrings.gameExcellent
-                      : AppStrings.congratulations,
-                  style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                        color: gameState.isPerfect
-                            ? AppColors.accent
-                            : AppColors.primary,
-                      ),
+                  gameState.isPerfect ? 'Sempurna! 🌟' : 'Hebat Sekali!',
+                  style: TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.w900,
+                    color: gameState.isPerfect ? AppColors.accent : AppColors.primary,
+                  ),
                 ).animate().fadeIn(delay: 300.ms),
 
                 const SizedBox(height: 8),
@@ -595,7 +633,10 @@ class _GameCompleteView extends StatelessWidget {
                   gameState.isPerfect
                       ? 'Kamu sempurna! Tidak ada kesalahan!'
                       : 'Kamu berhasil mencocokkan semua kata!',
-                  style: Theme.of(context).textTheme.bodyLarge,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    color: AppColors.textSecondary,
+                  ),
                   textAlign: TextAlign.center,
                 ).animate().fadeIn(delay: 500.ms),
 
@@ -668,9 +709,13 @@ class _RewardsCard extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Text(
+          const Text(
             'Hadiah Kamu',
-            style: Theme.of(context).textTheme.titleLarge,
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w800,
+              color: AppColors.textPrimary,
+            ),
           ),
           const SizedBox(height: 20),
           Row(
@@ -706,9 +751,9 @@ class _RewardsCard extends StatelessWidget {
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Text('⭐', style: TextStyle(fontSize: 20)),
-                  const SizedBox(width: 8),
+                children: const [
+                  Text('⭐', style: TextStyle(fontSize: 20)),
+                  SizedBox(width: 8),
                   Text(
                     'Perfect Score Bonus!',
                     style: TextStyle(
@@ -756,7 +801,7 @@ class _RewardItem extends StatelessWidget {
         ),
         Text(
           label,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 12,
             color: AppColors.textSecondary,
             fontWeight: FontWeight.w600,
@@ -766,5 +811,3 @@ class _RewardItem extends StatelessWidget {
     );
   }
 }
-
-

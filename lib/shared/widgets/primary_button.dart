@@ -10,6 +10,7 @@ class PrimaryButton extends StatelessWidget {
   final bool isLoading;
   final bool isSecondary;
   final double? width;
+  final Color? backgroundColor;
 
   const PrimaryButton({
     super.key,
@@ -19,6 +20,7 @@ class PrimaryButton extends StatelessWidget {
     this.isLoading = false,
     this.isSecondary = false,
     this.width,
+    this.backgroundColor,
   });
 
   @override
@@ -28,10 +30,14 @@ class PrimaryButton extends StatelessWidget {
       style: isSecondary
           ? ElevatedButton.styleFrom(
               backgroundColor: Colors.white,
-              foregroundColor: AppColors.primary,
-              side: const BorderSide(color: AppColors.primary, width: 2),
+              foregroundColor: backgroundColor ?? AppColors.primary,
+              side: BorderSide(color: backgroundColor ?? AppColors.primary, width: 2),
             )
-          : null,
+          : (backgroundColor != null
+              ? ElevatedButton.styleFrom(
+                  backgroundColor: backgroundColor,
+                )
+              : null),
       child: isLoading
           ? const SizedBox(
               width: 22,

@@ -8,7 +8,10 @@ import '../../features/minigames/presentation/minigames_hub_screen.dart';
 import '../../features/minigames/presentation/cocokkan_kata_screen.dart';
 import '../../features/learning/presentation/learning_screen.dart';
 import '../../features/rewards/presentation/collection_screen.dart';
+import '../../features/rewards/presentation/reward_screen.dart';
 import '../../features/profile/presentation/profile_screen.dart';
+import '../../features/progress/presentation/progress_screen.dart';
+import '../../features/settings/presentation/settings_screen.dart';
 import '../../features/auth/presentation/splash_screen.dart';
 import '../../features/auth/presentation/onboarding_screen.dart';
 import '../../shared/widgets/main_scaffold.dart';
@@ -33,6 +36,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       ),
 
       // === MAIN APP (Bottom Navigation Shell) ===
+      // 4 tabs: Belajar (Home), Progress, Profil, Setelan
       ShellRoute(
         builder: (context, state, child) => MainScaffold(child: child),
         routes: [
@@ -41,6 +45,22 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             name: 'home',
             builder: (context, state) => const HomeScreen(),
           ),
+          GoRoute(
+            path: '/progress',
+            name: 'progress',
+            builder: (context, state) => const ProgressScreen(),
+          ),
+          GoRoute(
+            path: '/profil',
+            name: 'profil',
+            builder: (context, state) => const ProfileScreen(),
+          ),
+          GoRoute(
+            path: '/setelan',
+            name: 'setelan',
+            builder: (context, state) => const SettingsScreen(),
+          ),
+          // Hidden routes still accessible but not in bottom nav
           GoRoute(
             path: '/pulau',
             name: 'pulau',
@@ -55,11 +75,6 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             path: '/koleksi',
             name: 'koleksi',
             builder: (context, state) => const CollectionScreen(),
-          ),
-          GoRoute(
-            path: '/profil',
-            name: 'profil',
-            builder: (context, state) => const ProfileScreen(),
           ),
         ],
       ),
@@ -94,7 +109,18 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/reward',
         name: 'reward',
-        builder: (context, state) => const PlaceholderRewardScreen(),
+        builder: (context, state) {
+          final title = state.uri.queryParameters['title'] ?? 'Hebat Sekali!';
+          final coins = state.uri.queryParameters['coins'] ?? '100';
+          final xp = state.uri.queryParameters['xp'] ?? '50';
+          final stars = state.uri.queryParameters['stars'] ?? '3';
+          return RewardScreen(
+            title: title,
+            coinsEarned: int.tryParse(coins) ?? 100,
+            xpEarned: int.tryParse(xp) ?? 50,
+            starsEarned: int.tryParse(stars) ?? 3,
+          );
+        },
       ),
     ],
 
@@ -104,10 +130,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
-              '🤔',
-              style: TextStyle(fontSize: 64),
-            ),
+            const Text('🤔', style: TextStyle(fontSize: 64)),
             const SizedBox(height: 16),
             Text(
               'Halaman tidak ditemukan',
@@ -131,34 +154,3 @@ final appRouterProvider = Provider<GoRouter>((ref) {
     ),
   );
 });
-
-/// Placeholder reward screen (will be built in Phase 2)
-class PlaceholderRewardScreen extends StatelessWidget {
-  const PlaceholderRewardScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Hadiah')),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text('🎉', style: TextStyle(fontSize: 64)),
-            const SizedBox(height: 16),
-            Text(
-              'Layar Reward & Celebration',
-              style: Theme.of(context).textTheme.headlineSmall,
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Hadir di update berikutnya!',
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
