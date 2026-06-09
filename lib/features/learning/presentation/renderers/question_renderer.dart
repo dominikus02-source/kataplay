@@ -4,7 +4,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../data/models/question_model.dart';
 
 /// Main question renderer that delegates to type-specific sub-renderers
-/// Supports all 10 question types with Duolingo dark theme style
+/// Supports all 10 question types with bright iOS modern theme
 class QuestionRenderer extends StatelessWidget {
   final Question question;
   final String? selectedAnswerId;
@@ -119,13 +119,17 @@ class QuestionRenderer extends StatelessWidget {
       return Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: AppColors.learningWrong.withOpacity(0.15),
+          color: AppColors.learningFeedbackWrongBg,
           borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: AppColors.learningWrong.withOpacity(0.3)),
         ),
         child: Text(
           'Soal ini belum tersedia. Lewati ke soal berikutnya.',
           textAlign: TextAlign.center,
-          style: GoogleFonts.nunito(fontSize: 14, color: Colors.white54),
+          style: GoogleFonts.nunito(
+            fontSize: 14,
+            color: AppColors.learningTextSecondary,
+          ),
         ),
       );
     }
@@ -133,10 +137,10 @@ class QuestionRenderer extends StatelessWidget {
 }
 
 // ============================================================
-// SHARED: Dark Answer Option Tile (Duolingo-style)
+// SHARED: Bright Answer Option Tile (iOS Modern style)
 // ============================================================
 
-class _DarkAnswerTile extends StatefulWidget {
+class _BrightAnswerTile extends StatefulWidget {
   final AnswerOption option;
   final bool isSelected;
   final bool isAnswered;
@@ -144,7 +148,7 @@ class _DarkAnswerTile extends StatefulWidget {
   final VoidCallback onTap;
   final bool isLarge;
 
-  const _DarkAnswerTile({
+  const _BrightAnswerTile({
     required this.option,
     this.isSelected = false,
     this.isAnswered = false,
@@ -154,10 +158,10 @@ class _DarkAnswerTile extends StatefulWidget {
   });
 
   @override
-  State<_DarkAnswerTile> createState() => _DarkAnswerTileState();
+  State<_BrightAnswerTile> createState() => _BrightAnswerTileState();
 }
 
-class _DarkAnswerTileState extends State<_DarkAnswerTile> {
+class _BrightAnswerTileState extends State<_BrightAnswerTile> {
   double _scale = 1.0;
 
   void _onTapDown(_) => setState(() => _scale = 0.97);
@@ -183,11 +187,11 @@ class _DarkAnswerTileState extends State<_DarkAnswerTile> {
 
   Color get _bgColor {
     if (widget.isAnswered) {
-      if (widget.option.isCorrect) return AppColors.learningCorrect.withOpacity(0.15);
-      if (widget.isSelected) return AppColors.learningWrong.withOpacity(0.15);
+      if (widget.option.isCorrect) return AppColors.learningCorrect.withOpacity(0.08);
+      if (widget.isSelected) return AppColors.learningWrong.withOpacity(0.08);
       return AppColors.learningTileBg;
     }
-    if (widget.isSelected) return AppColors.learningTileSelected.withOpacity(0.1);
+    if (widget.isSelected) return AppColors.learningTileSelected.withOpacity(0.06);
     return AppColors.learningTileBg;
   }
 
@@ -198,7 +202,7 @@ class _DarkAnswerTileState extends State<_DarkAnswerTile> {
       return AppColors.learningTextSecondary;
     }
     if (widget.isSelected) return AppColors.learningTileSelected;
-    return Colors.white;
+    return AppColors.learningTextPrimary;
   }
 
   @override
@@ -225,6 +229,13 @@ class _DarkAnswerTileState extends State<_DarkAnswerTile> {
             color: _borderColor,
             width: _borderWidth,
           ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.04),
+              blurRadius: 8,
+              offset: const Offset(0, 2),
+            ),
+          ],
         ),
         child: Row(
           children: [
@@ -293,7 +304,7 @@ class _MultipleChoiceRenderer extends StatelessWidget {
       children: [
         ...options.map((option) => Padding(
           padding: const EdgeInsets.only(bottom: 10),
-          child: _DarkAnswerTile(
+          child: _BrightAnswerTile(
             option: option,
             isSelected: selectedAnswerId == option.id,
             isAnswered: isAnswered,
@@ -342,12 +353,12 @@ class _TrueFalseRenderer extends StatelessWidget {
         if (isAnswered) {
           if (option.isCorrect) {
             borderColor = AppColors.learningCorrect;
-            bgColor = AppColors.learningCorrect.withOpacity(0.15);
+            bgColor = AppColors.learningCorrect.withOpacity(0.08);
             textColor = AppColors.learningCorrect;
             borderWidth = 2.5;
           } else if (isSelected) {
             borderColor = AppColors.learningWrong;
-            bgColor = AppColors.learningWrong.withOpacity(0.15);
+            bgColor = AppColors.learningWrong.withOpacity(0.08);
             textColor = AppColors.learningWrong;
             borderWidth = 2.5;
           } else {
@@ -358,8 +369,8 @@ class _TrueFalseRenderer extends StatelessWidget {
           }
         } else {
           borderColor = isSelected ? AppColors.learningTileSelected : AppColors.learningBorder;
-          bgColor = isSelected ? AppColors.learningTileSelected.withOpacity(0.1) : AppColors.learningTileBg;
-          textColor = isSelected ? AppColors.learningTileSelected : Colors.white;
+          bgColor = isSelected ? AppColors.learningTileSelected.withOpacity(0.06) : AppColors.learningTileBg;
+          textColor = isSelected ? AppColors.learningTileSelected : AppColors.learningTextPrimary;
           borderWidth = isSelected ? 2.5 : 1.5;
         }
 
@@ -375,6 +386,13 @@ class _TrueFalseRenderer extends StatelessWidget {
                   color: bgColor,
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(color: borderColor, width: borderWidth),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.04),
+                      blurRadius: 8,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
                 ),
                 child: Column(
                   children: [
@@ -403,7 +421,7 @@ class _TrueFalseRenderer extends StatelessWidget {
 }
 
 // ============================================================
-// 3. MATCH WORD & IMAGE — Dark grid style
+// 3. MATCH WORD & IMAGE — Bright grid style
 // ============================================================
 
 class _MatchWordImageRenderer extends StatelessWidget {
@@ -439,11 +457,11 @@ class _MatchWordImageRenderer extends StatelessWidget {
         if (isAnswered) {
           if (option.isCorrect) {
             borderColor = AppColors.learningCorrect;
-            bgColor = AppColors.learningCorrect.withOpacity(0.15);
+            bgColor = AppColors.learningCorrect.withOpacity(0.08);
             textColor = AppColors.learningCorrect;
           } else if (isSelected) {
             borderColor = AppColors.learningWrong;
-            bgColor = AppColors.learningWrong.withOpacity(0.15);
+            bgColor = AppColors.learningWrong.withOpacity(0.08);
             textColor = AppColors.learningWrong;
           } else {
             borderColor = AppColors.learningBorder;
@@ -452,8 +470,8 @@ class _MatchWordImageRenderer extends StatelessWidget {
           }
         } else {
           borderColor = isSelected ? AppColors.learningTileSelected : AppColors.learningBorder;
-          bgColor = isSelected ? AppColors.learningTileSelected.withOpacity(0.1) : AppColors.learningTileBg;
-          textColor = isSelected ? AppColors.learningTileSelected : Colors.white;
+          bgColor = isSelected ? AppColors.learningTileSelected.withOpacity(0.06) : AppColors.learningTileBg;
+          textColor = isSelected ? AppColors.learningTileSelected : AppColors.learningTextPrimary;
         }
 
         return GestureDetector(
@@ -469,6 +487,13 @@ class _MatchWordImageRenderer extends StatelessWidget {
                 color: borderColor,
                 width: isSelected || (isAnswered && option.isCorrect) ? 2.5 : 1.5,
               ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.04),
+                  blurRadius: 8,
+                  offset: const Offset(0, 2),
+                ),
+              ],
             ),
             child: Column(
               children: [
@@ -494,7 +519,7 @@ class _MatchWordImageRenderer extends StatelessWidget {
 }
 
 // ============================================================
-// 4. LISTEN AND CHOOSE — Dark theme audio buttons
+// 4. LISTEN AND CHOOSE — Bright theme audio buttons
 // ============================================================
 
 class _ListenAndChooseRenderer extends StatefulWidget {
@@ -541,7 +566,7 @@ class _ListenAndChooseRendererState extends State<_ListenAndChooseRenderer> {
 
     return Column(
       children: [
-        // Audio playback buttons — Duolingo style (two buttons side by side)
+        // Audio playback buttons — iOS style (two buttons side by side)
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -551,30 +576,37 @@ class _ListenAndChooseRendererState extends State<_ListenAndChooseRenderer> {
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                 decoration: BoxDecoration(
-                  color: AppColors.learningSurface,
+                  color: AppColors.learningCheckBtn.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: AppColors.learningBorder, width: 1.5),
+                  border: Border.all(
+                    color: AppColors.learningCheckBtn.withOpacity(0.3),
+                    width: 1.5,
+                  ),
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     _isPlaying
-                        ? const SizedBox(
+                        ? SizedBox(
                             width: 20,
                             height: 20,
                             child: CircularProgressIndicator(
-                              color: Colors.cyanAccent,
+                              color: AppColors.learningCheckBtn,
                               strokeWidth: 2.5,
                             ),
                           )
-                        : const Icon(Icons.volume_up_rounded, color: Colors.cyanAccent, size: 24),
+                        : Icon(
+                            Icons.volume_up_rounded,
+                            color: AppColors.learningCheckBtn,
+                            size: 24,
+                          ),
                     const SizedBox(width: 8),
                     Text(
                       'Putar',
                       style: GoogleFonts.nunito(
                         fontSize: 14,
                         fontWeight: FontWeight.w700,
-                        color: Colors.white,
+                        color: AppColors.learningCheckBtn,
                       ),
                     ),
                   ],
@@ -590,14 +622,18 @@ class _ListenAndChooseRendererState extends State<_ListenAndChooseRenderer> {
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 decoration: BoxDecoration(
-                  color: AppColors.learningSurface,
+                  color: AppColors.learningSurfaceLight,
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(color: AppColors.learningBorder, width: 1.5),
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Icon(Icons.slow_motion_video_rounded, color: Colors.cyanAccent, size: 22),
+                    Icon(
+                      Icons.slow_motion_video_rounded,
+                      color: AppColors.learningTextSecondary,
+                      size: 22,
+                    ),
                     const SizedBox(width: 6),
                     Text(
                       'Lambat',
@@ -619,7 +655,7 @@ class _ListenAndChooseRendererState extends State<_ListenAndChooseRenderer> {
         // Options
         ...options.map((option) => Padding(
           padding: const EdgeInsets.only(bottom: 10),
-          child: _DarkAnswerTile(
+          child: _BrightAnswerTile(
             option: option,
             isSelected: widget.selectedAnswerId == option.id,
             isAnswered: widget.isAnswered,
@@ -663,7 +699,7 @@ class _FillInTheBlankRenderer extends StatelessWidget {
         children: [
           ...options.map((option) => Padding(
             padding: const EdgeInsets.only(bottom: 10),
-            child: _DarkAnswerTile(
+            child: _BrightAnswerTile(
               option: option,
               isSelected: selectedAnswerId == option.id,
               isAnswered: isAnswered,
@@ -675,8 +711,8 @@ class _FillInTheBlankRenderer extends StatelessWidget {
       );
     }
 
-    // Text input fallback — dark theme
-    return _DarkTextInputAnswer(
+    // Text input fallback — bright theme
+    return _BrightTextInputAnswer(
       onSubmit: (answer) {
         onTextAnswer(answer);
       },
@@ -684,16 +720,16 @@ class _FillInTheBlankRenderer extends StatelessWidget {
   }
 }
 
-class _DarkTextInputAnswer extends StatefulWidget {
+class _BrightTextInputAnswer extends StatefulWidget {
   final Function(String) onSubmit;
 
-  const _DarkTextInputAnswer({required this.onSubmit});
+  const _BrightTextInputAnswer({required this.onSubmit});
 
   @override
-  State<_DarkTextInputAnswer> createState() => _DarkTextInputAnswerState();
+  State<_BrightTextInputAnswer> createState() => _BrightTextInputAnswerState();
 }
 
-class _DarkTextInputAnswerState extends State<_DarkTextInputAnswer> {
+class _BrightTextInputAnswerState extends State<_BrightTextInputAnswer> {
   final _controller = TextEditingController();
 
   @override
@@ -712,13 +748,13 @@ class _DarkTextInputAnswerState extends State<_DarkTextInputAnswer> {
           style: GoogleFonts.nunito(
             fontSize: 20,
             fontWeight: FontWeight.w700,
-            color: Colors.white,
+            color: AppColors.learningTextPrimary,
           ),
           decoration: InputDecoration(
             hintText: 'Ketik jawabanmu di sini...',
             hintStyle: GoogleFonts.nunito(color: AppColors.learningTextSecondary),
             filled: true,
-            fillColor: AppColors.learningTileBg,
+            fillColor: Colors.white,
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(16),
               borderSide: const BorderSide(color: AppColors.learningBorder, width: 1.5),
@@ -738,6 +774,8 @@ class _DarkTextInputAnswerState extends State<_DarkTextInputAnswer> {
             onPressed: () => widget.onSubmit(_controller.text),
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.learningCheckBtn,
+              elevation: 3,
+              shadowColor: AppColors.learningCheckBtn.withOpacity(0.3),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16),
               ),
@@ -759,7 +797,7 @@ class _DarkTextInputAnswerState extends State<_DarkTextInputAnswer> {
 }
 
 // ============================================================
-// 6. ARRANGE WORDS — Dark word tiles
+// 6. ARRANGE WORDS — Bright word tiles
 // ============================================================
 
 class _ArrangeWordsRenderer extends StatefulWidget {
@@ -790,16 +828,16 @@ class _ArrangeWordsRendererState extends State<_ArrangeWordsRenderer> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // Selected words area (sentence being built) — dark theme
+        // Selected words area (sentence being built) — bright theme
         Container(
           minHeight: 56,
           width: double.infinity,
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: AppColors.learningTileSelected.withOpacity(0.08),
+            color: AppColors.learningTileSelected.withOpacity(0.04),
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
-              color: AppColors.learningTileSelected.withOpacity(0.3),
+              color: AppColors.learningTileSelected.withOpacity(0.2),
               width: 1.5,
             ),
           ),
@@ -817,7 +855,7 @@ class _ArrangeWordsRendererState extends State<_ArrangeWordsRenderer> {
                       ),
                     ),
                   ]
-                : _selected.map((fragment) => _DarkWordChip(
+                : _selected.map((fragment) => _BrightWordChip(
                       text: fragment.text,
                       isSelected: true,
                       onTap: () {
@@ -832,12 +870,12 @@ class _ArrangeWordsRendererState extends State<_ArrangeWordsRenderer> {
 
         const SizedBox(height: 16),
 
-        // Available words to pick from — dark tiles
+        // Available words to pick from — bright tiles
         Wrap(
           spacing: 8,
           runSpacing: 8,
           alignment: WrapAlignment.center,
-          children: _available.map((fragment) => _DarkWordChip(
+          children: _available.map((fragment) => _BrightWordChip(
                 text: fragment.text,
                 isSelected: false,
                 onTap: () {
@@ -864,6 +902,8 @@ class _ArrangeWordsRendererState extends State<_ArrangeWordsRenderer> {
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.learningCheckBtn,
+                elevation: 3,
+                shadowColor: AppColors.learningCheckBtn.withOpacity(0.3),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
                 ),
@@ -884,12 +924,12 @@ class _ArrangeWordsRendererState extends State<_ArrangeWordsRenderer> {
   }
 }
 
-class _DarkWordChip extends StatelessWidget {
+class _BrightWordChip extends StatelessWidget {
   final String text;
   final bool isSelected;
   final VoidCallback onTap;
 
-  const _DarkWordChip({
+  const _BrightWordChip({
     required this.text,
     required this.isSelected,
     required this.onTap,
@@ -905,19 +945,28 @@ class _DarkWordChip extends StatelessWidget {
         decoration: BoxDecoration(
           color: isSelected
               ? AppColors.learningTileSelected
-              : AppColors.learningTileBg,
+              : Colors.white,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
             color: isSelected ? AppColors.learningTileSelected : AppColors.learningBorder,
             width: 1.5,
           ),
+          boxShadow: isSelected
+              ? []
+              : [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.04),
+                    blurRadius: 6,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
         ),
         child: Text(
           text,
           style: GoogleFonts.nunito(
             fontSize: 16,
             fontWeight: FontWeight.w700,
-            color: isSelected ? Colors.white : Colors.white,
+            color: isSelected ? Colors.white : AppColors.learningTextPrimary,
           ),
         ),
       ),
@@ -926,7 +975,7 @@ class _DarkWordChip extends StatelessWidget {
 }
 
 // ============================================================
-// 7. PICK CORRECT IMAGE — Dark grid
+// 7. PICK CORRECT IMAGE — Bright grid
 // ============================================================
 
 class _PickCorrectImageRenderer extends StatelessWidget {
@@ -965,11 +1014,11 @@ class _PickCorrectImageRenderer extends StatelessWidget {
         if (isAnswered) {
           if (option.isCorrect) {
             borderColor = AppColors.learningCorrect;
-            bgColor = AppColors.learningCorrect.withOpacity(0.15);
+            bgColor = AppColors.learningCorrect.withOpacity(0.08);
             textColor = AppColors.learningCorrect;
           } else if (isSelected) {
             borderColor = AppColors.learningWrong;
-            bgColor = AppColors.learningWrong.withOpacity(0.15);
+            bgColor = AppColors.learningWrong.withOpacity(0.08);
             textColor = AppColors.learningWrong;
           } else {
             borderColor = AppColors.learningBorder;
@@ -978,8 +1027,8 @@ class _PickCorrectImageRenderer extends StatelessWidget {
           }
         } else {
           borderColor = isSelected ? AppColors.learningTileSelected : AppColors.learningBorder;
-          bgColor = isSelected ? AppColors.learningTileSelected.withOpacity(0.1) : AppColors.learningTileBg;
-          textColor = isSelected ? AppColors.learningTileSelected : Colors.white;
+          bgColor = isSelected ? AppColors.learningTileSelected.withOpacity(0.06) : AppColors.learningTileBg;
+          textColor = isSelected ? AppColors.learningTileSelected : AppColors.learningTextPrimary;
         }
 
         return GestureDetector(
@@ -993,6 +1042,13 @@ class _PickCorrectImageRenderer extends StatelessWidget {
                 color: borderColor,
                 width: isSelected || (isAnswered && option.isCorrect) ? 2.5 : 1.5,
               ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.04),
+                  blurRadius: 8,
+                  offset: const Offset(0, 2),
+                ),
+              ],
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -1045,7 +1101,7 @@ class _DragAndDropRenderer extends StatelessWidget {
       children: [
         ...options.map((option) => Padding(
           padding: const EdgeInsets.only(bottom: 10),
-          child: _DarkAnswerTile(
+          child: _BrightAnswerTile(
             option: option,
             isSelected: selectedAnswerId == option.id,
             isAnswered: isAnswered,
@@ -1059,7 +1115,7 @@ class _DragAndDropRenderer extends StatelessWidget {
 }
 
 // ============================================================
-// 9. ORDER STORY — Dark theme
+// 9. ORDER STORY — Bright theme
 // ============================================================
 
 class _OrderStoryRenderer extends StatefulWidget {
@@ -1096,10 +1152,10 @@ class _OrderStoryRendererState extends State<_OrderStoryRenderer> {
           width: double.infinity,
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: AppColors.learningTileSelected.withOpacity(0.08),
+            color: AppColors.learningTileSelected.withOpacity(0.04),
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
-              color: AppColors.learningTileSelected.withOpacity(0.3),
+              color: AppColors.learningTileSelected.withOpacity(0.2),
               width: 1.5,
             ),
           ),
@@ -1120,7 +1176,7 @@ class _OrderStoryRendererState extends State<_OrderStoryRenderer> {
                 : _selected.asMap().entries.map((entry) {
                     final index = entry.key;
                     final step = entry.value;
-                    return _DarkStoryStepChip(
+                    return _BrightStoryStepChip(
                       number: index + 1,
                       text: step.text,
                       emoji: step.emoji,
@@ -1150,9 +1206,16 @@ class _OrderStoryRendererState extends State<_OrderStoryRenderer> {
             child: Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: AppColors.learningTileBg,
+                color: Colors.white,
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(color: AppColors.learningBorder, width: 1.5),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.04),
+                    blurRadius: 6,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
               ),
               child: Row(
                 children: [
@@ -1166,11 +1229,11 @@ class _OrderStoryRendererState extends State<_OrderStoryRenderer> {
                       style: GoogleFonts.nunito(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
-                        color: Colors.white,
+                        color: AppColors.learningTextPrimary,
                       ),
                     ),
                   ),
-                  const Icon(
+                  Icon(
                     Icons.add_circle_outline_rounded,
                     size: 20,
                     color: AppColors.learningTileSelected,
@@ -1196,6 +1259,8 @@ class _OrderStoryRendererState extends State<_OrderStoryRenderer> {
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.learningCheckBtn,
+                elevation: 3,
+                shadowColor: AppColors.learningCheckBtn.withOpacity(0.3),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
                 ),
@@ -1216,13 +1281,13 @@ class _OrderStoryRendererState extends State<_OrderStoryRenderer> {
   }
 }
 
-class _DarkStoryStepChip extends StatelessWidget {
+class _BrightStoryStepChip extends StatelessWidget {
   final int number;
   final String text;
   final String? emoji;
   final VoidCallback onTap;
 
-  const _DarkStoryStepChip({
+  const _BrightStoryStepChip({
     required this.number,
     required this.text,
     this.emoji,
@@ -1238,16 +1303,23 @@ class _DarkStoryStepChip extends StatelessWidget {
         decoration: BoxDecoration(
           color: AppColors.learningTileSelected,
           borderRadius: BorderRadius.circular(12),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.learningTileSelected.withOpacity(0.2),
+              blurRadius: 6,
+              offset: const Offset(0, 2),
+            ),
+          ],
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              width: 24,
-              height: 24,
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                shape: BoxShape.circle,
+              width: 22,
+              height: 22,
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.3),
+                borderRadius: BorderRadius.circular(6),
               ),
               child: Center(
                 child: Text(
@@ -1255,7 +1327,7 @@ class _DarkStoryStepChip extends StatelessWidget {
                   style: GoogleFonts.nunito(
                     fontSize: 12,
                     fontWeight: FontWeight.w800,
-                    color: AppColors.learningTileSelected,
+                    color: Colors.white,
                   ),
                 ),
               ),
@@ -1265,16 +1337,12 @@ class _DarkStoryStepChip extends StatelessWidget {
               Text(emoji!, style: const TextStyle(fontSize: 16)),
               const SizedBox(width: 4),
             ],
-            Flexible(
-              child: Text(
-                text,
-                style: GoogleFonts.nunito(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white,
-                ),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+            Text(
+              text,
+              style: GoogleFonts.nunito(
+                fontSize: 14,
+                fontWeight: FontWeight.w700,
+                color: Colors.white,
               ),
             ),
           ],
@@ -1285,7 +1353,7 @@ class _DarkStoryStepChip extends StatelessWidget {
 }
 
 // ============================================================
-// 10. PICK INITIAL LETTER — Dark circle buttons
+// 10. PICK INITIAL LETTER
 // ============================================================
 
 class _PickInitialLetterRenderer extends StatelessWidget {
@@ -1307,8 +1375,10 @@ class _PickInitialLetterRenderer extends StatelessWidget {
   Widget build(BuildContext context) {
     final options = question.options;
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    return Wrap(
+      spacing: 10,
+      runSpacing: 10,
+      alignment: WrapAlignment.center,
       children: options.map((option) {
         final isSelected = selectedAnswerId == option.id;
 
@@ -1319,43 +1389,50 @@ class _PickInitialLetterRenderer extends StatelessWidget {
         if (isAnswered) {
           if (option.isCorrect) {
             borderColor = AppColors.learningCorrect;
-            bgColor = AppColors.learningCorrect.withOpacity(0.2);
+            bgColor = AppColors.learningCorrect.withOpacity(0.08);
             textColor = AppColors.learningCorrect;
           } else if (isSelected) {
             borderColor = AppColors.learningWrong;
-            bgColor = AppColors.learningWrong.withOpacity(0.2);
+            bgColor = AppColors.learningWrong.withOpacity(0.08);
             textColor = AppColors.learningWrong;
           } else {
             borderColor = AppColors.learningBorder;
-            bgColor = AppColors.learningTileBg;
+            bgColor = Colors.white;
             textColor = AppColors.learningTextSecondary;
           }
         } else {
           borderColor = isSelected ? AppColors.learningTileSelected : AppColors.learningBorder;
-          bgColor = isSelected ? AppColors.learningTileSelected.withOpacity(0.15) : AppColors.learningTileBg;
-          textColor = isSelected ? AppColors.learningTileSelected : Colors.white;
+          bgColor = isSelected ? AppColors.learningTileSelected.withOpacity(0.06) : Colors.white;
+          textColor = isSelected ? AppColors.learningTileSelected : AppColors.learningTextPrimary;
         }
 
         return GestureDetector(
           onTap: isAnswered ? null : () => onAnswer(option.id),
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 200),
-            width: 60,
-            height: 60,
+            width: 56,
+            height: 56,
             decoration: BoxDecoration(
               color: bgColor,
-              shape: BoxShape.circle,
+              borderRadius: BorderRadius.circular(14),
               border: Border.all(
                 color: borderColor,
                 width: isSelected || (isAnswered && option.isCorrect) ? 2.5 : 1.5,
               ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.04),
+                  blurRadius: 6,
+                  offset: const Offset(0, 2),
+                ),
+              ],
             ),
             child: Center(
               child: Text(
                 option.text,
                 style: GoogleFonts.fredoka(
-                  fontSize: 28,
-                  fontWeight: FontWeight.w800,
+                  fontSize: 24,
+                  fontWeight: FontWeight.w700,
                   color: textColor,
                 ),
               ),

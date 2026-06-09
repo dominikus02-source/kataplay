@@ -32,11 +32,12 @@ enum CharacterDisplayType {
 
 /// Reusable character illustration widget
 /// Handles image loading with emoji fallback
-/// Supports both light and dark themes
+/// Bright modern iOS theme — clean circle with soft shadow
 class CharacterIllustration extends StatelessWidget {
   final CharacterType character;
   final double size;
   final String? mood; // Only used for Zelby emoji fallback
+  @Deprecated('No longer needed — bright theme is the default')
   final bool isDarkTheme;
 
   const CharacterIllustration({
@@ -70,27 +71,25 @@ class CharacterIllustration extends StatelessWidget {
   }
 
   Widget _buildEmojiFallback(BuildContext context) {
-    final bgColor = Color(character.colorValue).withOpacity(isDarkTheme ? 0.25 : 0.15);
-    final borderColor = Color(character.colorValue).withOpacity(isDarkTheme ? 0.5 : 0.3);
+    final accentColor = Color(character.colorValue);
 
     return Container(
       width: size,
       height: size,
       decoration: BoxDecoration(
-        color: bgColor,
+        color: accentColor.withOpacity(0.1),
         shape: BoxShape.circle,
-        border: isDarkTheme
-            ? Border.all(color: borderColor, width: 2)
-            : null,
-        boxShadow: isDarkTheme
-            ? []
-            : [
-                BoxShadow(
-                  color: AppColors.shadowLight,
-                  blurRadius: 8,
-                  offset: const Offset(0, 3),
-                ),
-              ],
+        border: Border.all(
+          color: accentColor.withOpacity(0.2),
+          width: 2,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: accentColor.withOpacity(0.15),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       child: Center(
         child: Text(
@@ -208,13 +207,14 @@ class CharacterMessages {
 
 /// Character Coach Bubble — a speech bubble paired with a character
 /// Used for hints, encouragement, and feedback
-/// Supports both light and dark themes
+/// Bright iOS modern theme — white background with subtle shadow
 class CharacterCoachBubble extends StatelessWidget {
   final CharacterType character;
   final String message;
   final double characterSize;
   final bool showCharacter;
   final VoidCallback? onTap;
+  @Deprecated('No longer needed — bright theme is the default')
   final bool isDarkTheme;
 
   const CharacterCoachBubble({
@@ -231,32 +231,24 @@ class CharacterCoachBubble extends StatelessWidget {
   Widget build(BuildContext context) {
     final accentColor = Color(character.colorValue);
 
-    final bgColor = isDarkTheme ? AppColors.learningBubbleBg : Colors.white;
-    final textColor = isDarkTheme ? Colors.white : AppColors.textPrimary;
-    final borderColor = isDarkTheme
-        ? accentColor.withOpacity(0.4)
-        : accentColor.withOpacity(0.3);
-
     return GestureDetector(
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         decoration: BoxDecoration(
-          color: bgColor,
+          color: Colors.white,
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: borderColor,
-            width: 2,
+            color: accentColor.withOpacity(0.2),
+            width: 1.5,
           ),
-          boxShadow: isDarkTheme
-              ? []
-              : [
-                  BoxShadow(
-                    color: AppColors.shadowLight,
-                    blurRadius: 8,
-                    offset: const Offset(0, 3),
-                  ),
-                ],
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.06),
+              blurRadius: 10,
+              offset: const Offset(0, 3),
+            ),
+          ],
         ),
         child: Row(
           children: [
@@ -264,7 +256,6 @@ class CharacterCoachBubble extends StatelessWidget {
               CharacterIllustration(
                 character: character,
                 size: characterSize,
-                isDarkTheme: isDarkTheme,
               ),
               const SizedBox(width: 12),
             ],
@@ -287,7 +278,7 @@ class CharacterCoachBubble extends StatelessWidget {
                     style: GoogleFonts.nunito(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
-                      color: textColor,
+                      color: AppColors.learningTextPrimary,
                       height: 1.3,
                     ),
                   ),

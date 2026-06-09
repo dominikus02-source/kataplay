@@ -70,24 +70,24 @@ class AppColors {
   static const Color cardGreen = Color(0xFF66BB6A);      // Green card
   static const Color cardPurple = Color(0xFFAB47BC);     // Purple card
 
-  // === DARK LEARNING THEME (Duolingo-style) ===
-  static const Color learningBg = Color(0xFF1A1E2E);        // Dark navy background
-  static const Color learningSurface = Color(0xFF2C3044);   // Dark surface for cards
-  static const Color learningSurfaceLight = Color(0xFF374151); // Lighter dark surface
-  static const Color learningBorder = Color(0xFF4B5563);    // Subtle border
-  static const Color learningTextPrimary = Color(0xFFFFFFFF); // White text
-  static const Color learningTextSecondary = Color(0xFF9CA3AF); // Gray secondary text
-  static const Color learningCorrect = Color(0xFF4CAF50);   // Green for correct
-  static const Color learningWrong = Color(0xFFE53935);     // Red for wrong
-  static const Color learningCombo = Color(0xFFFF9800);     // Orange for combo bar
-  static const Color learningComboBg = Color(0xFF374151);   // Combo bar background
-  static const Color learningCheckBtn = Color(0xFF4CAF50);  // Green PERIKSA/LANJUTKAN btn
-  static const Color learningCheckBtnDisabled = Color(0xFF4B5563); // Disabled check btn
-  static const Color learningTileSelected = Color(0xFF4CAF50); // Green border for selected tile
-  static const Color learningTileBg = Color(0xFF2C3044);    // Dark tile background
-  static const Color learningBubbleBg = Color(0xFF374151);  // Speech bubble background
-  static const Color learningFeedbackBg = Color(0xFF1B5E20); // Green feedback bar bg
-  static const Color learningFeedbackWrongBg = Color(0xFF7F1D1D); // Red feedback bar bg
+  // === BRIGHT iOS MODERN LEARNING THEME (Kids-friendly) ===
+  static const Color learningBg = Color(0xFFF5F3FF);        // Soft lavender-white bg
+  static const Color learningSurface = Color(0xFFFFFFFF);    // Pure white cards
+  static const Color learningSurfaceLight = Color(0xFFF8F7FF); // Very light lavender surface
+  static const Color learningBorder = Color(0xFFE5E3F5);    // Soft lavender border
+  static const Color learningTextPrimary = Color(0xFF1C1E2D); // Deep navy text
+  static const Color learningTextSecondary = Color(0xFF8B8FA3); // Medium gray text
+  static const Color learningCorrect = Color(0xFF34C759);    // iOS green for correct
+  static const Color learningWrong = Color(0xFFFF3B30);      // iOS red for wrong
+  static const Color learningCombo = Color(0xFFFF9500);      // iOS orange for combo
+  static const Color learningComboBg = Color(0xFFE8EAF6);    // Light bar bg
+  static const Color learningCheckBtn = Color(0xFF8A4FFF);   // Brand purple PERIKSA btn
+  static const Color learningCheckBtnDisabled = Color(0xFFD1D3DE); // Soft disabled
+  static const Color learningTileSelected = Color(0xFF8A4FFF); // Purple border for selected
+  static const Color learningTileBg = Color(0xFFFFFFFF);     // White tile background
+  static const Color learningBubbleBg = Color(0xFFFFFFFF);   // White speech bubble
+  static const Color learningFeedbackBg = Color(0xFFEAFBF0); // Light green feedback bg
+  static const Color learningFeedbackWrongBg = Color(0xFFFFF0F0); // Light red feedback bg
 
   // === SOFT SHADOWS (child-friendly) ===
   static const Color shadowLight = Color(0x1A000000);
