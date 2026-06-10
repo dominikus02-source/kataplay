@@ -1,0 +1,1 @@
+/Users/user/kataplay/android/app/build/intermediates/cxx/release/5g1od53r/obj/x86_64

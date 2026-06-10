@@ -1,0 +1,1 @@
+/Users/user/kataplay/android/app/build/intermediates/cxx/debug/511h3c2z/obj/x86_64
