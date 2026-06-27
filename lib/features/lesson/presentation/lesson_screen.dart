@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../app/theme/app_colors.dart';
@@ -17,6 +18,7 @@ import 'widgets/answer_option_card.dart';
 import 'widgets/streak_indicator.dart';
 import 'widgets/question_transition_wrapper.dart';
 import 'widgets/shimmer_loading.dart';
+import 'widgets/shake_wrapper.dart';
 import '../../lesson_engine/domain/lesson_step.dart' as engine;
 import '../../lesson_engine/domain/lesson_type.dart' as engine;
 import '../../lesson_engine/application/lesson_state.dart' as engine;
@@ -68,6 +70,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
   int _streak = 0;
   bool _showStreak = false;
   int _currentQuestionKey = 0;
+  int _feedbackShakeKey = 0;
 
   @override
   void initState() {
@@ -116,6 +119,13 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
 
   bool get _isLastQuestion => _currentIndex >= _questions.length - 1;
   bool get _isArrangeType => _questions.isNotEmpty && _questions[_currentIndex].type == LessonType.arrangeWord;
+  bool get _isNonChoiceType {
+    if (_questions.isEmpty) return false;
+    final t = _questions[_currentIndex].type;
+    return t == LessonType.storyReading ||
+        t == LessonType.recordVoice ||
+        t == LessonType.speakingPractice;
+  }
   BrainQuestionPayload get _activeBrainQuestion => _brainQuestions[_currentIndex];
 
   bool _isLessonCompleted(String id) {
@@ -189,6 +199,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
 
   void _selectAnswer(int index) {
     if (_showFeedback || _questions.isEmpty) return;
+    HapticFeedback.selectionClick();
     setState(() => _selectedAnswer = index);
   }
 
@@ -217,8 +228,8 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
       );
       setState(() {
         _showFeedback = true;
+        _feedbackShakeKey++;
         _isCorrect = isCorrect;
-        if (isCorrect) _score++;
         _questionAttempts = attempts;
         _feedbackMessageOverride = feedback.message;
         _feedbackSubtitleOverride = feedback.subtitle;
@@ -227,7 +238,45 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
         _updateStreak(isCorrect);
       });
       _feedbackController.forward(from: 0);
-      if (isCorrect) _onCorrectSound();
+      if (isCorrect) {
+        _onCorrectSound();
+        HapticFeedback.lightImpact();
+      } else {
+        HapticFeedback.mediumImpact();
+      }
+      return;
+    }
+
+    if (_isNonChoiceType) {
+      final attempts = _questionAttempts + 1;
+      final feedback = _brain.evaluate(
+        session: BrainLessonSession(
+          lessonId: _lessonId ?? '',
+          title: '',
+          character: _character,
+          openingLine: '',
+          focusLabel: _focusLabel,
+          adaptiveSeed: _sessionAdaptiveSeed,
+          questions: _brainQuestions,
+        ),
+        questionIndex: _currentIndex,
+        isCorrect: true,
+        attempts: attempts,
+      );
+      setState(() {
+        _showFeedback = true;
+        _feedbackShakeKey++;
+        _isCorrect = true;
+        _score++;
+        _questionAttempts = attempts;
+        _feedbackMessageOverride = feedback.message;
+        _feedbackSubtitleOverride = feedback.subtitle;
+        _feedbackMood = feedback.mood;
+        _updateStreak(true);
+      });
+      _feedbackController.forward(from: 0);
+      _onCorrectSound();
+      HapticFeedback.lightImpact();
       return;
     }
 
@@ -252,6 +301,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
     );
     setState(() {
       _showFeedback = true;
+      _feedbackShakeKey++;
       _isCorrect = isCorrect;
       if (isCorrect) _score++;
       _questionAttempts = attempts;
@@ -262,8 +312,13 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
       _updateStreak(isCorrect);
     });
     _feedbackController.forward(from: 0);
-    if (isCorrect) _onCorrectSound();
-    if (!isCorrect) _onWrongSound();
+    if (isCorrect) {
+      _onCorrectSound();
+      HapticFeedback.lightImpact();
+    } else {
+      _onWrongSound();
+      HapticFeedback.mediumImpact();
+    }
   }
 
   void _updateStreak(bool isCorrect) {
@@ -592,7 +647,13 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
           mainAxisSize: MainAxisSize.min,
           children: [
             if (_showFeedback)
-              _buildFeedbackInside()
+              ShakeWrapper(
+              triggerCount: _feedbackShakeKey,
+              isShake: !_isCorrect,
+              child: _showFeedback
+                  ? _buildFeedbackInside()
+                  : const SizedBox.shrink(),
+            )
             else ...[
               if (_revealedHint != null) ...[
                 _buildSmartHintCard(),
@@ -1253,6 +1314,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
   }
 
   void _onEngineSelect(String answer) {
+    HapticFeedback.selectionClick();
     setState(() {
       _selectedAnswer = _activeBrainQuestion.options.indexOf(answer);
       _showFeedback = false;
@@ -1260,11 +1322,11 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
   }
 
   void _onEngineContinue() {
-    setState(() {});
+    setState(() => _selectedAnswer = 0);
   }
 
   void _onEngineRecord() {
-    setState(() {});
+    setState(() => _selectedAnswer = 0);
   }
 
   Widget _buildGameOptions(LessonQuestion question) {

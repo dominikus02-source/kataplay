@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 enum AnswerState { default_, selected, correct, incorrect }
 
@@ -59,14 +60,6 @@ class _AnswerOptionCardState extends State<AnswerOptionCard>
   @override
   void didUpdateWidget(AnswerOptionCard oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.state == AnswerState.incorrect &&
-        oldWidget.state != AnswerState.incorrect) {
-      _shakeController.forward(from: 0);
-    }
-    if (widget.state == AnswerState.correct &&
-        oldWidget.state != AnswerState.correct) {
-      _tapController.forward(from: 0).then((_) => _tapController.reverse());
-    }
   }
 
   @override
@@ -84,6 +77,7 @@ class _AnswerOptionCardState extends State<AnswerOptionCard>
   void _handleTapUp(_) {
     if (widget.state != AnswerState.default_) return;
     _tapController.reverse();
+    HapticFeedback.selectionClick();
     widget.onTap?.call();
   }
 

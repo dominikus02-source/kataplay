@@ -15,10 +15,10 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   bool _vibrationEnabled = true;
   bool _focusModeEnabled = false;
   bool _highContrastEnabled = false;
-  String _language = 'Indonesia';
-  String _textSize = 'Sedang';
-  String _dailyTarget = '15 menit';
-  String _reminderTime = '18.00';
+  final String _language = 'Indonesia';
+  final String _textSize = 'Sedang';
+  final String _dailyTarget = '15 menit';
+  final String _reminderTime = '18.00';
 
   @override
   Widget build(BuildContext context) {
