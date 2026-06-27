@@ -1,3 +1,15 @@
+/// Main lesson type enum for all 18 question types.
+///
+/// Types handled natively (non-engine): imageChoice, wordChoice, trueFalse,
+/// arrangeWord, fillBlank, matching, readSentence — rendered directly by
+/// lesson_screen.dart widgets.
+///
+/// Types bridged to lesson_engine renderers: pictureChoice, wordOrder,
+/// matchPair, listenChoose, missingWord, sentenceChoice, storyReading,
+/// storyComprehension, readingComprehension, recordVoice, speakingPractice.
+///
+/// Lihat juga lib/features/lesson_engine/domain/lesson_type.dart untuk
+/// versi internal engine (subset dari enum ini).
 enum LessonType {
   imageChoice,
   pictureChoice,

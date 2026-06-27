@@ -54,26 +54,6 @@ class LessonRendererFactory {
         return TrueFalseRenderer(step: step, state: state, onSelect: onSelect);
       case LessonType.fillBlank:
         return FillBlankRenderer(step: step, state: state, onSelect: onSelect);
-      case LessonType.storySequence:
-      case LessonType.paragraphChoice:
-        return _buildPlaceholder(step);
     }
-  }
-
-  static Widget _buildPlaceholder(LessonStep step) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(32),
-        child: Text(
-          'Tipe "${step.type.name}" belum tersedia',
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-            color: Color(0xFF999999),
-          ),
-        ),
-      ),
-    );
   }
 }

@@ -52,6 +52,7 @@ flutter:
     - assets/images/
     - assets/images/characters/
     - assets/animations/
+    - assets/sample_lessons/
 
   # Note: For production, download Fredoka & Nunito fonts and add to assets/fonts
   # For MVP we use google_fonts package (easy & beautiful)

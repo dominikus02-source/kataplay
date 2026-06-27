@@ -178,6 +178,9 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
       correctAnswer: [question.correctAnswer],
       imageAsset: question.imageAsset,
       hint: question.hint,
+      question: question.imageText,
+      storyText: question.sentence,
+      storyImageAsset: question.imageAsset,
       matchPairs: question.matchLeft != null && question.matchRight != null
           ? {question.matchLeft!: question.matchRight!}
           : null,
@@ -1308,8 +1311,6 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
           step: step, state: state,
           onRecord: _onEngineRecord,
         );
-      default:
-        return const SizedBox.shrink();
     }
   }
 
