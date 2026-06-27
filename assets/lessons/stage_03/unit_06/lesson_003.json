@@ -1,0 +1,113 @@
+{
+  "id": "stage_03_unit_06_lesson_03",
+  "title": "Arti Kata",
+  "steps": [
+    {
+      "id": "s3u6l3_01",
+      "level": 5,
+      "world": "gunung_kata",
+      "xpReward": 10,
+      "type": "storySequence",
+      "prompt": "Urutkan peristiwa berikut!",
+      "instruction": "Memahami arti kata dalam konteks",
+      "storyTitle": "Urutan Cerita",
+      "storyText": "Pertama, kemudian, lalu, akhirnya.",
+      "question": "Apa yang terjadi pertama kali?",
+      "choices": [
+        "Peristiwa 1",
+        "Peristiwa 2",
+        "Peristiwa 3",
+        "Peristiwa 4"
+      ],
+      "correctAnswer": [
+        "Peristiwa 1"
+      ],
+      "hint": "Pikirkan urutan waktu",
+      "difficulty": 5
+    },
+    {
+      "id": "s3u6l3_02",
+      "level": 5,
+      "world": "gunung_kata",
+      "xpReward": 10,
+      "type": "storySequence",
+      "prompt": "Urutkan peristiwa berikut!",
+      "instruction": "Memahami arti kata dalam konteks",
+      "storyTitle": "Urutan Cerita",
+      "storyText": "Pertama, kemudian, lalu, akhirnya.",
+      "question": "Apa yang terjadi pertama kali?",
+      "choices": [
+        "Peristiwa 1",
+        "Peristiwa 2",
+        "Peristiwa 3",
+        "Peristiwa 4"
+      ],
+      "correctAnswer": [
+        "Peristiwa 1"
+      ],
+      "hint": "Pikirkan urutan waktu",
+      "difficulty": 5
+    },
+    {
+      "id": "s3u6l3_03",
+      "level": 5,
+      "world": "gunung_kata",
+      "xpReward": 10,
+      "type": "wordChoice",
+      "prompt": "Pilih jawaban yang tepat!",
+      "instruction": "Memahami arti kata dalam konteks",
+      "choices": [
+        "Pilihan A",
+        "Pilihan B",
+        "Pilihan C",
+        "Pilihan D"
+      ],
+      "correctAnswer": [
+        "Pilihan A"
+      ],
+      "hint": "Coba pikirkan baik-baik",
+      "difficulty": 5
+    },
+    {
+      "id": "s3u6l3_04",
+      "level": 5,
+      "world": "gunung_kata",
+      "xpReward": 10,
+      "type": "wordOrder",
+      "prompt": "Urutkan kata-kata ini!",
+      "instruction": "Memahami arti kata dalam konteks",
+      "choices": [
+        "kata1",
+        "kata2",
+        "kata3",
+        "kata4"
+      ],
+      "correctAnswer": [
+        "kata1",
+        "kata2",
+        "kata3",
+        "kata4"
+      ],
+      "hint": "Urutkan dari kiri ke kanan",
+      "difficulty": 5
+    },
+    {
+      "id": "s3u6l3_05",
+      "level": 5,
+      "world": "gunung_kata",
+      "xpReward": 10,
+      "type": "trueFalse",
+      "prompt": "Apakah pernyataan ini benar?",
+      "instruction": "Memahami arti kata dalam konteks",
+      "choices": [
+        "Benar",
+        "Salah"
+      ],
+      "correctAnswer": [
+        "Benar"
+      ],
+      "hint": "Baca pernyataan dengan teliti",
+      "difficulty": 5
+    }
+  ]
+}

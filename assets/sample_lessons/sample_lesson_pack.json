@@ -1,0 +1,72 @@
+{
+  "id": "sample_lesson_pack_1",
+  "title": "Mengenal Huruf",
+  "world": "hutan_kata",
+  "steps": [
+    {
+      "id": "mh_1",
+      "type": "wordChoice",
+      "level": 1,
+      "world": "hutan_kata",
+      "prompt": "Huruf apa ini?",
+      "instruction": "Pilih huruf yang benar",
+      "choices": ["E", "U", "A", "I"],
+      "correctAnswer": ["A"],
+      "hint": "A seperti ayam",
+      "difficulty": 1,
+      "xpReward": 10
+    },
+    {
+      "id": "mh_2",
+      "type": "wordChoice",
+      "level": 1,
+      "world": "hutan_kata",
+      "prompt": "Huruf apa ini?",
+      "instruction": "Pilih huruf yang benar",
+      "choices": ["B", "D", "P", "T"],
+      "correctAnswer": ["B"],
+      "hint": "B seperti bola",
+      "difficulty": 1,
+      "xpReward": 10
+    },
+    {
+      "id": "mh_3",
+      "type": "wordChoice",
+      "level": 1,
+      "world": "hutan_kata",
+      "prompt": "Huruf apa ini?",
+      "instruction": "Pilih huruf yang benar",
+      "choices": ["C", "K", "S", "R"],
+      "correctAnswer": ["C"],
+      "hint": "C seperti cacing",
+      "difficulty": 1,
+      "xpReward": 10
+    },
+    {
+      "id": "mh_4",
+      "type": "wordChoice",
+      "level": 1,
+      "world": "hutan_kata",
+      "prompt": "Pilih huruf yang tepat!",
+      "instruction": "Cari huruf yang sesuai",
+      "choices": ["M", "N", "W", "V"],
+      "correctAnswer": ["M"],
+      "hint": "M seperti mata",
+      "difficulty": 1,
+      "xpReward": 10
+    },
+    {
+      "id": "mh_5",
+      "type": "pictureChoice",
+      "level": 1,
+      "world": "hutan_kata",
+      "prompt": "Pilih gambar yang tepat!",
+      "instruction": "Cocokkan dengan huruf",
+      "choices": ["apel", "bola", "cicak", "domba"],
+      "correctAnswer": ["apel"],
+      "hint": "A untuk apel",
+      "difficulty": 1,
+      "xpReward": 10
+    }
+  ]
+}

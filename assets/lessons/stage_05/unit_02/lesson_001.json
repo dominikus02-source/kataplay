@@ -1,0 +1,111 @@
+{
+  "id": "stage_05_unit_02_lesson_01",
+  "title": "Petunjuk Sederhana",
+  "steps": [
+    {
+      "id": "s5u2l1_01",
+      "level": 6,
+      "world": "lautan_kata",
+      "xpReward": 10,
+      "type": "wordOrder",
+      "prompt": "Urutkan kata-kata ini!",
+      "instruction": "Membaca petunjuk sederhana",
+      "choices": [
+        "kata1",
+        "kata2",
+        "kata3",
+        "kata4"
+      ],
+      "correctAnswer": [
+        "kata1",
+        "kata2",
+        "kata3",
+        "kata4"
+      ],
+      "hint": "Urutkan dari kiri ke kanan",
+      "difficulty": 6
+    },
+    {
+      "id": "s5u2l1_02",
+      "level": 6,
+      "world": "lautan_kata",
+      "xpReward": 10,
+      "type": "wordOrder",
+      "prompt": "Urutkan kata-kata ini!",
+      "instruction": "Membaca petunjuk sederhana",
+      "choices": [
+        "kata1",
+        "kata2",
+        "kata3",
+        "kata4"
+      ],
+      "correctAnswer": [
+        "kata1",
+        "kata2",
+        "kata3",
+        "kata4"
+      ],
+      "hint": "Urutkan dari kiri ke kanan",
+      "difficulty": 6
+    },
+    {
+      "id": "s5u2l1_03",
+      "level": 6,
+      "world": "lautan_kata",
+      "xpReward": 10,
+      "type": "fillBlank",
+      "prompt": "Isilah titik-titik di bawah ini!",
+      "instruction": "Membaca petunjuk sederhana",
+      "question": "Kalimat dengan ____ kosong.",
+      "choices": [
+        "jawaban",
+        "salah",
+        "benda",
+        "teman"
+      ],
+      "correctAnswer": [
+        "jawaban"
+      ],
+      "hint": "Pilih kata yang paling tepat",
+      "difficulty": 6
+    },
+    {
+      "id": "s5u2l1_04",
+      "level": 6,
+      "world": "lautan_kata",
+      "xpReward": 10,
+      "type": "wordChoice",
+      "prompt": "Pilih jawaban yang tepat!",
+      "instruction": "Membaca petunjuk sederhana",
+      "choices": [
+        "Pilihan A",
+        "Pilihan B",
+        "Pilihan C",
+        "Pilihan D"
+      ],
+      "correctAnswer": [
+        "Pilihan A"
+      ],
+      "hint": "Coba pikirkan baik-baik",
+      "difficulty": 6
+    },
+    {
+      "id": "s5u2l1_05",
+      "level": 6,
+      "world": "lautan_kata",
+      "xpReward": 10,
+      "type": "trueFalse",
+      "prompt": "Apakah pernyataan ini benar?",
+      "instruction": "Membaca petunjuk sederhana",
+      "choices": [
+        "Benar",
+        "Salah"
+      ],
+      "correctAnswer": [
+        "Salah"
+      ],
+      "hint": "Baca pernyataan dengan teliti",
+      "difficulty": 6
+    }
+  ]
+}

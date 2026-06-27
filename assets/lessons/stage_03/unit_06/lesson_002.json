@@ -1,0 +1,103 @@
+{
+  "id": "stage_03_unit_06_lesson_02",
+  "title": "Lawan Kata",
+  "steps": [
+    {
+      "id": "s3u6l2_01",
+      "level": 5,
+      "world": "gunung_kata",
+      "xpReward": 10,
+      "type": "listenChoose",
+      "prompt": "Dengarkan dan pilih jawaban!",
+      "instruction": "Mencari kata yang berlawanan makna",
+      "choices": [
+        "Pilihan A",
+        "Pilihan B",
+        "Pilihan C"
+      ],
+      "correctAnswer": [
+        "Pilihan A"
+      ],
+      "hint": "Dengarkan dengan saksama",
+      "difficulty": 5
+    },
+    {
+      "id": "s3u6l2_02",
+      "level": 5,
+      "world": "gunung_kata",
+      "xpReward": 10,
+      "type": "listenChoose",
+      "prompt": "Dengarkan dan pilih jawaban!",
+      "instruction": "Mencari kata yang berlawanan makna",
+      "choices": [
+        "Pilihan A",
+        "Pilihan B",
+        "Pilihan C"
+      ],
+      "correctAnswer": [
+        "Pilihan A"
+      ],
+      "hint": "Dengarkan dengan saksama",
+      "difficulty": 5
+    },
+    {
+      "id": "s3u6l2_03",
+      "level": 5,
+      "world": "gunung_kata",
+      "xpReward": 10,
+      "type": "wordChoice",
+      "prompt": "Pilih jawaban yang tepat!",
+      "instruction": "Mencari kata yang berlawanan makna",
+      "choices": [
+        "Pilihan A",
+        "Pilihan B",
+        "Pilihan C",
+        "Pilihan D"
+      ],
+      "correctAnswer": [
+        "Pilihan A"
+      ],
+      "hint": "Coba pikirkan baik-baik",
+      "difficulty": 5
+    },
+    {
+      "id": "s3u6l2_04",
+      "level": 5,
+      "world": "gunung_kata",
+      "xpReward": 10,
+      "type": "trueFalse",
+      "prompt": "Apakah pernyataan ini benar?",
+      "instruction": "Mencari kata yang berlawanan makna",
+      "choices": [
+        "Benar",
+        "Salah"
+      ],
+      "correctAnswer": [
+        "Salah"
+      ],
+      "hint": "Baca pernyataan dengan teliti",
+      "difficulty": 5
+    },
+    {
+      "id": "s3u6l2_05",
+      "level": 5,
+      "world": "gunung_kata",
+      "xpReward": 10,
+      "type": "fillBlank",
+      "prompt": "Isilah titik-titik di bawah ini!",
+      "instruction": "Mencari kata yang berlawanan makna",
+      "question": "Kalimat dengan ____ kosong.",
+      "choices": [
+        "jawaban",
+        "salah",
+        "benda",
+        "teman"
+      ],
+      "correctAnswer": [
+        "jawaban"
+      ],
+      "hint": "Pilih kata yang paling tepat",
+      "difficulty": 5
+    }
+  ]
+}

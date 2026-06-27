@@ -1,0 +1,111 @@
+{
+  "id": "stage_01_unit_06_lesson_02",
+  "title": "Tumbuhan",
+  "steps": [
+    {
+      "id": "s1u6l2_01",
+      "level": 3,
+      "world": "hutan_kata",
+      "xpReward": 10,
+      "type": "readingComprehension",
+      "prompt": "Baca teks dan jawab pertanyaan!",
+      "instruction": "Mengenal tumbuhan dan bagiannya",
+      "storyTitle": "Cerita Singkat",
+      "storyText": "Ini adalah teks bacaan singkat untuk latihan membaca pemahaman. Ini adalah teks bacaan singkat untuk latihan membaca pemahaman. Ini adalah teks bacaan singkat untuk latihan membaca pemahaman. ",
+      "question": "Apa yang dibahas dalam teks?",
+      "choices": [
+        "Jawaban A",
+        "Jawaban B",
+        "Jawaban C",
+        "Jawaban D"
+      ],
+      "correctAnswer": [
+        "Jawaban A"
+      ],
+      "hint": "Baca teks sekali lagi",
+      "difficulty": 3
+    },
+    {
+      "id": "s1u6l2_02",
+      "level": 3,
+      "world": "hutan_kata",
+      "xpReward": 10,
+      "type": "readingComprehension",
+      "prompt": "Baca teks dan jawab pertanyaan!",
+      "instruction": "Mengenal tumbuhan dan bagiannya",
+      "storyTitle": "Cerita Singkat",
+      "storyText": "Ini adalah teks bacaan singkat untuk latihan membaca pemahaman. Ini adalah teks bacaan singkat untuk latihan membaca pemahaman. Ini adalah teks bacaan singkat untuk latihan membaca pemahaman. ",
+      "question": "Apa yang dibahas dalam teks?",
+      "choices": [
+        "Jawaban A",
+        "Jawaban B",
+        "Jawaban C",
+        "Jawaban D"
+      ],
+      "correctAnswer": [
+        "Jawaban A"
+      ],
+      "hint": "Baca teks sekali lagi",
+      "difficulty": 3
+    },
+    {
+      "id": "s1u6l2_03",
+      "level": 3,
+      "world": "hutan_kata",
+      "xpReward": 10,
+      "type": "wordChoice",
+      "prompt": "Pilih jawaban yang tepat!",
+      "instruction": "Mengenal tumbuhan dan bagiannya",
+      "choices": [
+        "Pilihan A",
+        "Pilihan B",
+        "Pilihan C",
+        "Pilihan D"
+      ],
+      "correctAnswer": [
+        "Pilihan A"
+      ],
+      "hint": "Coba pikirkan baik-baik",
+      "difficulty": 3
+    },
+    {
+      "id": "s1u6l2_04",
+      "level": 3,
+      "world": "hutan_kata",
+      "xpReward": 10,
+      "type": "trueFalse",
+      "prompt": "Apakah pernyataan ini benar?",
+      "instruction": "Mengenal tumbuhan dan bagiannya",
+      "choices": [
+        "Benar",
+        "Salah"
+      ],
+      "correctAnswer": [
+        "Salah"
+      ],
+      "hint": "Baca pernyataan dengan teliti",
+      "difficulty": 3
+    },
+    {
+      "id": "s1u6l2_05",
+      "level": 3,
+      "world": "hutan_kata",
+      "xpReward": 10,
+      "type": "fillBlank",
+      "prompt": "Isilah titik-titik di bawah ini!",
+      "instruction": "Mengenal tumbuhan dan bagiannya",
+      "question": "Kalimat dengan ____ kosong.",
+      "choices": [
+        "jawaban",
+        "salah",
+        "benda",
+        "teman"
+      ],
+      "correctAnswer": [
+        "jawaban"
+      ],
+      "hint": "Pilih kata yang paling tepat",
+      "difficulty": 3
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "id": "stage_06_unit_06_lesson_02",
+  "title": "Paragraf Argumentasi",
+  "steps": [
+    {
+      "id": "s6u6l2_01",
+      "level": 8,
+      "world": "angkasa_kata",
+      "xpReward": 10,
+      "type": "wordChoice",
+      "prompt": "Pilih jawaban yang tepat!",
+      "instruction": "Menulis paragraf argumentasi",
+      "choices": [
+        "Pilihan A",
+        "Pilihan B",
+        "Pilihan C",
+        "Pilihan D"
+      ],
+      "correctAnswer": [
+        "Pilihan A"
+      ],
+      "hint": "Coba pikirkan baik-baik",
+      "difficulty": 8
+    },
+    {
+      "id": "s6u6l2_02",
+      "level": 8,
+      "world": "angkasa_kata",
+      "xpReward": 10,
+      "type": "matchPair",
+      "prompt": "Pasangkan yang cocok!",
+      "instruction": "Menulis paragraf argumentasi",
+      "matchPairs": {
+        "Kiri 2": "Kanan 2",
+        "Kiri A": "Kanan A",
+        "Kiri B": "Kanan B"
+      },
+      "correctAnswer": [
+        "Kiri 2=Kanan 2"
+      ],
+      "hint": "Cocokkan satu per satu",
+      "difficulty": 8
+    },
+    {
+      "id": "s6u6l2_03",
+      "level": 8,
+      "world": "angkasa_kata",
+      "xpReward": 10,
+      "type": "fillBlank",
+      "prompt": "Isilah titik-titik di bawah ini!",
+      "instruction": "Menulis paragraf argumentasi",
+      "question": "Kalimat dengan ____ kosong.",
+      "choices": [
+        "jawaban",
+        "salah",
+        "benda",
+        "teman"
+      ],
+      "correctAnswer": [
+        "jawaban"
+      ],
+      "hint": "Pilih kata yang paling tepat",
+      "difficulty": 8
+    },
+    {
+      "id": "s6u6l2_04",
+      "level": 8,
+      "world": "angkasa_kata",
+      "xpReward": 10,
+      "type": "wordChoice",
+      "prompt": "Pilih jawaban yang tepat!",
+      "instruction": "Menulis paragraf argumentasi",
+      "choices": [
+        "Pilihan A",
+        "Pilihan B",
+        "Pilihan C",
+        "Pilihan D"
+      ],
+      "correctAnswer": [
+        "Pilihan A"
+      ],
+      "hint": "Coba pikirkan baik-baik",
+      "difficulty": 8
+    },
+    {
+      "id": "s6u6l2_05",
+      "level": 8,
+      "world": "angkasa_kata",
+      "xpReward": 10,
+      "type": "trueFalse",
+      "prompt": "Apakah pernyataan ini benar?",
+      "instruction": "Menulis paragraf argumentasi",
+      "choices": [
+        "Benar",
+        "Salah"
+      ],
+      "correctAnswer": [
+        "Benar"
+      ],
+      "hint": "Baca pernyataan dengan teliti",
+      "difficulty": 8
+    }
+  ]
+}

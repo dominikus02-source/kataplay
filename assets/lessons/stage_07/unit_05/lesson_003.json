@@ -1,0 +1,108 @@
+{
+  "id": "stage_07_unit_05_lesson_03",
+  "title": "Laporan Singkat",
+  "steps": [
+    {
+      "id": "s7u5l3_01",
+      "level": 9,
+      "world": "kota_kata",
+      "xpReward": 10,
+      "type": "readingComprehension",
+      "prompt": "Baca teks dan jawab pertanyaan!",
+      "instruction": "Menulis laporan singkat",
+      "storyTitle": "Cerita Singkat",
+      "storyText": "Ini adalah teks bacaan singkat untuk latihan membaca pemahaman. Ini adalah teks bacaan singkat untuk latihan membaca pemahaman. Ini adalah teks bacaan singkat untuk latihan membaca pemahaman. ",
+      "question": "Apa yang dibahas dalam teks?",
+      "choices": [
+        "Jawaban A",
+        "Jawaban B",
+        "Jawaban C",
+        "Jawaban D"
+      ],
+      "correctAnswer": [
+        "Jawaban A"
+      ],
+      "hint": "Baca teks sekali lagi",
+      "difficulty": 9
+    },
+    {
+      "id": "s7u5l3_02",
+      "level": 9,
+      "world": "kota_kata",
+      "xpReward": 10,
+      "type": "wordChoice",
+      "prompt": "Pilih jawaban yang tepat!",
+      "instruction": "Menulis laporan singkat",
+      "choices": [
+        "Pilihan A",
+        "Pilihan B",
+        "Pilihan C",
+        "Pilihan D"
+      ],
+      "correctAnswer": [
+        "Pilihan A"
+      ],
+      "hint": "Coba pikirkan baik-baik",
+      "difficulty": 9
+    },
+    {
+      "id": "s7u5l3_03",
+      "level": 9,
+      "world": "kota_kata",
+      "xpReward": 10,
+      "type": "sentenceChoice",
+      "prompt": "Pilih kalimat yang benar!",
+      "instruction": "Menulis laporan singkat",
+      "choices": [
+        "Kalimat yang benar.",
+        "kalimat salah.",
+        "KALIMAT SALAH.",
+        "kali mat salah."
+      ],
+      "correctAnswer": [
+        "Kalimat yang benar."
+      ],
+      "hint": "Perhatikan huruf kapital dan tanda baca",
+      "difficulty": 9
+    },
+    {
+      "id": "s7u5l3_04",
+      "level": 9,
+      "world": "kota_kata",
+      "xpReward": 10,
+      "type": "trueFalse",
+      "prompt": "Apakah pernyataan ini benar?",
+      "instruction": "Menulis laporan singkat",
+      "choices": [
+        "Benar",
+        "Salah"
+      ],
+      "correctAnswer": [
+        "Salah"
+      ],
+      "hint": "Baca pernyataan dengan teliti",
+      "difficulty": 9
+    },
+    {
+      "id": "s7u5l3_05",
+      "level": 9,
+      "world": "kota_kata",
+      "xpReward": 10,
+      "type": "fillBlank",
+      "prompt": "Isilah titik-titik di bawah ini!",
+      "instruction": "Menulis laporan singkat",
+      "question": "Kalimat dengan ____ kosong.",
+      "choices": [
+        "jawaban",
+        "salah",
+        "benda",
+        "teman"
+      ],
+      "correctAnswer": [
+        "jawaban"
+      ],
+      "hint": "Pilih kata yang paling tepat",
+      "difficulty": 9
+    }
+  ]
+}

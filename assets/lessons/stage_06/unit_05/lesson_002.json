@@ -1,0 +1,108 @@
+{
+  "id": "stage_06_unit_05_lesson_02",
+  "title": "Perbedaan dan Persamaan",
+  "steps": [
+    {
+      "id": "s6u5l2_01",
+      "level": 8,
+      "world": "angkasa_kata",
+      "xpReward": 10,
+      "type": "sentenceChoice",
+      "prompt": "Pilih kalimat yang benar!",
+      "instruction": "Mencari perbedaan dan persamaan",
+      "choices": [
+        "Kalimat yang benar.",
+        "kalimat salah.",
+        "KALIMAT SALAH.",
+        "kali mat salah."
+      ],
+      "correctAnswer": [
+        "Kalimat yang benar."
+      ],
+      "hint": "Perhatikan huruf kapital dan tanda baca",
+      "difficulty": 8
+    },
+    {
+      "id": "s6u5l2_02",
+      "level": 8,
+      "world": "angkasa_kata",
+      "xpReward": 10,
+      "type": "fillBlank",
+      "prompt": "Isilah titik-titik di bawah ini!",
+      "instruction": "Mencari perbedaan dan persamaan",
+      "question": "Kalimat dengan ____ kosong.",
+      "choices": [
+        "jawaban",
+        "salah",
+        "benda",
+        "teman"
+      ],
+      "correctAnswer": [
+        "jawaban"
+      ],
+      "hint": "Pilih kata yang paling tepat",
+      "difficulty": 8
+    },
+    {
+      "id": "s6u5l2_03",
+      "level": 8,
+      "world": "angkasa_kata",
+      "xpReward": 10,
+      "type": "wordOrder",
+      "prompt": "Urutkan kata-kata ini!",
+      "instruction": "Mencari perbedaan dan persamaan",
+      "choices": [
+        "kata1",
+        "kata2",
+        "kata3",
+        "kata4"
+      ],
+      "correctAnswer": [
+        "kata1",
+        "kata2",
+        "kata3",
+        "kata4"
+      ],
+      "hint": "Urutkan dari kiri ke kanan",
+      "difficulty": 8
+    },
+    {
+      "id": "s6u5l2_04",
+      "level": 8,
+      "world": "angkasa_kata",
+      "xpReward": 10,
+      "type": "wordChoice",
+      "prompt": "Pilih jawaban yang tepat!",
+      "instruction": "Mencari perbedaan dan persamaan",
+      "choices": [
+        "Pilihan A",
+        "Pilihan B",
+        "Pilihan C",
+        "Pilihan D"
+      ],
+      "correctAnswer": [
+        "Pilihan A"
+      ],
+      "hint": "Coba pikirkan baik-baik",
+      "difficulty": 8
+    },
+    {
+      "id": "s6u5l2_05",
+      "level": 8,
+      "world": "angkasa_kata",
+      "xpReward": 10,
+      "type": "trueFalse",
+      "prompt": "Apakah pernyataan ini benar?",
+      "instruction": "Mencari perbedaan dan persamaan",
+      "choices": [
+        "Benar",
+        "Salah"
+      ],
+      "correctAnswer": [
+        "Benar"
+      ],
+      "hint": "Baca pernyataan dengan teliti",
+      "difficulty": 8
+    }
+  ]
+}

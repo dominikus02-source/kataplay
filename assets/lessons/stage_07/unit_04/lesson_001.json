@@ -1,0 +1,113 @@
+{
+  "id": "stage_07_unit_04_lesson_01",
+  "title": "Pendapat dan Alasan",
+  "steps": [
+    {
+      "id": "s7u4l1_01",
+      "level": 8,
+      "world": "kota_kata",
+      "xpReward": 10,
+      "type": "storySequence",
+      "prompt": "Urutkan peristiwa berikut!",
+      "instruction": "Mengemukakan pendapat dan alasan",
+      "storyTitle": "Urutan Cerita",
+      "storyText": "Pertama, kemudian, lalu, akhirnya.",
+      "question": "Apa yang terjadi pertama kali?",
+      "choices": [
+        "Peristiwa 1",
+        "Peristiwa 2",
+        "Peristiwa 3",
+        "Peristiwa 4"
+      ],
+      "correctAnswer": [
+        "Peristiwa 1"
+      ],
+      "hint": "Pikirkan urutan waktu",
+      "difficulty": 8
+    },
+    {
+      "id": "s7u4l1_02",
+      "level": 8,
+      "world": "kota_kata",
+      "xpReward": 10,
+      "type": "storySequence",
+      "prompt": "Urutkan peristiwa berikut!",
+      "instruction": "Mengemukakan pendapat dan alasan",
+      "storyTitle": "Urutan Cerita",
+      "storyText": "Pertama, kemudian, lalu, akhirnya.",
+      "question": "Apa yang terjadi pertama kali?",
+      "choices": [
+        "Peristiwa 1",
+        "Peristiwa 2",
+        "Peristiwa 3",
+        "Peristiwa 4"
+      ],
+      "correctAnswer": [
+        "Peristiwa 1"
+      ],
+      "hint": "Pikirkan urutan waktu",
+      "difficulty": 8
+    },
+    {
+      "id": "s7u4l1_03",
+      "level": 8,
+      "world": "kota_kata",
+      "xpReward": 10,
+      "type": "wordChoice",
+      "prompt": "Pilih jawaban yang tepat!",
+      "instruction": "Mengemukakan pendapat dan alasan",
+      "choices": [
+        "Pilihan A",
+        "Pilihan B",
+        "Pilihan C",
+        "Pilihan D"
+      ],
+      "correctAnswer": [
+        "Pilihan A"
+      ],
+      "hint": "Coba pikirkan baik-baik",
+      "difficulty": 8
+    },
+    {
+      "id": "s7u4l1_04",
+      "level": 8,
+      "world": "kota_kata",
+      "xpReward": 10,
+      "type": "wordOrder",
+      "prompt": "Urutkan kata-kata ini!",
+      "instruction": "Mengemukakan pendapat dan alasan",
+      "choices": [
+        "kata1",
+        "kata2",
+        "kata3",
+        "kata4"
+      ],
+      "correctAnswer": [
+        "kata1",
+        "kata2",
+        "kata3",
+        "kata4"
+      ],
+      "hint": "Urutkan dari kiri ke kanan",
+      "difficulty": 8
+    },
+    {
+      "id": "s7u4l1_05",
+      "level": 8,
+      "world": "kota_kata",
+      "xpReward": 10,
+      "type": "trueFalse",
+      "prompt": "Apakah pernyataan ini benar?",
+      "instruction": "Mengemukakan pendapat dan alasan",
+      "choices": [
+        "Benar",
+        "Salah"
+      ],
+      "correctAnswer": [
+        "Benar"
+      ],
+      "hint": "Baca pernyataan dengan teliti",
+      "difficulty": 8
+    }
+  ]
+}

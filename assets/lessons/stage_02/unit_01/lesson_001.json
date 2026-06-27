@@ -1,0 +1,104 @@
+{
+  "id": "stage_02_unit_01_lesson_01",
+  "title": "Gabung Huruf",
+  "steps": [
+    {
+      "id": "s2u1l1_01",
+      "level": 3,
+      "world": "sawah_kata",
+      "xpReward": 10,
+      "type": "wordChoice",
+      "prompt": "Pilih jawaban yang tepat!",
+      "instruction": "Gabungkan huruf menjadi suku kata",
+      "choices": [
+        "Pilihan A",
+        "Pilihan B",
+        "Pilihan C",
+        "Pilihan D"
+      ],
+      "correctAnswer": [
+        "Pilihan A"
+      ],
+      "hint": "Coba pikirkan baik-baik",
+      "difficulty": 3
+    },
+    {
+      "id": "s2u1l1_02",
+      "level": 3,
+      "world": "sawah_kata",
+      "xpReward": 10,
+      "type": "wordChoice",
+      "prompt": "Pilih jawaban yang tepat!",
+      "instruction": "Gabungkan huruf menjadi suku kata",
+      "choices": [
+        "Pilihan A",
+        "Pilihan B",
+        "Pilihan C",
+        "Pilihan D"
+      ],
+      "correctAnswer": [
+        "Pilihan A"
+      ],
+      "hint": "Coba pikirkan baik-baik",
+      "difficulty": 3
+    },
+    {
+      "id": "s2u1l1_03",
+      "level": 3,
+      "world": "sawah_kata",
+      "xpReward": 10,
+      "type": "pictureChoice",
+      "prompt": "Pilih gambar yang sesuai!",
+      "instruction": "Gabungkan huruf menjadi suku kata",
+      "choices": [
+        "apel",
+        "bola",
+        "buku",
+        "rumah"
+      ],
+      "correctAnswer": [
+        "apel"
+      ],
+      "hint": "Lihat petunjuknya",
+      "difficulty": 3
+    },
+    {
+      "id": "s2u1l1_04",
+      "level": 3,
+      "world": "sawah_kata",
+      "xpReward": 10,
+      "type": "wordChoice",
+      "prompt": "Pilih jawaban yang tepat!",
+      "instruction": "Gabungkan huruf menjadi suku kata",
+      "choices": [
+        "Pilihan A",
+        "Pilihan B",
+        "Pilihan C",
+        "Pilihan D"
+      ],
+      "correctAnswer": [
+        "Pilihan A"
+      ],
+      "hint": "Coba pikirkan baik-baik",
+      "difficulty": 3
+    },
+    {
+      "id": "s2u1l1_05",
+      "level": 3,
+      "world": "sawah_kata",
+      "xpReward": 10,
+      "type": "trueFalse",
+      "prompt": "Apakah pernyataan ini benar?",
+      "instruction": "Gabungkan huruf menjadi suku kata",
+      "choices": [
+        "Benar",
+        "Salah"
+      ],
+      "correctAnswer": [
+        "Benar"
+      ],
+      "hint": "Baca pernyataan dengan teliti",
+      "difficulty": 3
+    }
+  ]
+}

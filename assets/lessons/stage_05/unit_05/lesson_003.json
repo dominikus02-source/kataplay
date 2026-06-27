@@ -1,0 +1,108 @@
+{
+  "id": "stage_05_unit_05_lesson_03",
+  "title": "Poin Penting",
+  "steps": [
+    {
+      "id": "s5u5l3_01",
+      "level": 7,
+      "world": "lautan_kata",
+      "xpReward": 10,
+      "type": "sentenceChoice",
+      "prompt": "Pilih kalimat yang benar!",
+      "instruction": "Mengidentifikasi poin penting bacaan",
+      "choices": [
+        "Kalimat yang benar.",
+        "kalimat salah.",
+        "KALIMAT SALAH.",
+        "kali mat salah."
+      ],
+      "correctAnswer": [
+        "Kalimat yang benar."
+      ],
+      "hint": "Perhatikan huruf kapital dan tanda baca",
+      "difficulty": 7
+    },
+    {
+      "id": "s5u5l3_02",
+      "level": 7,
+      "world": "lautan_kata",
+      "xpReward": 10,
+      "type": "fillBlank",
+      "prompt": "Isilah titik-titik di bawah ini!",
+      "instruction": "Mengidentifikasi poin penting bacaan",
+      "question": "Kalimat dengan ____ kosong.",
+      "choices": [
+        "jawaban",
+        "salah",
+        "benda",
+        "teman"
+      ],
+      "correctAnswer": [
+        "jawaban"
+      ],
+      "hint": "Pilih kata yang paling tepat",
+      "difficulty": 7
+    },
+    {
+      "id": "s5u5l3_03",
+      "level": 7,
+      "world": "lautan_kata",
+      "xpReward": 10,
+      "type": "wordOrder",
+      "prompt": "Urutkan kata-kata ini!",
+      "instruction": "Mengidentifikasi poin penting bacaan",
+      "choices": [
+        "kata1",
+        "kata2",
+        "kata3",
+        "kata4"
+      ],
+      "correctAnswer": [
+        "kata1",
+        "kata2",
+        "kata3",
+        "kata4"
+      ],
+      "hint": "Urutkan dari kiri ke kanan",
+      "difficulty": 7
+    },
+    {
+      "id": "s5u5l3_04",
+      "level": 7,
+      "world": "lautan_kata",
+      "xpReward": 10,
+      "type": "wordChoice",
+      "prompt": "Pilih jawaban yang tepat!",
+      "instruction": "Mengidentifikasi poin penting bacaan",
+      "choices": [
+        "Pilihan A",
+        "Pilihan B",
+        "Pilihan C",
+        "Pilihan D"
+      ],
+      "correctAnswer": [
+        "Pilihan A"
+      ],
+      "hint": "Coba pikirkan baik-baik",
+      "difficulty": 7
+    },
+    {
+      "id": "s5u5l3_05",
+      "level": 7,
+      "world": "lautan_kata",
+      "xpReward": 10,
+      "type": "trueFalse",
+      "prompt": "Apakah pernyataan ini benar?",
+      "instruction": "Mengidentifikasi poin penting bacaan",
+      "choices": [
+        "Benar",
+        "Salah"
+      ],
+      "correctAnswer": [
+        "Salah"
+      ],
+      "hint": "Baca pernyataan dengan teliti",
+      "difficulty": 7
+    }
+  ]
+}

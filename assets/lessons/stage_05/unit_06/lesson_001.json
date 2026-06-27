@@ -1,0 +1,113 @@
+{
+  "id": "stage_05_unit_06_lesson_01",
+  "title": "Kata Baku",
+  "steps": [
+    {
+      "id": "s5u6l1_01",
+      "level": 7,
+      "world": "lautan_kata",
+      "xpReward": 10,
+      "type": "storySequence",
+      "prompt": "Urutkan peristiwa berikut!",
+      "instruction": "Mengenal kata baku dalam bahasa Indonesia",
+      "storyTitle": "Urutan Cerita",
+      "storyText": "Pertama, kemudian, lalu, akhirnya.",
+      "question": "Apa yang terjadi pertama kali?",
+      "choices": [
+        "Peristiwa 1",
+        "Peristiwa 2",
+        "Peristiwa 3",
+        "Peristiwa 4"
+      ],
+      "correctAnswer": [
+        "Peristiwa 1"
+      ],
+      "hint": "Pikirkan urutan waktu",
+      "difficulty": 7
+    },
+    {
+      "id": "s5u6l1_02",
+      "level": 7,
+      "world": "lautan_kata",
+      "xpReward": 10,
+      "type": "storySequence",
+      "prompt": "Urutkan peristiwa berikut!",
+      "instruction": "Mengenal kata baku dalam bahasa Indonesia",
+      "storyTitle": "Urutan Cerita",
+      "storyText": "Pertama, kemudian, lalu, akhirnya.",
+      "question": "Apa yang terjadi pertama kali?",
+      "choices": [
+        "Peristiwa 1",
+        "Peristiwa 2",
+        "Peristiwa 3",
+        "Peristiwa 4"
+      ],
+      "correctAnswer": [
+        "Peristiwa 1"
+      ],
+      "hint": "Pikirkan urutan waktu",
+      "difficulty": 7
+    },
+    {
+      "id": "s5u6l1_03",
+      "level": 7,
+      "world": "lautan_kata",
+      "xpReward": 10,
+      "type": "wordChoice",
+      "prompt": "Pilih jawaban yang tepat!",
+      "instruction": "Mengenal kata baku dalam bahasa Indonesia",
+      "choices": [
+        "Pilihan A",
+        "Pilihan B",
+        "Pilihan C",
+        "Pilihan D"
+      ],
+      "correctAnswer": [
+        "Pilihan A"
+      ],
+      "hint": "Coba pikirkan baik-baik",
+      "difficulty": 7
+    },
+    {
+      "id": "s5u6l1_04",
+      "level": 7,
+      "world": "lautan_kata",
+      "xpReward": 10,
+      "type": "wordOrder",
+      "prompt": "Urutkan kata-kata ini!",
+      "instruction": "Mengenal kata baku dalam bahasa Indonesia",
+      "choices": [
+        "kata1",
+        "kata2",
+        "kata3",
+        "kata4"
+      ],
+      "correctAnswer": [
+        "kata1",
+        "kata2",
+        "kata3",
+        "kata4"
+      ],
+      "hint": "Urutkan dari kiri ke kanan",
+      "difficulty": 7
+    },
+    {
+      "id": "s5u6l1_05",
+      "level": 7,
+      "world": "lautan_kata",
+      "xpReward": 10,
+      "type": "trueFalse",
+      "prompt": "Apakah pernyataan ini benar?",
+      "instruction": "Mengenal kata baku dalam bahasa Indonesia",
+      "choices": [
+        "Benar",
+        "Salah"
+      ],
+      "correctAnswer": [
+        "Salah"
+      ],
+      "hint": "Baca pernyataan dengan teliti",
+      "difficulty": 7
+    }
+  ]
+}

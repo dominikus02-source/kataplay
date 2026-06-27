@@ -1,0 +1,103 @@
+{
+  "id": "stage_04_unit_06_lesson_01",
+  "title": "Struktur Kalimat",
+  "steps": [
+    {
+      "id": "s4u6l1_01",
+      "level": 6,
+      "world": "sungai_kata",
+      "xpReward": 10,
+      "type": "listenChoose",
+      "prompt": "Dengarkan dan pilih jawaban!",
+      "instruction": "Belajar struktur kalimat yang benar",
+      "choices": [
+        "Pilihan A",
+        "Pilihan B",
+        "Pilihan C"
+      ],
+      "correctAnswer": [
+        "Pilihan A"
+      ],
+      "hint": "Dengarkan dengan saksama",
+      "difficulty": 6
+    },
+    {
+      "id": "s4u6l1_02",
+      "level": 6,
+      "world": "sungai_kata",
+      "xpReward": 10,
+      "type": "listenChoose",
+      "prompt": "Dengarkan dan pilih jawaban!",
+      "instruction": "Belajar struktur kalimat yang benar",
+      "choices": [
+        "Pilihan A",
+        "Pilihan B",
+        "Pilihan C"
+      ],
+      "correctAnswer": [
+        "Pilihan A"
+      ],
+      "hint": "Dengarkan dengan saksama",
+      "difficulty": 6
+    },
+    {
+      "id": "s4u6l1_03",
+      "level": 6,
+      "world": "sungai_kata",
+      "xpReward": 10,
+      "type": "wordChoice",
+      "prompt": "Pilih jawaban yang tepat!",
+      "instruction": "Belajar struktur kalimat yang benar",
+      "choices": [
+        "Pilihan A",
+        "Pilihan B",
+        "Pilihan C",
+        "Pilihan D"
+      ],
+      "correctAnswer": [
+        "Pilihan A"
+      ],
+      "hint": "Coba pikirkan baik-baik",
+      "difficulty": 6
+    },
+    {
+      "id": "s4u6l1_04",
+      "level": 6,
+      "world": "sungai_kata",
+      "xpReward": 10,
+      "type": "trueFalse",
+      "prompt": "Apakah pernyataan ini benar?",
+      "instruction": "Belajar struktur kalimat yang benar",
+      "choices": [
+        "Benar",
+        "Salah"
+      ],
+      "correctAnswer": [
+        "Benar"
+      ],
+      "hint": "Baca pernyataan dengan teliti",
+      "difficulty": 6
+    },
+    {
+      "id": "s4u6l1_05",
+      "level": 6,
+      "world": "sungai_kata",
+      "xpReward": 10,
+      "type": "fillBlank",
+      "prompt": "Isilah titik-titik di bawah ini!",
+      "instruction": "Belajar struktur kalimat yang benar",
+      "question": "Kalimat dengan ____ kosong.",
+      "choices": [
+        "jawaban",
+        "salah",
+        "benda",
+        "teman"
+      ],
+      "correctAnswer": [
+        "jawaban"
+      ],
+      "hint": "Pilih kata yang paling tepat",
+      "difficulty": 6
+    }
+  ]
+}

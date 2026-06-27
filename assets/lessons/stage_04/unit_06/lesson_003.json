@@ -1,0 +1,108 @@
+{
+  "id": "stage_04_unit_06_lesson_03",
+  "title": "Paragraf Pertama",
+  "steps": [
+    {
+      "id": "s4u6l3_01",
+      "level": 6,
+      "world": "sungai_kata",
+      "xpReward": 10,
+      "type": "sentenceChoice",
+      "prompt": "Pilih kalimat yang benar!",
+      "instruction": "Menulis paragraf pertama sendiri",
+      "choices": [
+        "Kalimat yang benar.",
+        "kalimat salah.",
+        "KALIMAT SALAH.",
+        "kali mat salah."
+      ],
+      "correctAnswer": [
+        "Kalimat yang benar."
+      ],
+      "hint": "Perhatikan huruf kapital dan tanda baca",
+      "difficulty": 6
+    },
+    {
+      "id": "s4u6l3_02",
+      "level": 6,
+      "world": "sungai_kata",
+      "xpReward": 10,
+      "type": "fillBlank",
+      "prompt": "Isilah titik-titik di bawah ini!",
+      "instruction": "Menulis paragraf pertama sendiri",
+      "question": "Kalimat dengan ____ kosong.",
+      "choices": [
+        "jawaban",
+        "salah",
+        "benda",
+        "teman"
+      ],
+      "correctAnswer": [
+        "jawaban"
+      ],
+      "hint": "Pilih kata yang paling tepat",
+      "difficulty": 6
+    },
+    {
+      "id": "s4u6l3_03",
+      "level": 6,
+      "world": "sungai_kata",
+      "xpReward": 10,
+      "type": "wordOrder",
+      "prompt": "Urutkan kata-kata ini!",
+      "instruction": "Menulis paragraf pertama sendiri",
+      "choices": [
+        "kata1",
+        "kata2",
+        "kata3",
+        "kata4"
+      ],
+      "correctAnswer": [
+        "kata1",
+        "kata2",
+        "kata3",
+        "kata4"
+      ],
+      "hint": "Urutkan dari kiri ke kanan",
+      "difficulty": 6
+    },
+    {
+      "id": "s4u6l3_04",
+      "level": 6,
+      "world": "sungai_kata",
+      "xpReward": 10,
+      "type": "wordChoice",
+      "prompt": "Pilih jawaban yang tepat!",
+      "instruction": "Menulis paragraf pertama sendiri",
+      "choices": [
+        "Pilihan A",
+        "Pilihan B",
+        "Pilihan C",
+        "Pilihan D"
+      ],
+      "correctAnswer": [
+        "Pilihan A"
+      ],
+      "hint": "Coba pikirkan baik-baik",
+      "difficulty": 6
+    },
+    {
+      "id": "s4u6l3_05",
+      "level": 6,
+      "world": "sungai_kata",
+      "xpReward": 10,
+      "type": "trueFalse",
+      "prompt": "Apakah pernyataan ini benar?",
+      "instruction": "Menulis paragraf pertama sendiri",
+      "choices": [
+        "Benar",
+        "Salah"
+      ],
+      "correctAnswer": [
+        "Benar"
+      ],
+      "hint": "Baca pernyataan dengan teliti",
+      "difficulty": 6
+    }
+  ]
+}

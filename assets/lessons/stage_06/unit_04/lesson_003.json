@@ -1,0 +1,108 @@
+{
+  "id": "stage_06_unit_04_lesson_03",
+  "title": "Penjelasan Ilmiah",
+  "steps": [
+    {
+      "id": "s6u4l3_01",
+      "level": 8,
+      "world": "angkasa_kata",
+      "xpReward": 10,
+      "type": "sentenceChoice",
+      "prompt": "Pilih kalimat yang benar!",
+      "instruction": "Membaca penjelasan ilmiah sederhana",
+      "choices": [
+        "Kalimat yang benar.",
+        "kalimat salah.",
+        "KALIMAT SALAH.",
+        "kali mat salah."
+      ],
+      "correctAnswer": [
+        "Kalimat yang benar."
+      ],
+      "hint": "Perhatikan huruf kapital dan tanda baca",
+      "difficulty": 8
+    },
+    {
+      "id": "s6u4l3_02",
+      "level": 8,
+      "world": "angkasa_kata",
+      "xpReward": 10,
+      "type": "fillBlank",
+      "prompt": "Isilah titik-titik di bawah ini!",
+      "instruction": "Membaca penjelasan ilmiah sederhana",
+      "question": "Kalimat dengan ____ kosong.",
+      "choices": [
+        "jawaban",
+        "salah",
+        "benda",
+        "teman"
+      ],
+      "correctAnswer": [
+        "jawaban"
+      ],
+      "hint": "Pilih kata yang paling tepat",
+      "difficulty": 8
+    },
+    {
+      "id": "s6u4l3_03",
+      "level": 8,
+      "world": "angkasa_kata",
+      "xpReward": 10,
+      "type": "wordOrder",
+      "prompt": "Urutkan kata-kata ini!",
+      "instruction": "Membaca penjelasan ilmiah sederhana",
+      "choices": [
+        "kata1",
+        "kata2",
+        "kata3",
+        "kata4"
+      ],
+      "correctAnswer": [
+        "kata1",
+        "kata2",
+        "kata3",
+        "kata4"
+      ],
+      "hint": "Urutkan dari kiri ke kanan",
+      "difficulty": 8
+    },
+    {
+      "id": "s6u4l3_04",
+      "level": 8,
+      "world": "angkasa_kata",
+      "xpReward": 10,
+      "type": "wordChoice",
+      "prompt": "Pilih jawaban yang tepat!",
+      "instruction": "Membaca penjelasan ilmiah sederhana",
+      "choices": [
+        "Pilihan A",
+        "Pilihan B",
+        "Pilihan C",
+        "Pilihan D"
+      ],
+      "correctAnswer": [
+        "Pilihan A"
+      ],
+      "hint": "Coba pikirkan baik-baik",
+      "difficulty": 8
+    },
+    {
+      "id": "s6u4l3_05",
+      "level": 8,
+      "world": "angkasa_kata",
+      "xpReward": 10,
+      "type": "trueFalse",
+      "prompt": "Apakah pernyataan ini benar?",
+      "instruction": "Membaca penjelasan ilmiah sederhana",
+      "choices": [
+        "Benar",
+        "Salah"
+      ],
+      "correctAnswer": [
+        "Salah"
+      ],
+      "hint": "Baca pernyataan dengan teliti",
+      "difficulty": 8
+    }
+  ]
+}

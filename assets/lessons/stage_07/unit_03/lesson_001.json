@@ -1,0 +1,103 @@
+{
+  "id": "stage_07_unit_03_lesson_01",
+  "title": "Majas Sederhana",
+  "steps": [
+    {
+      "id": "s7u3l1_01",
+      "level": 8,
+      "world": "kota_kata",
+      "xpReward": 10,
+      "type": "listenChoose",
+      "prompt": "Dengarkan dan pilih jawaban!",
+      "instruction": "Mengenal majas sederhana dalam bacaan",
+      "choices": [
+        "Pilihan A",
+        "Pilihan B",
+        "Pilihan C"
+      ],
+      "correctAnswer": [
+        "Pilihan A"
+      ],
+      "hint": "Dengarkan dengan saksama",
+      "difficulty": 8
+    },
+    {
+      "id": "s7u3l1_02",
+      "level": 8,
+      "world": "kota_kata",
+      "xpReward": 10,
+      "type": "listenChoose",
+      "prompt": "Dengarkan dan pilih jawaban!",
+      "instruction": "Mengenal majas sederhana dalam bacaan",
+      "choices": [
+        "Pilihan A",
+        "Pilihan B",
+        "Pilihan C"
+      ],
+      "correctAnswer": [
+        "Pilihan A"
+      ],
+      "hint": "Dengarkan dengan saksama",
+      "difficulty": 8
+    },
+    {
+      "id": "s7u3l1_03",
+      "level": 8,
+      "world": "kota_kata",
+      "xpReward": 10,
+      "type": "wordChoice",
+      "prompt": "Pilih jawaban yang tepat!",
+      "instruction": "Mengenal majas sederhana dalam bacaan",
+      "choices": [
+        "Pilihan A",
+        "Pilihan B",
+        "Pilihan C",
+        "Pilihan D"
+      ],
+      "correctAnswer": [
+        "Pilihan A"
+      ],
+      "hint": "Coba pikirkan baik-baik",
+      "difficulty": 8
+    },
+    {
+      "id": "s7u3l1_04",
+      "level": 8,
+      "world": "kota_kata",
+      "xpReward": 10,
+      "type": "trueFalse",
+      "prompt": "Apakah pernyataan ini benar?",
+      "instruction": "Mengenal majas sederhana dalam bacaan",
+      "choices": [
+        "Benar",
+        "Salah"
+      ],
+      "correctAnswer": [
+        "Salah"
+      ],
+      "hint": "Baca pernyataan dengan teliti",
+      "difficulty": 8
+    },
+    {
+      "id": "s7u3l1_05",
+      "level": 8,
+      "world": "kota_kata",
+      "xpReward": 10,
+      "type": "fillBlank",
+      "prompt": "Isilah titik-titik di bawah ini!",
+      "instruction": "Mengenal majas sederhana dalam bacaan",
+      "question": "Kalimat dengan ____ kosong.",
+      "choices": [
+        "jawaban",
+        "salah",
+        "benda",
+        "teman"
+      ],
+      "correctAnswer": [
+        "jawaban"
+      ],
+      "hint": "Pilih kata yang paling tepat",
+      "difficulty": 8
+    }
+  ]
+}

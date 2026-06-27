@@ -1,0 +1,103 @@
+{
+  "id": "stage_05_unit_05_lesson_01",
+  "title": "Meringkas Bacaan",
+  "steps": [
+    {
+      "id": "s5u5l1_01",
+      "level": 7,
+      "world": "lautan_kata",
+      "xpReward": 10,
+      "type": "listenChoose",
+      "prompt": "Dengarkan dan pilih jawaban!",
+      "instruction": "Meringkas bacaan pendek",
+      "choices": [
+        "Pilihan A",
+        "Pilihan B",
+        "Pilihan C"
+      ],
+      "correctAnswer": [
+        "Pilihan A"
+      ],
+      "hint": "Dengarkan dengan saksama",
+      "difficulty": 7
+    },
+    {
+      "id": "s5u5l1_02",
+      "level": 7,
+      "world": "lautan_kata",
+      "xpReward": 10,
+      "type": "listenChoose",
+      "prompt": "Dengarkan dan pilih jawaban!",
+      "instruction": "Meringkas bacaan pendek",
+      "choices": [
+        "Pilihan A",
+        "Pilihan B",
+        "Pilihan C"
+      ],
+      "correctAnswer": [
+        "Pilihan A"
+      ],
+      "hint": "Dengarkan dengan saksama",
+      "difficulty": 7
+    },
+    {
+      "id": "s5u5l1_03",
+      "level": 7,
+      "world": "lautan_kata",
+      "xpReward": 10,
+      "type": "wordChoice",
+      "prompt": "Pilih jawaban yang tepat!",
+      "instruction": "Meringkas bacaan pendek",
+      "choices": [
+        "Pilihan A",
+        "Pilihan B",
+        "Pilihan C",
+        "Pilihan D"
+      ],
+      "correctAnswer": [
+        "Pilihan A"
+      ],
+      "hint": "Coba pikirkan baik-baik",
+      "difficulty": 7
+    },
+    {
+      "id": "s5u5l1_04",
+      "level": 7,
+      "world": "lautan_kata",
+      "xpReward": 10,
+      "type": "trueFalse",
+      "prompt": "Apakah pernyataan ini benar?",
+      "instruction": "Meringkas bacaan pendek",
+      "choices": [
+        "Benar",
+        "Salah"
+      ],
+      "correctAnswer": [
+        "Benar"
+      ],
+      "hint": "Baca pernyataan dengan teliti",
+      "difficulty": 7
+    },
+    {
+      "id": "s5u5l1_05",
+      "level": 7,
+      "world": "lautan_kata",
+      "xpReward": 10,
+      "type": "fillBlank",
+      "prompt": "Isilah titik-titik di bawah ini!",
+      "instruction": "Meringkas bacaan pendek",
+      "question": "Kalimat dengan ____ kosong.",
+      "choices": [
+        "jawaban",
+        "salah",
+        "benda",
+        "teman"
+      ],
+      "correctAnswer": [
+        "jawaban"
+      ],
+      "hint": "Pilih kata yang paling tepat",
+      "difficulty": 7
+    }
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "id": "stage_06_unit_02_lesson_03",
+  "title": "Prediksi Cerita",
+  "steps": [
+    {
+      "id": "s6u2l3_01",
+      "level": 7,
+      "world": "angkasa_kata",
+      "xpReward": 10,
+      "type": "listenChoose",
+      "prompt": "Dengarkan dan pilih jawaban!",
+      "instruction": "Memprediksi kelanjutan cerita",
+      "choices": [
+        "Pilihan A",
+        "Pilihan B",
+        "Pilihan C"
+      ],
+      "correctAnswer": [
+        "Pilihan A"
+      ],
+      "hint": "Dengarkan dengan saksama",
+      "difficulty": 7
+    },
+    {
+      "id": "s6u2l3_02",
+      "level": 7,
+      "world": "angkasa_kata",
+      "xpReward": 10,
+      "type": "listenChoose",
+      "prompt": "Dengarkan dan pilih jawaban!",
+      "instruction": "Memprediksi kelanjutan cerita",
+      "choices": [
+        "Pilihan A",
+        "Pilihan B",
+        "Pilihan C"
+      ],
+      "correctAnswer": [
+        "Pilihan A"
+      ],
+      "hint": "Dengarkan dengan saksama",
+      "difficulty": 7
+    },
+    {
+      "id": "s6u2l3_03",
+      "level": 7,
+      "world": "angkasa_kata",
+      "xpReward": 10,
+      "type": "wordChoice",
+      "prompt": "Pilih jawaban yang tepat!",
+      "instruction": "Memprediksi kelanjutan cerita",
+      "choices": [
+        "Pilihan A",
+        "Pilihan B",
+        "Pilihan C",
+        "Pilihan D"
+      ],
+      "correctAnswer": [
+        "Pilihan A"
+      ],
+      "hint": "Coba pikirkan baik-baik",
+      "difficulty": 7
+    },
+    {
+      "id": "s6u2l3_04",
+      "level": 7,
+      "world": "angkasa_kata",
+      "xpReward": 10,
+      "type": "trueFalse",
+      "prompt": "Apakah pernyataan ini benar?",
+      "instruction": "Memprediksi kelanjutan cerita",
+      "choices": [
+        "Benar",
+        "Salah"
+      ],
+      "correctAnswer": [
+        "Salah"
+      ],
+      "hint": "Baca pernyataan dengan teliti",
+      "difficulty": 7
+    },
+    {
+      "id": "s6u2l3_05",
+      "level": 7,
+      "world": "angkasa_kata",
+      "xpReward": 10,
+      "type": "fillBlank",
+      "prompt": "Isilah titik-titik di bawah ini!",
+      "instruction": "Memprediksi kelanjutan cerita",
+      "question": "Kalimat dengan ____ kosong.",
+      "choices": [
+        "jawaban",
+        "salah",
+        "benda",
+        "teman"
+      ],
+      "correctAnswer": [
+        "jawaban"
+      ],
+      "hint": "Pilih kata yang paling tepat",
+      "difficulty": 7
+    }
+  ]
+}

@@ -1,0 +1,102 @@
+{
+  "id": "stage_03_unit_03_lesson_01",
+  "title": "Apa dan Siapa",
+  "steps": [
+    {
+      "id": "s3u3l1_01",
+      "level": 4,
+      "world": "gunung_kata",
+      "xpReward": 10,
+      "type": "matchPair",
+      "prompt": "Pasangkan yang cocok!",
+      "instruction": "Kata tanya apa dan siapa",
+      "matchPairs": {
+        "Kiri 1": "Kanan 1",
+        "Kiri A": "Kanan A",
+        "Kiri B": "Kanan B"
+      },
+      "correctAnswer": [
+        "Kiri 1=Kanan 1"
+      ],
+      "hint": "Cocokkan satu per satu",
+      "difficulty": 4
+    },
+    {
+      "id": "s3u3l1_02",
+      "level": 4,
+      "world": "gunung_kata",
+      "xpReward": 10,
+      "type": "matchPair",
+      "prompt": "Pasangkan yang cocok!",
+      "instruction": "Kata tanya apa dan siapa",
+      "matchPairs": {
+        "Kiri 2": "Kanan 2",
+        "Kiri A": "Kanan A",
+        "Kiri B": "Kanan B"
+      },
+      "correctAnswer": [
+        "Kiri 2=Kanan 2"
+      ],
+      "hint": "Cocokkan satu per satu",
+      "difficulty": 4
+    },
+    {
+      "id": "s3u3l1_03",
+      "level": 4,
+      "world": "gunung_kata",
+      "xpReward": 10,
+      "type": "wordChoice",
+      "prompt": "Pilih jawaban yang tepat!",
+      "instruction": "Kata tanya apa dan siapa",
+      "choices": [
+        "Pilihan A",
+        "Pilihan B",
+        "Pilihan C",
+        "Pilihan D"
+      ],
+      "correctAnswer": [
+        "Pilihan A"
+      ],
+      "hint": "Coba pikirkan baik-baik",
+      "difficulty": 4
+    },
+    {
+      "id": "s3u3l1_04",
+      "level": 4,
+      "world": "gunung_kata",
+      "xpReward": 10,
+      "type": "pictureChoice",
+      "prompt": "Pilih gambar yang sesuai!",
+      "instruction": "Kata tanya apa dan siapa",
+      "choices": [
+        "apel",
+        "bola",
+        "buku",
+        "rumah"
+      ],
+      "correctAnswer": [
+        "apel"
+      ],
+      "hint": "Lihat petunjuknya",
+      "difficulty": 4
+    },
+    {
+      "id": "s3u3l1_05",
+      "level": 4,
+      "world": "gunung_kata",
+      "xpReward": 10,
+      "type": "trueFalse",
+      "prompt": "Apakah pernyataan ini benar?",
+      "instruction": "Kata tanya apa dan siapa",
+      "choices": [
+        "Benar",
+        "Salah"
+      ],
+      "correctAnswer": [
+        "Salah"
+      ],
+      "hint": "Baca pernyataan dengan teliti",
+      "difficulty": 4
+    }
+  ]
+}

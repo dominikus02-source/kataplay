@@ -1,0 +1,104 @@
+{
+  "id": "stage_03_unit_01_lesson_01",
+  "title": "Kata Tindakan",
+  "steps": [
+    {
+      "id": "s3u1l1_01",
+      "level": 4,
+      "world": "gunung_kata",
+      "xpReward": 10,
+      "type": "wordChoice",
+      "prompt": "Pilih jawaban yang tepat!",
+      "instruction": "Belajar kata kerja sehari-hari",
+      "choices": [
+        "Pilihan A",
+        "Pilihan B",
+        "Pilihan C",
+        "Pilihan D"
+      ],
+      "correctAnswer": [
+        "Pilihan A"
+      ],
+      "hint": "Coba pikirkan baik-baik",
+      "difficulty": 4
+    },
+    {
+      "id": "s3u1l1_02",
+      "level": 4,
+      "world": "gunung_kata",
+      "xpReward": 10,
+      "type": "wordChoice",
+      "prompt": "Pilih jawaban yang tepat!",
+      "instruction": "Belajar kata kerja sehari-hari",
+      "choices": [
+        "Pilihan A",
+        "Pilihan B",
+        "Pilihan C",
+        "Pilihan D"
+      ],
+      "correctAnswer": [
+        "Pilihan A"
+      ],
+      "hint": "Coba pikirkan baik-baik",
+      "difficulty": 4
+    },
+    {
+      "id": "s3u1l1_03",
+      "level": 4,
+      "world": "gunung_kata",
+      "xpReward": 10,
+      "type": "wordChoice",
+      "prompt": "Pilih jawaban yang tepat!",
+      "instruction": "Belajar kata kerja sehari-hari",
+      "choices": [
+        "Pilihan A",
+        "Pilihan B",
+        "Pilihan C",
+        "Pilihan D"
+      ],
+      "correctAnswer": [
+        "Pilihan A"
+      ],
+      "hint": "Coba pikirkan baik-baik",
+      "difficulty": 4
+    },
+    {
+      "id": "s3u1l1_04",
+      "level": 4,
+      "world": "gunung_kata",
+      "xpReward": 10,
+      "type": "pictureChoice",
+      "prompt": "Pilih gambar yang sesuai!",
+      "instruction": "Belajar kata kerja sehari-hari",
+      "choices": [
+        "apel",
+        "bola",
+        "buku",
+        "rumah"
+      ],
+      "correctAnswer": [
+        "apel"
+      ],
+      "hint": "Lihat petunjuknya",
+      "difficulty": 4
+    },
+    {
+      "id": "s3u1l1_05",
+      "level": 4,
+      "world": "gunung_kata",
+      "xpReward": 10,
+      "type": "trueFalse",
+      "prompt": "Apakah pernyataan ini benar?",
+      "instruction": "Belajar kata kerja sehari-hari",
+      "choices": [
+        "Benar",
+        "Salah"
+      ],
+      "correctAnswer": [
+        "Salah"
+      ],
+      "hint": "Baca pernyataan dengan teliti",
+      "difficulty": 4
+    }
+  ]
+}

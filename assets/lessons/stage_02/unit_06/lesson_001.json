@@ -1,0 +1,111 @@
+{
+  "id": "stage_02_unit_06_lesson_01",
+  "title": "Urutkan Huruf",
+  "steps": [
+    {
+      "id": "s2u6l1_01",
+      "level": 4,
+      "world": "sawah_kata",
+      "xpReward": 10,
+      "type": "readingComprehension",
+      "prompt": "Baca teks dan jawab pertanyaan!",
+      "instruction": "Urutkan huruf menjadi kata yang benar",
+      "storyTitle": "Cerita Singkat",
+      "storyText": "Ini adalah teks bacaan singkat untuk latihan membaca pemahaman. Ini adalah teks bacaan singkat untuk latihan membaca pemahaman. Ini adalah teks bacaan singkat untuk latihan membaca pemahaman. ",
+      "question": "Apa yang dibahas dalam teks?",
+      "choices": [
+        "Jawaban A",
+        "Jawaban B",
+        "Jawaban C",
+        "Jawaban D"
+      ],
+      "correctAnswer": [
+        "Jawaban A"
+      ],
+      "hint": "Baca teks sekali lagi",
+      "difficulty": 4
+    },
+    {
+      "id": "s2u6l1_02",
+      "level": 4,
+      "world": "sawah_kata",
+      "xpReward": 10,
+      "type": "readingComprehension",
+      "prompt": "Baca teks dan jawab pertanyaan!",
+      "instruction": "Urutkan huruf menjadi kata yang benar",
+      "storyTitle": "Cerita Singkat",
+      "storyText": "Ini adalah teks bacaan singkat untuk latihan membaca pemahaman. Ini adalah teks bacaan singkat untuk latihan membaca pemahaman. Ini adalah teks bacaan singkat untuk latihan membaca pemahaman. ",
+      "question": "Apa yang dibahas dalam teks?",
+      "choices": [
+        "Jawaban A",
+        "Jawaban B",
+        "Jawaban C",
+        "Jawaban D"
+      ],
+      "correctAnswer": [
+        "Jawaban A"
+      ],
+      "hint": "Baca teks sekali lagi",
+      "difficulty": 4
+    },
+    {
+      "id": "s2u6l1_03",
+      "level": 4,
+      "world": "sawah_kata",
+      "xpReward": 10,
+      "type": "wordChoice",
+      "prompt": "Pilih jawaban yang tepat!",
+      "instruction": "Urutkan huruf menjadi kata yang benar",
+      "choices": [
+        "Pilihan A",
+        "Pilihan B",
+        "Pilihan C",
+        "Pilihan D"
+      ],
+      "correctAnswer": [
+        "Pilihan A"
+      ],
+      "hint": "Coba pikirkan baik-baik",
+      "difficulty": 4
+    },
+    {
+      "id": "s2u6l1_04",
+      "level": 4,
+      "world": "sawah_kata",
+      "xpReward": 10,
+      "type": "trueFalse",
+      "prompt": "Apakah pernyataan ini benar?",
+      "instruction": "Urutkan huruf menjadi kata yang benar",
+      "choices": [
+        "Benar",
+        "Salah"
+      ],
+      "correctAnswer": [
+        "Benar"
+      ],
+      "hint": "Baca pernyataan dengan teliti",
+      "difficulty": 4
+    },
+    {
+      "id": "s2u6l1_05",
+      "level": 4,
+      "world": "sawah_kata",
+      "xpReward": 10,
+      "type": "fillBlank",
+      "prompt": "Isilah titik-titik di bawah ini!",
+      "instruction": "Urutkan huruf menjadi kata yang benar",
+      "question": "Kalimat dengan ____ kosong.",
+      "choices": [
+        "jawaban",
+        "salah",
+        "benda",
+        "teman"
+      ],
+      "correctAnswer": [
+        "jawaban"
+      ],
+      "hint": "Pilih kata yang paling tepat",
+      "difficulty": 4
+    }
+  ]
+}

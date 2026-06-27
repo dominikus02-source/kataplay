@@ -1,0 +1,111 @@
+{
+  "id": "stage_03_unit_04_lesson_02",
+  "title": "Cerita Teman",
+  "steps": [
+    {
+      "id": "s3u4l2_01",
+      "level": 5,
+      "world": "gunung_kata",
+      "xpReward": 10,
+      "type": "readingComprehension",
+      "prompt": "Baca teks dan jawab pertanyaan!",
+      "instruction": "Membaca cerita tentang teman",
+      "storyTitle": "Cerita Singkat",
+      "storyText": "Ini adalah teks bacaan singkat untuk latihan membaca pemahaman. Ini adalah teks bacaan singkat untuk latihan membaca pemahaman. Ini adalah teks bacaan singkat untuk latihan membaca pemahaman. ",
+      "question": "Apa yang dibahas dalam teks?",
+      "choices": [
+        "Jawaban A",
+        "Jawaban B",
+        "Jawaban C",
+        "Jawaban D"
+      ],
+      "correctAnswer": [
+        "Jawaban A"
+      ],
+      "hint": "Baca teks sekali lagi",
+      "difficulty": 5
+    },
+    {
+      "id": "s3u4l2_02",
+      "level": 5,
+      "world": "gunung_kata",
+      "xpReward": 10,
+      "type": "readingComprehension",
+      "prompt": "Baca teks dan jawab pertanyaan!",
+      "instruction": "Membaca cerita tentang teman",
+      "storyTitle": "Cerita Singkat",
+      "storyText": "Ini adalah teks bacaan singkat untuk latihan membaca pemahaman. Ini adalah teks bacaan singkat untuk latihan membaca pemahaman. Ini adalah teks bacaan singkat untuk latihan membaca pemahaman. ",
+      "question": "Apa yang dibahas dalam teks?",
+      "choices": [
+        "Jawaban A",
+        "Jawaban B",
+        "Jawaban C",
+        "Jawaban D"
+      ],
+      "correctAnswer": [
+        "Jawaban A"
+      ],
+      "hint": "Baca teks sekali lagi",
+      "difficulty": 5
+    },
+    {
+      "id": "s3u4l2_03",
+      "level": 5,
+      "world": "gunung_kata",
+      "xpReward": 10,
+      "type": "wordChoice",
+      "prompt": "Pilih jawaban yang tepat!",
+      "instruction": "Membaca cerita tentang teman",
+      "choices": [
+        "Pilihan A",
+        "Pilihan B",
+        "Pilihan C",
+        "Pilihan D"
+      ],
+      "correctAnswer": [
+        "Pilihan A"
+      ],
+      "hint": "Coba pikirkan baik-baik",
+      "difficulty": 5
+    },
+    {
+      "id": "s3u4l2_04",
+      "level": 5,
+      "world": "gunung_kata",
+      "xpReward": 10,
+      "type": "trueFalse",
+      "prompt": "Apakah pernyataan ini benar?",
+      "instruction": "Membaca cerita tentang teman",
+      "choices": [
+        "Benar",
+        "Salah"
+      ],
+      "correctAnswer": [
+        "Salah"
+      ],
+      "hint": "Baca pernyataan dengan teliti",
+      "difficulty": 5
+    },
+    {
+      "id": "s3u4l2_05",
+      "level": 5,
+      "world": "gunung_kata",
+      "xpReward": 10,
+      "type": "fillBlank",
+      "prompt": "Isilah titik-titik di bawah ini!",
+      "instruction": "Membaca cerita tentang teman",
+      "question": "Kalimat dengan ____ kosong.",
+      "choices": [
+        "jawaban",
+        "salah",
+        "benda",
+        "teman"
+      ],
+      "correctAnswer": [
+        "jawaban"
+      ],
+      "hint": "Pilih kata yang paling tepat",
+      "difficulty": 5
+    }
+  ]
+}

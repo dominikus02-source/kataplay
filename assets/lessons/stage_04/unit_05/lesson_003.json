@@ -1,0 +1,113 @@
+{
+  "id": "stage_04_unit_05_lesson_03",
+  "title": "Cerita Rakyat Nusantara",
+  "steps": [
+    {
+      "id": "s4u5l3_01",
+      "level": 6,
+      "world": "sungai_kata",
+      "xpReward": 10,
+      "type": "storySequence",
+      "prompt": "Urutkan peristiwa berikut!",
+      "instruction": "Mengenal cerita rakyat Indonesia",
+      "storyTitle": "Urutan Cerita",
+      "storyText": "Pertama, kemudian, lalu, akhirnya.",
+      "question": "Apa yang terjadi pertama kali?",
+      "choices": [
+        "Peristiwa 1",
+        "Peristiwa 2",
+        "Peristiwa 3",
+        "Peristiwa 4"
+      ],
+      "correctAnswer": [
+        "Peristiwa 1"
+      ],
+      "hint": "Pikirkan urutan waktu",
+      "difficulty": 6
+    },
+    {
+      "id": "s4u5l3_02",
+      "level": 6,
+      "world": "sungai_kata",
+      "xpReward": 10,
+      "type": "storySequence",
+      "prompt": "Urutkan peristiwa berikut!",
+      "instruction": "Mengenal cerita rakyat Indonesia",
+      "storyTitle": "Urutan Cerita",
+      "storyText": "Pertama, kemudian, lalu, akhirnya.",
+      "question": "Apa yang terjadi pertama kali?",
+      "choices": [
+        "Peristiwa 1",
+        "Peristiwa 2",
+        "Peristiwa 3",
+        "Peristiwa 4"
+      ],
+      "correctAnswer": [
+        "Peristiwa 1"
+      ],
+      "hint": "Pikirkan urutan waktu",
+      "difficulty": 6
+    },
+    {
+      "id": "s4u5l3_03",
+      "level": 6,
+      "world": "sungai_kata",
+      "xpReward": 10,
+      "type": "wordChoice",
+      "prompt": "Pilih jawaban yang tepat!",
+      "instruction": "Mengenal cerita rakyat Indonesia",
+      "choices": [
+        "Pilihan A",
+        "Pilihan B",
+        "Pilihan C",
+        "Pilihan D"
+      ],
+      "correctAnswer": [
+        "Pilihan A"
+      ],
+      "hint": "Coba pikirkan baik-baik",
+      "difficulty": 6
+    },
+    {
+      "id": "s4u5l3_04",
+      "level": 6,
+      "world": "sungai_kata",
+      "xpReward": 10,
+      "type": "wordOrder",
+      "prompt": "Urutkan kata-kata ini!",
+      "instruction": "Mengenal cerita rakyat Indonesia",
+      "choices": [
+        "kata1",
+        "kata2",
+        "kata3",
+        "kata4"
+      ],
+      "correctAnswer": [
+        "kata1",
+        "kata2",
+        "kata3",
+        "kata4"
+      ],
+      "hint": "Urutkan dari kiri ke kanan",
+      "difficulty": 6
+    },
+    {
+      "id": "s4u5l3_05",
+      "level": 6,
+      "world": "sungai_kata",
+      "xpReward": 10,
+      "type": "trueFalse",
+      "prompt": "Apakah pernyataan ini benar?",
+      "instruction": "Mengenal cerita rakyat Indonesia",
+      "choices": [
+        "Benar",
+        "Salah"
+      ],
+      "correctAnswer": [
+        "Benar"
+      ],
+      "hint": "Baca pernyataan dengan teliti",
+      "difficulty": 6
+    }
+  ]
+}

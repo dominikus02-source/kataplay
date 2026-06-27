@@ -1,0 +1,104 @@
+{
+  "id": "stage_01_unit_02_lesson_01",
+  "title": "Suara Awal Kata",
+  "steps": [
+    {
+      "id": "s1u2l1_01",
+      "level": 2,
+      "world": "hutan_kata",
+      "xpReward": 10,
+      "type": "wordChoice",
+      "prompt": "Pilih jawaban yang tepat!",
+      "instruction": "Dengarkan bunyi pertama dari kata",
+      "choices": [
+        "Pilihan A",
+        "Pilihan B",
+        "Pilihan C",
+        "Pilihan D"
+      ],
+      "correctAnswer": [
+        "Pilihan A"
+      ],
+      "hint": "Coba pikirkan baik-baik",
+      "difficulty": 2
+    },
+    {
+      "id": "s1u2l1_02",
+      "level": 2,
+      "world": "hutan_kata",
+      "xpReward": 10,
+      "type": "wordChoice",
+      "prompt": "Pilih jawaban yang tepat!",
+      "instruction": "Dengarkan bunyi pertama dari kata",
+      "choices": [
+        "Pilihan A",
+        "Pilihan B",
+        "Pilihan C",
+        "Pilihan D"
+      ],
+      "correctAnswer": [
+        "Pilihan A"
+      ],
+      "hint": "Coba pikirkan baik-baik",
+      "difficulty": 2
+    },
+    {
+      "id": "s1u2l1_03",
+      "level": 2,
+      "world": "hutan_kata",
+      "xpReward": 10,
+      "type": "pictureChoice",
+      "prompt": "Pilih gambar yang sesuai!",
+      "instruction": "Dengarkan bunyi pertama dari kata",
+      "choices": [
+        "apel",
+        "bola",
+        "buku",
+        "rumah"
+      ],
+      "correctAnswer": [
+        "apel"
+      ],
+      "hint": "Lihat petunjuknya",
+      "difficulty": 2
+    },
+    {
+      "id": "s1u2l1_04",
+      "level": 2,
+      "world": "hutan_kata",
+      "xpReward": 10,
+      "type": "wordChoice",
+      "prompt": "Pilih jawaban yang tepat!",
+      "instruction": "Dengarkan bunyi pertama dari kata",
+      "choices": [
+        "Pilihan A",
+        "Pilihan B",
+        "Pilihan C",
+        "Pilihan D"
+      ],
+      "correctAnswer": [
+        "Pilihan A"
+      ],
+      "hint": "Coba pikirkan baik-baik",
+      "difficulty": 2
+    },
+    {
+      "id": "s1u2l1_05",
+      "level": 2,
+      "world": "hutan_kata",
+      "xpReward": 10,
+      "type": "trueFalse",
+      "prompt": "Apakah pernyataan ini benar?",
+      "instruction": "Dengarkan bunyi pertama dari kata",
+      "choices": [
+        "Benar",
+        "Salah"
+      ],
+      "correctAnswer": [
+        "Salah"
+      ],
+      "hint": "Baca pernyataan dengan teliti",
+      "difficulty": 2
+    }
+  ]
+}

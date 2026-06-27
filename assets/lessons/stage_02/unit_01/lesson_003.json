@@ -1,0 +1,104 @@
+{
+  "id": "stage_02_unit_01_lesson_03",
+  "title": "Suku Kata Tertutup",
+  "steps": [
+    {
+      "id": "s2u1l3_01",
+      "level": 3,
+      "world": "sawah_kata",
+      "xpReward": 10,
+      "type": "wordChoice",
+      "prompt": "Pilih jawaban yang tepat!",
+      "instruction": "Suku kata dengan akhiran konsonan",
+      "choices": [
+        "Pilihan A",
+        "Pilihan B",
+        "Pilihan C",
+        "Pilihan D"
+      ],
+      "correctAnswer": [
+        "Pilihan A"
+      ],
+      "hint": "Coba pikirkan baik-baik",
+      "difficulty": 3
+    },
+    {
+      "id": "s2u1l3_02",
+      "level": 3,
+      "world": "sawah_kata",
+      "xpReward": 10,
+      "type": "wordChoice",
+      "prompt": "Pilih jawaban yang tepat!",
+      "instruction": "Suku kata dengan akhiran konsonan",
+      "choices": [
+        "Pilihan A",
+        "Pilihan B",
+        "Pilihan C",
+        "Pilihan D"
+      ],
+      "correctAnswer": [
+        "Pilihan A"
+      ],
+      "hint": "Coba pikirkan baik-baik",
+      "difficulty": 3
+    },
+    {
+      "id": "s2u1l3_03",
+      "level": 3,
+      "world": "sawah_kata",
+      "xpReward": 10,
+      "type": "pictureChoice",
+      "prompt": "Pilih gambar yang sesuai!",
+      "instruction": "Suku kata dengan akhiran konsonan",
+      "choices": [
+        "apel",
+        "bola",
+        "buku",
+        "rumah"
+      ],
+      "correctAnswer": [
+        "apel"
+      ],
+      "hint": "Lihat petunjuknya",
+      "difficulty": 3
+    },
+    {
+      "id": "s2u1l3_04",
+      "level": 3,
+      "world": "sawah_kata",
+      "xpReward": 10,
+      "type": "wordChoice",
+      "prompt": "Pilih jawaban yang tepat!",
+      "instruction": "Suku kata dengan akhiran konsonan",
+      "choices": [
+        "Pilihan A",
+        "Pilihan B",
+        "Pilihan C",
+        "Pilihan D"
+      ],
+      "correctAnswer": [
+        "Pilihan A"
+      ],
+      "hint": "Coba pikirkan baik-baik",
+      "difficulty": 3
+    },
+    {
+      "id": "s2u1l3_05",
+      "level": 3,
+      "world": "sawah_kata",
+      "xpReward": 10,
+      "type": "trueFalse",
+      "prompt": "Apakah pernyataan ini benar?",
+      "instruction": "Suku kata dengan akhiran konsonan",
+      "choices": [
+        "Benar",
+        "Salah"
+      ],
+      "correctAnswer": [
+        "Salah"
+      ],
+      "hint": "Baca pernyataan dengan teliti",
+      "difficulty": 3
+    }
+  ]
+}
