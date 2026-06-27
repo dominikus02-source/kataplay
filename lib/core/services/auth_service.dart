@@ -10,10 +10,12 @@ class AuthService {
   final FirebaseAuthService? _firebaseAuth;
 
   AuthService({
-    required this._profileRepo,
-    required this._appMode,
-    this._firebaseAuth,
-  });
+    required ProfileRepository profileRepo,
+    required AppModeConfig appMode,
+    FirebaseAuthService? firebaseAuth,
+  })  : _profileRepo = profileRepo,
+        _appMode = appMode,
+        _firebaseAuth = firebaseAuth;
 
   UserSession get currentSession => _session;
   bool get isLoggedIn => _session.isAuthenticated;

@@ -1,46 +1,48 @@
-/// App-wide constants (durations, sizes, limits)
 class AppConstants {
   AppConstants._();
 
-  // === ANIMATION DURATIONS ===
-  static const Duration fastAnimation = Duration(milliseconds: 200);
-  static const Duration normalAnimation = Duration(milliseconds: 350);
-  static const Duration slowAnimation = Duration(milliseconds: 600);
+  static const String appName = 'KataPlay';
+  static const String appVersion = '2.0.0';
 
-  // === UI SIZES (Child-friendly) ===
-  static const double buttonRadius = 28.0;
-  static const double cardRadius = 24.0;
-  static const double largeRadius = 32.0;
+  static const String zelby = 'Zelby';
+  static const String hazel = 'Hazel';
+  static const String alby = 'Alby';
 
-  static const double minTouchTarget = 56.0; // WCAG + kids friendly
-  static const double iconSize = 28.0;
+  static const double borderRadius = 20;
+  static const double borderRadiusSmall = 12;
+  static const double borderRadiusLarge = 28;
 
-  // === GAME LIMITS ===
-  static const int maxDailyQuests = 3;
-  static const int coinsPerCorrectAnswer = 10;
-  static const int xpPerCorrectAnswer = 15;
+  static const Duration splashDuration = Duration(seconds: 2);
+  static const Duration feedbackDuration = Duration(milliseconds: 600);
 
-  // === STREAK ===
-  static const int streakMilestone1 = 3;
-  static const int streakMilestone2 = 7;
-  static const int streakMilestone3 = 14;
+  static const int maxOnboardingSlides = 3;
+  static const int maxLevels = 8;
+  static const int xpPerQuestion = 10;
+  static const int xpPerLesson = 50;
+  static const int xpPerLevel = 200;
+  static const int streakBonus = 25;
+  static const int totalQuestionsPerSession = 5;
 
-  // === WORLD MAP (Pulau Kata) - Matches reference design ===
-  static const int totalIslands = 6;
-  static const List<String> islandNames = [
-    'Desa Huruf',       // Letter Village (TK A)
-    'Kebun Kata',       // Word Garden (TK B)
-    'Hutan Kalimat',    // Sentence Forest (SD 1)
-    'Lembah Cerita',    // Story Valley (SD 2)
-    'Gunung Bahasa',    // Language Mountain (SD 3)
-    'Kota Pengetahuan', // Knowledge City (SD 4)
-  ];
-  static const List<String> islandLabels = [
-    'TK A',
-    'TK B',
-    'SD 1',
-    'SD 2',
-    'SD 3',
-    'SD 4',
-  ];
+  static const int xpBadge100 = 100;
+  static const int xpBadge500 = 500;
+  static const int xpBadge1000 = 1000;
+  static const int streakMinForBadge = 3;
+  static const int streakBadgeThreshold = 7;
+
+  static const String defaultAvatarId = 'avatar_1';
+  static const String defaultAvatarPath = 'assets/characters/zelby_happy.png';
+  static const String defaultGuestId = 'guest_default';
+
+  static String characterName(String character) {
+    switch (character.toLowerCase()) {
+      case 'zelby':
+        return zelby;
+      case 'hazel':
+        return hazel;
+      case 'alby':
+        return alby;
+      default:
+        return zelby;
+    }
+  }
 }

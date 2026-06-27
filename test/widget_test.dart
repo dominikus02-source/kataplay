@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'helpers/pump_kataplay_app.dart';
 import 'helpers/test_screen_sizes.dart';
-import 'helpers/fake_lesson_data.dart';
-import 'helpers/mock_assets.dart';
 import 'package:kataplay_2/app/theme/app_theme.dart';
 
 void main() {

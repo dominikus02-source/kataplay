@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../core/theme/app_colors.dart';
+import '../../app/theme/app_colors.dart';
 
 /// Large, friendly primary button for kids.
 /// Minimum touch target 56px, rounded 28px.

@@ -1,10 +1,10 @@
 {
   "roots": [
-    "kataplay"
+    "kataplay_2"
   ],
   "packages": [
     {
-      "name": "kataplay",
+      "name": "kataplay_2",
       "version": "1.0.0+1",
       "dependencies": [
         "confetti",

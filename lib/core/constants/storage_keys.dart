@@ -1,22 +1,19 @@
 class StorageKeys {
   StorageKeys._();
 
-  // UserProgress
+  static const String childName = 'childName';
+  static const String selectedAvatarId = 'selectedAvatarId';
+  static const String selectedAvatarPath = 'selectedAvatarPath';
+  static const String profileGuestId = 'profileGuestId';
+
   static const String xp = 'xp';
   static const String streak = 'streak';
-  static const String childName = 'child_name';
-  static const String completedLessonIds = 'completed_lesson_ids';
-  static const String collectedBadges = 'collected_badges';
-  static const String lastPlayedDate = 'last_played_date';
-  static const String currentLevelIndex = 'current_level_index';
-  static const String selectedAvatarId = 'selected_avatar_id';
-  static const String selectedAvatarPath = 'selected_avatar_path';
+  static const String currentLevelIndex = 'currentLevelIndex';
+  static const String completedLessonIds = 'completedLessonIds';
+  static const String collectedBadges = 'collectedBadges';
+  static const String lastPlayedDate = 'lastPlayedDate';
 
-  // Profile
-  static const String profileGuestId = 'profile_guest_id';
-
-  // Settings
-  static const String settingSound = 'setting_sound';
-  static const String settingMusic = 'setting_music';
-  static const String settingOnboardingComplete = 'setting_onboarding_complete';
+  static const String settingSound = 'settingSound';
+  static const String settingMusic = 'settingMusic';
+  static const String settingOnboardingComplete = 'settingOnboardingComplete';
 }

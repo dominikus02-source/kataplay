@@ -1,4 +1,4 @@
-name: kataplay
+name: kataplay_2
 description: "KataPlay - Petualangan Bahasa Indonesia yang Menyenangkan untuk anak usia 4-10 tahun"
 publish_to: 'none'
 
@@ -46,6 +46,9 @@ flutter:
   uses-material-design: true
 
   assets:
+    - assets/Splashscreen_kataplay.png
+    - assets/icon_kataplay.png
+    - assets/onboarding_kataplay.png
     - assets/images/
     - assets/images/characters/
     - assets/animations/

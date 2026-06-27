@@ -121,7 +121,7 @@ class SectionLabel extends StatelessWidget {
             ),
           ),
           const Spacer(),
-          ?trailing,
+          if (trailing != null) trailing!,
         ],
       ),
     );
