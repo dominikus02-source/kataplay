@@ -1,0 +1,71 @@
+{
+  "id": "stage_01_unit_01_lesson_02",
+  "title": "Huruf B dan C",
+  "steps": [
+    {
+      "id": "s1u1l2_01",
+      "type": "wordChoice",
+      "level": 1,
+      "world": "hutan_kata",
+      "prompt": "Huruf apa ini?",
+      "instruction": "Pilih huruf B",
+      "choices": ["B", "D", "P", "T"],
+      "correctAnswer": ["B"],
+      "hint": "B seperti bola",
+      "difficulty": 1,
+      "xpReward": 10
+    },
+    {
+      "id": "s1u1l2_02",
+      "type": "wordChoice",
+      "level": 1,
+      "world": "hutan_kata",
+      "prompt": "Cari huruf C!",
+      "instruction": "Pilih huruf yang benar",
+      "choices": ["C", "K", "S", "R"],
+      "correctAnswer": ["C"],
+      "hint": "C seperti cacing",
+      "difficulty": 1,
+      "xpReward": 10
+    },
+    {
+      "id": "s1u1l2_03",
+      "type": "wordChoice",
+      "level": 1,
+      "world": "hutan_kata",
+      "prompt": "Pilih huruf B!",
+      "instruction": "Temukan huruf B",
+      "choices": ["M", "N", "B", "V"],
+      "correctAnswer": ["B"],
+      "hint": "B adalah huruf kedua",
+      "difficulty": 1,
+      "xpReward": 10
+    },
+    {
+      "id": "s1u1l2_04",
+      "type": "pictureChoice",
+      "level": 1,
+      "world": "hutan_kata",
+      "prompt": "Pilih gambar bola!",
+      "instruction": "Benda yang dimulai dengan B",
+      "choices": ["apel", "bola", "cicak", "meja"],
+      "correctAnswer": ["bola"],
+      "hint": "Bola dimulai dengan B",
+      "difficulty": 1,
+      "xpReward": 10
+    },
+    {
+      "id": "s1u1l2_05",
+      "type": "trueFalse",
+      "level": 1,
+      "world": "hutan_kata",
+      "prompt": "Cacing diawali dengan C?",
+      "instruction": "Benar atau salah?",
+      "choices": ["Benar", "Salah"],
+      "correctAnswer": ["Benar"],
+      "hint": "C untuk cacing",
+      "difficulty": 1,
+      "xpReward": 10
+    }
+  ]
+}

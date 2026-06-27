@@ -1,0 +1,102 @@
+{
+  "id": "stage_01_unit_05_lesson_01",
+  "title": "Anggota Keluarga",
+  "steps": [
+    {
+      "id": "s1u5l1_01",
+      "level": 3,
+      "world": "hutan_kata",
+      "xpReward": 10,
+      "type": "matchPair",
+      "prompt": "Pasangkan yang cocok!",
+      "instruction": "Kenali nama anggota keluarga",
+      "matchPairs": {
+        "Kiri 1": "Kanan 1",
+        "Kiri A": "Kanan A",
+        "Kiri B": "Kanan B"
+      },
+      "correctAnswer": [
+        "Kiri 1=Kanan 1"
+      ],
+      "hint": "Cocokkan satu per satu",
+      "difficulty": 3
+    },
+    {
+      "id": "s1u5l1_02",
+      "level": 3,
+      "world": "hutan_kata",
+      "xpReward": 10,
+      "type": "matchPair",
+      "prompt": "Pasangkan yang cocok!",
+      "instruction": "Kenali nama anggota keluarga",
+      "matchPairs": {
+        "Kiri 2": "Kanan 2",
+        "Kiri A": "Kanan A",
+        "Kiri B": "Kanan B"
+      },
+      "correctAnswer": [
+        "Kiri 2=Kanan 2"
+      ],
+      "hint": "Cocokkan satu per satu",
+      "difficulty": 3
+    },
+    {
+      "id": "s1u5l1_03",
+      "level": 3,
+      "world": "hutan_kata",
+      "xpReward": 10,
+      "type": "wordChoice",
+      "prompt": "Pilih jawaban yang tepat!",
+      "instruction": "Kenali nama anggota keluarga",
+      "choices": [
+        "Pilihan A",
+        "Pilihan B",
+        "Pilihan C",
+        "Pilihan D"
+      ],
+      "correctAnswer": [
+        "Pilihan A"
+      ],
+      "hint": "Coba pikirkan baik-baik",
+      "difficulty": 3
+    },
+    {
+      "id": "s1u5l1_04",
+      "level": 3,
+      "world": "hutan_kata",
+      "xpReward": 10,
+      "type": "pictureChoice",
+      "prompt": "Pilih gambar yang sesuai!",
+      "instruction": "Kenali nama anggota keluarga",
+      "choices": [
+        "apel",
+        "bola",
+        "buku",
+        "rumah"
+      ],
+      "correctAnswer": [
+        "apel"
+      ],
+      "hint": "Lihat petunjuknya",
+      "difficulty": 3
+    },
+    {
+      "id": "s1u5l1_05",
+      "level": 3,
+      "world": "hutan_kata",
+      "xpReward": 10,
+      "type": "trueFalse",
+      "prompt": "Apakah pernyataan ini benar?",
+      "instruction": "Kenali nama anggota keluarga",
+      "choices": [
+        "Benar",
+        "Salah"
+      ],
+      "correctAnswer": [
+        "Benar"
+      ],
+      "hint": "Baca pernyataan dengan teliti",
+      "difficulty": 3
+    }
+  ]
+}

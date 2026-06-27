@@ -1,0 +1,104 @@
+{
+  "id": "stage_02_unit_02_lesson_02",
+  "title": "Kata di Sekolah",
+  "steps": [
+    {
+      "id": "s2u2l2_01",
+      "level": 3,
+      "world": "sawah_kata",
+      "xpReward": 10,
+      "type": "wordChoice",
+      "prompt": "Pilih jawaban yang tepat!",
+      "instruction": "Kata yang sering digunakan di sekolah",
+      "choices": [
+        "Pilihan A",
+        "Pilihan B",
+        "Pilihan C",
+        "Pilihan D"
+      ],
+      "correctAnswer": [
+        "Pilihan A"
+      ],
+      "hint": "Coba pikirkan baik-baik",
+      "difficulty": 3
+    },
+    {
+      "id": "s2u2l2_02",
+      "level": 3,
+      "world": "sawah_kata",
+      "xpReward": 10,
+      "type": "wordChoice",
+      "prompt": "Pilih jawaban yang tepat!",
+      "instruction": "Kata yang sering digunakan di sekolah",
+      "choices": [
+        "Pilihan A",
+        "Pilihan B",
+        "Pilihan C",
+        "Pilihan D"
+      ],
+      "correctAnswer": [
+        "Pilihan A"
+      ],
+      "hint": "Coba pikirkan baik-baik",
+      "difficulty": 3
+    },
+    {
+      "id": "s2u2l2_03",
+      "level": 3,
+      "world": "sawah_kata",
+      "xpReward": 10,
+      "type": "pictureChoice",
+      "prompt": "Pilih gambar yang sesuai!",
+      "instruction": "Kata yang sering digunakan di sekolah",
+      "choices": [
+        "apel",
+        "bola",
+        "buku",
+        "rumah"
+      ],
+      "correctAnswer": [
+        "apel"
+      ],
+      "hint": "Lihat petunjuknya",
+      "difficulty": 3
+    },
+    {
+      "id": "s2u2l2_04",
+      "level": 3,
+      "world": "sawah_kata",
+      "xpReward": 10,
+      "type": "wordChoice",
+      "prompt": "Pilih jawaban yang tepat!",
+      "instruction": "Kata yang sering digunakan di sekolah",
+      "choices": [
+        "Pilihan A",
+        "Pilihan B",
+        "Pilihan C",
+        "Pilihan D"
+      ],
+      "correctAnswer": [
+        "Pilihan A"
+      ],
+      "hint": "Coba pikirkan baik-baik",
+      "difficulty": 3
+    },
+    {
+      "id": "s2u2l2_05",
+      "level": 3,
+      "world": "sawah_kata",
+      "xpReward": 10,
+      "type": "trueFalse",
+      "prompt": "Apakah pernyataan ini benar?",
+      "instruction": "Kata yang sering digunakan di sekolah",
+      "choices": [
+        "Benar",
+        "Salah"
+      ],
+      "correctAnswer": [
+        "Benar"
+      ],
+      "hint": "Baca pernyataan dengan teliti",
+      "difficulty": 3
+    }
+  ]
+}

@@ -1,0 +1,102 @@
+{
+  "id": "stage_04_unit_01_lesson_02",
+  "title": "Gagasan Paragraf",
+  "steps": [
+    {
+      "id": "s4u1l2_01",
+      "level": 5,
+      "world": "sungai_kata",
+      "xpReward": 10,
+      "type": "matchPair",
+      "prompt": "Pasangkan yang cocok!",
+      "instruction": "Menemukan gagasan dalam paragraf",
+      "matchPairs": {
+        "Kiri 1": "Kanan 1",
+        "Kiri A": "Kanan A",
+        "Kiri B": "Kanan B"
+      },
+      "correctAnswer": [
+        "Kiri 1=Kanan 1"
+      ],
+      "hint": "Cocokkan satu per satu",
+      "difficulty": 5
+    },
+    {
+      "id": "s4u1l2_02",
+      "level": 5,
+      "world": "sungai_kata",
+      "xpReward": 10,
+      "type": "matchPair",
+      "prompt": "Pasangkan yang cocok!",
+      "instruction": "Menemukan gagasan dalam paragraf",
+      "matchPairs": {
+        "Kiri 2": "Kanan 2",
+        "Kiri A": "Kanan A",
+        "Kiri B": "Kanan B"
+      },
+      "correctAnswer": [
+        "Kiri 2=Kanan 2"
+      ],
+      "hint": "Cocokkan satu per satu",
+      "difficulty": 5
+    },
+    {
+      "id": "s4u1l2_03",
+      "level": 5,
+      "world": "sungai_kata",
+      "xpReward": 10,
+      "type": "wordChoice",
+      "prompt": "Pilih jawaban yang tepat!",
+      "instruction": "Menemukan gagasan dalam paragraf",
+      "choices": [
+        "Pilihan A",
+        "Pilihan B",
+        "Pilihan C",
+        "Pilihan D"
+      ],
+      "correctAnswer": [
+        "Pilihan A"
+      ],
+      "hint": "Coba pikirkan baik-baik",
+      "difficulty": 5
+    },
+    {
+      "id": "s4u1l2_04",
+      "level": 5,
+      "world": "sungai_kata",
+      "xpReward": 10,
+      "type": "pictureChoice",
+      "prompt": "Pilih gambar yang sesuai!",
+      "instruction": "Menemukan gagasan dalam paragraf",
+      "choices": [
+        "apel",
+        "bola",
+        "buku",
+        "rumah"
+      ],
+      "correctAnswer": [
+        "apel"
+      ],
+      "hint": "Lihat petunjuknya",
+      "difficulty": 5
+    },
+    {
+      "id": "s4u1l2_05",
+      "level": 5,
+      "world": "sungai_kata",
+      "xpReward": 10,
+      "type": "trueFalse",
+      "prompt": "Apakah pernyataan ini benar?",
+      "instruction": "Menemukan gagasan dalam paragraf",
+      "choices": [
+        "Benar",
+        "Salah"
+      ],
+      "correctAnswer": [
+        "Salah"
+      ],
+      "hint": "Baca pernyataan dengan teliti",
+      "difficulty": 5
+    }
+  ]
+}

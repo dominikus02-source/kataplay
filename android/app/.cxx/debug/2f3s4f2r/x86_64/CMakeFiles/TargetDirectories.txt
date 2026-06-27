@@ -1,0 +1,2 @@
+/Users/user/kataplay/android/app/.cxx/debug/2f3s4f2r/x86_64/CMakeFiles/edit_cache.dir
+/Users/user/kataplay/android/app/.cxx/debug/2f3s4f2r/x86_64/CMakeFiles/rebuild_cache.dir

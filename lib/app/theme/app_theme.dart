@@ -1,0 +1,272 @@
+import 'package:flutter/material.dart';
+import 'app_colors.dart';
+
+class AppTheme {
+  AppTheme._();
+
+  static const String _fontFamily = 'Nunito';
+
+  static final ThemeData lightTheme = ThemeData(
+    useMaterial3: true,
+    colorScheme: ColorScheme.fromSeed(
+      seedColor: const Color(0xFF58CC02),
+      primary: AppColors.primary,
+      secondary: AppColors.secondary,
+      tertiary: AppColors.tertiary,
+      surface: AppColors.surface,
+      brightness: Brightness.light,
+    ),
+    scaffoldBackgroundColor: AppColors.background,
+    fontFamily: _fontFamily,
+    textTheme: const TextTheme(
+      displayLarge: TextStyle(
+        fontSize: 36,
+        fontWeight: FontWeight.w900,
+        color: AppColors.textPrimary,
+        height: 1.1,
+        decoration: TextDecoration.none,
+      ),
+      displayMedium: TextStyle(
+        fontSize: 30,
+        fontWeight: FontWeight.w800,
+        color: AppColors.textPrimary,
+        height: 1.15,
+        decoration: TextDecoration.none,
+      ),
+      displaySmall: TextStyle(
+        fontSize: 26,
+        fontWeight: FontWeight.w800,
+        color: AppColors.textPrimary,
+        height: 1.2,
+        decoration: TextDecoration.none,
+      ),
+      headlineLarge: TextStyle(
+        fontSize: 24,
+        fontWeight: FontWeight.w800,
+        color: AppColors.textPrimary,
+        height: 1.25,
+        decoration: TextDecoration.none,
+      ),
+      headlineMedium: TextStyle(
+        fontSize: 22,
+        fontWeight: FontWeight.w700,
+        color: AppColors.textPrimary,
+        height: 1.3,
+        decoration: TextDecoration.none,
+      ),
+      headlineSmall: TextStyle(
+        fontSize: 20,
+        fontWeight: FontWeight.w600,
+        color: AppColors.textPrimary,
+        height: 1.35,
+        decoration: TextDecoration.none,
+      ),
+      titleLarge: TextStyle(
+        fontSize: 20,
+        fontWeight: FontWeight.w700,
+        color: AppColors.textPrimary,
+        height: 1.3,
+        decoration: TextDecoration.none,
+      ),
+      titleMedium: TextStyle(
+        fontSize: 17,
+        fontWeight: FontWeight.w600,
+        color: AppColors.textPrimary,
+        height: 1.4,
+        decoration: TextDecoration.none,
+      ),
+      titleSmall: TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.w600,
+        color: AppColors.textPrimary,
+        height: 1.4,
+        decoration: TextDecoration.none,
+      ),
+      bodyLarge: TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.w500,
+        color: AppColors.textPrimary,
+        height: 1.5,
+        decoration: TextDecoration.none,
+      ),
+      bodyMedium: TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.w400,
+        color: AppColors.textSecondary,
+        height: 1.5,
+        decoration: TextDecoration.none,
+      ),
+      bodySmall: TextStyle(
+        fontSize: 12,
+        fontWeight: FontWeight.w400,
+        color: AppColors.textSecondary,
+        height: 1.4,
+        decoration: TextDecoration.none,
+      ),
+      labelLarge: TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.w700,
+        color: AppColors.textPrimary,
+        height: 1.3,
+        decoration: TextDecoration.none,
+      ),
+      labelMedium: TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.w600,
+        color: AppColors.textSecondary,
+        height: 1.3,
+        decoration: TextDecoration.none,
+      ),
+      labelSmall: TextStyle(
+        fontSize: 12,
+        fontWeight: FontWeight.w600,
+        color: AppColors.textSecondary,
+        height: 1.2,
+        decoration: TextDecoration.none,
+      ),
+    ),
+    primaryTextTheme: TextTheme(
+      displayLarge: TextStyle(
+        fontSize: 36,
+        fontWeight: FontWeight.w900,
+        color: Colors.white,
+        height: 1.1,
+        decoration: TextDecoration.none,
+      ),
+      displayMedium: TextStyle(
+        fontSize: 30,
+        fontWeight: FontWeight.w800,
+        color: Colors.white,
+        height: 1.15,
+        decoration: TextDecoration.none,
+      ),
+      displaySmall: TextStyle(
+        fontSize: 26,
+        fontWeight: FontWeight.w800,
+        color: Colors.white,
+        height: 1.2,
+        decoration: TextDecoration.none,
+      ),
+      headlineLarge: TextStyle(
+        fontSize: 24,
+        fontWeight: FontWeight.w800,
+        color: Colors.white,
+        height: 1.25,
+        decoration: TextDecoration.none,
+      ),
+      headlineMedium: TextStyle(
+        fontSize: 22,
+        fontWeight: FontWeight.w700,
+        color: Colors.white,
+        height: 1.3,
+        decoration: TextDecoration.none,
+      ),
+      headlineSmall: TextStyle(
+        fontSize: 20,
+        fontWeight: FontWeight.w600,
+        color: Colors.white,
+        height: 1.35,
+        decoration: TextDecoration.none,
+      ),
+      titleLarge: TextStyle(
+        fontSize: 20,
+        fontWeight: FontWeight.w700,
+        color: Colors.white,
+        height: 1.3,
+        decoration: TextDecoration.none,
+      ),
+      titleMedium: TextStyle(
+        fontSize: 17,
+        fontWeight: FontWeight.w600,
+        color: Colors.white,
+        height: 1.4,
+        decoration: TextDecoration.none,
+      ),
+      titleSmall: TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.w600,
+        color: Colors.white,
+        height: 1.4,
+        decoration: TextDecoration.none,
+      ),
+      bodyLarge: TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.w500,
+        color: Colors.white,
+        height: 1.5,
+        decoration: TextDecoration.none,
+      ),
+      bodyMedium: TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.w400,
+        color: Colors.white70,
+        height: 1.5,
+        decoration: TextDecoration.none,
+      ),
+      bodySmall: TextStyle(
+        fontSize: 12,
+        fontWeight: FontWeight.w400,
+        color: Colors.white70,
+        height: 1.4,
+        decoration: TextDecoration.none,
+      ),
+      labelLarge: TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.w700,
+        color: Colors.white,
+        height: 1.3,
+        decoration: TextDecoration.none,
+      ),
+      labelMedium: TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.w600,
+        color: Colors.white70,
+        height: 1.3,
+        decoration: TextDecoration.none,
+      ),
+      labelSmall: TextStyle(
+        fontSize: 12,
+        fontWeight: FontWeight.w600,
+        color: Colors.white70,
+        height: 1.2,
+        decoration: TextDecoration.none,
+      ),
+    ),
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(
+        textStyle: TextStyle(
+          fontFamily: _fontFamily,
+          decoration: TextDecoration.none,
+        ),
+      ),
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: AppColors.primary,
+        foregroundColor: AppColors.textOnPrimary,
+        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        elevation: 4,
+        shadowColor: AppColors.primary.withValues(alpha: 0.3),
+        textStyle: const TextStyle(
+          fontSize: 17,
+          fontWeight: FontWeight.w800,
+          fontFamily: _fontFamily,
+          decoration: TextDecoration.none,
+        ),
+      ),
+    ),
+    cardTheme: CardThemeData(
+      color: AppColors.cardBg,
+      elevation: 2,
+      shadowColor: Colors.black.withValues(alpha: 0.06),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+        side: const BorderSide(color: AppColors.cardBorder, width: 1),
+      ),
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+    ),
+  );
+}

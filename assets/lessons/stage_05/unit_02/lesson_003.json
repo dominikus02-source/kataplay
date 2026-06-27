@@ -1,0 +1,109 @@
+{
+  "id": "stage_05_unit_02_lesson_03",
+  "title": "Aturan Permainan",
+  "steps": [
+    {
+      "id": "s5u2l3_01",
+      "level": 6,
+      "world": "lautan_kata",
+      "xpReward": 10,
+      "type": "storyReading",
+      "prompt": "Bacalah cerita berikut!",
+      "instruction": "Membaca aturan permainan",
+      "storyTitle": "Cerita untuk Dibaca",
+      "storyText": "Pada suatu hari, ada sebuah cerita yang menarik untuk dibaca. Pada suatu hari, ada sebuah cerita yang menarik untuk dibaca. Pada suatu hari, ada sebuah cerita yang menarik untuk dibaca. ",
+      "question": "Apa yang terjadi dalam cerita?",
+      "choices": [
+        "Kejadian A",
+        "Kejadian B",
+        "Kejadian C"
+      ],
+      "correctAnswer": [
+        "Kejadian A"
+      ],
+      "hint": "Baca cerita dengan saksama",
+      "difficulty": 6
+    },
+    {
+      "id": "s5u2l3_02",
+      "level": 6,
+      "world": "lautan_kata",
+      "xpReward": 10,
+      "type": "readingComprehension",
+      "prompt": "Baca teks dan jawab pertanyaan!",
+      "instruction": "Membaca aturan permainan",
+      "storyTitle": "Cerita Singkat",
+      "storyText": "Ini adalah teks bacaan singkat untuk latihan membaca pemahaman. Ini adalah teks bacaan singkat untuk latihan membaca pemahaman. Ini adalah teks bacaan singkat untuk latihan membaca pemahaman. ",
+      "question": "Apa yang dibahas dalam teks?",
+      "choices": [
+        "Jawaban A",
+        "Jawaban B",
+        "Jawaban C",
+        "Jawaban D"
+      ],
+      "correctAnswer": [
+        "Jawaban A"
+      ],
+      "hint": "Baca teks sekali lagi",
+      "difficulty": 6
+    },
+    {
+      "id": "s5u2l3_03",
+      "level": 6,
+      "world": "lautan_kata",
+      "xpReward": 10,
+      "type": "wordChoice",
+      "prompt": "Pilih jawaban yang tepat!",
+      "instruction": "Membaca aturan permainan",
+      "choices": [
+        "Pilihan A",
+        "Pilihan B",
+        "Pilihan C",
+        "Pilihan D"
+      ],
+      "correctAnswer": [
+        "Pilihan A"
+      ],
+      "hint": "Coba pikirkan baik-baik",
+      "difficulty": 6
+    },
+    {
+      "id": "s5u2l3_04",
+      "level": 6,
+      "world": "lautan_kata",
+      "xpReward": 10,
+      "type": "pictureChoice",
+      "prompt": "Pilih gambar yang sesuai!",
+      "instruction": "Membaca aturan permainan",
+      "choices": [
+        "apel",
+        "bola",
+        "buku",
+        "rumah"
+      ],
+      "correctAnswer": [
+        "apel"
+      ],
+      "hint": "Lihat petunjuknya",
+      "difficulty": 6
+    },
+    {
+      "id": "s5u2l3_05",
+      "level": 6,
+      "world": "lautan_kata",
+      "xpReward": 10,
+      "type": "trueFalse",
+      "prompt": "Apakah pernyataan ini benar?",
+      "instruction": "Membaca aturan permainan",
+      "choices": [
+        "Benar",
+        "Salah"
+      ],
+      "correctAnswer": [
+        "Salah"
+      ],
+      "hint": "Baca pernyataan dengan teliti",
+      "difficulty": 6
+    }
+  ]
+}

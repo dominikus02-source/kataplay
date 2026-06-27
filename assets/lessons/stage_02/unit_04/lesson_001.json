@@ -1,0 +1,102 @@
+{
+  "id": "stage_02_unit_04_lesson_01",
+  "title": "Cerita Keluarga",
+  "steps": [
+    {
+      "id": "s2u4l1_01",
+      "level": 3,
+      "world": "sawah_kata",
+      "xpReward": 10,
+      "type": "matchPair",
+      "prompt": "Pasangkan yang cocok!",
+      "instruction": "Membaca cerita pendek tentang keluarga",
+      "matchPairs": {
+        "Kiri 1": "Kanan 1",
+        "Kiri A": "Kanan A",
+        "Kiri B": "Kanan B"
+      },
+      "correctAnswer": [
+        "Kiri 1=Kanan 1"
+      ],
+      "hint": "Cocokkan satu per satu",
+      "difficulty": 3
+    },
+    {
+      "id": "s2u4l1_02",
+      "level": 3,
+      "world": "sawah_kata",
+      "xpReward": 10,
+      "type": "matchPair",
+      "prompt": "Pasangkan yang cocok!",
+      "instruction": "Membaca cerita pendek tentang keluarga",
+      "matchPairs": {
+        "Kiri 2": "Kanan 2",
+        "Kiri A": "Kanan A",
+        "Kiri B": "Kanan B"
+      },
+      "correctAnswer": [
+        "Kiri 2=Kanan 2"
+      ],
+      "hint": "Cocokkan satu per satu",
+      "difficulty": 3
+    },
+    {
+      "id": "s2u4l1_03",
+      "level": 3,
+      "world": "sawah_kata",
+      "xpReward": 10,
+      "type": "wordChoice",
+      "prompt": "Pilih jawaban yang tepat!",
+      "instruction": "Membaca cerita pendek tentang keluarga",
+      "choices": [
+        "Pilihan A",
+        "Pilihan B",
+        "Pilihan C",
+        "Pilihan D"
+      ],
+      "correctAnswer": [
+        "Pilihan A"
+      ],
+      "hint": "Coba pikirkan baik-baik",
+      "difficulty": 3
+    },
+    {
+      "id": "s2u4l1_04",
+      "level": 3,
+      "world": "sawah_kata",
+      "xpReward": 10,
+      "type": "pictureChoice",
+      "prompt": "Pilih gambar yang sesuai!",
+      "instruction": "Membaca cerita pendek tentang keluarga",
+      "choices": [
+        "apel",
+        "bola",
+        "buku",
+        "rumah"
+      ],
+      "correctAnswer": [
+        "apel"
+      ],
+      "hint": "Lihat petunjuknya",
+      "difficulty": 3
+    },
+    {
+      "id": "s2u4l1_05",
+      "level": 3,
+      "world": "sawah_kata",
+      "xpReward": 10,
+      "type": "trueFalse",
+      "prompt": "Apakah pernyataan ini benar?",
+      "instruction": "Membaca cerita pendek tentang keluarga",
+      "choices": [
+        "Benar",
+        "Salah"
+      ],
+      "correctAnswer": [
+        "Benar"
+      ],
+      "hint": "Baca pernyataan dengan teliti",
+      "difficulty": 3
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+enum LessonType {
+  wordChoice,
+  pictureChoice,
+  listenChoose,
+  wordOrder,
+  missingWord,
+  sentenceChoice,
+  matchPair,
+  storyReading,
+  storyComprehension,
+  readingComprehension,
+  storySequence,
+  recordVoice,
+  speakingPractice,
+  trueFalse,
+  fillBlank,
+  paragraphChoice,
+}

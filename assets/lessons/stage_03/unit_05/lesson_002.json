@@ -1,0 +1,109 @@
+{
+  "id": "stage_03_unit_05_lesson_02",
+  "title": "Cerita Berseri",
+  "steps": [
+    {
+      "id": "s3u5l2_01",
+      "level": 5,
+      "world": "gunung_kata",
+      "xpReward": 10,
+      "type": "storyReading",
+      "prompt": "Bacalah cerita berikut!",
+      "instruction": "Membaca cerita berseri bergambar",
+      "storyTitle": "Cerita untuk Dibaca",
+      "storyText": "Pada suatu hari, ada sebuah cerita yang menarik untuk dibaca. Pada suatu hari, ada sebuah cerita yang menarik untuk dibaca. Pada suatu hari, ada sebuah cerita yang menarik untuk dibaca. ",
+      "question": "Apa yang terjadi dalam cerita?",
+      "choices": [
+        "Kejadian A",
+        "Kejadian B",
+        "Kejadian C"
+      ],
+      "correctAnswer": [
+        "Kejadian A"
+      ],
+      "hint": "Baca cerita dengan saksama",
+      "difficulty": 5
+    },
+    {
+      "id": "s3u5l2_02",
+      "level": 5,
+      "world": "gunung_kata",
+      "xpReward": 10,
+      "type": "readingComprehension",
+      "prompt": "Baca teks dan jawab pertanyaan!",
+      "instruction": "Membaca cerita berseri bergambar",
+      "storyTitle": "Cerita Singkat",
+      "storyText": "Ini adalah teks bacaan singkat untuk latihan membaca pemahaman. Ini adalah teks bacaan singkat untuk latihan membaca pemahaman. Ini adalah teks bacaan singkat untuk latihan membaca pemahaman. ",
+      "question": "Apa yang dibahas dalam teks?",
+      "choices": [
+        "Jawaban A",
+        "Jawaban B",
+        "Jawaban C",
+        "Jawaban D"
+      ],
+      "correctAnswer": [
+        "Jawaban A"
+      ],
+      "hint": "Baca teks sekali lagi",
+      "difficulty": 5
+    },
+    {
+      "id": "s3u5l2_03",
+      "level": 5,
+      "world": "gunung_kata",
+      "xpReward": 10,
+      "type": "wordChoice",
+      "prompt": "Pilih jawaban yang tepat!",
+      "instruction": "Membaca cerita berseri bergambar",
+      "choices": [
+        "Pilihan A",
+        "Pilihan B",
+        "Pilihan C",
+        "Pilihan D"
+      ],
+      "correctAnswer": [
+        "Pilihan A"
+      ],
+      "hint": "Coba pikirkan baik-baik",
+      "difficulty": 5
+    },
+    {
+      "id": "s3u5l2_04",
+      "level": 5,
+      "world": "gunung_kata",
+      "xpReward": 10,
+      "type": "pictureChoice",
+      "prompt": "Pilih gambar yang sesuai!",
+      "instruction": "Membaca cerita berseri bergambar",
+      "choices": [
+        "apel",
+        "bola",
+        "buku",
+        "rumah"
+      ],
+      "correctAnswer": [
+        "apel"
+      ],
+      "hint": "Lihat petunjuknya",
+      "difficulty": 5
+    },
+    {
+      "id": "s3u5l2_05",
+      "level": 5,
+      "world": "gunung_kata",
+      "xpReward": 10,
+      "type": "trueFalse",
+      "prompt": "Apakah pernyataan ini benar?",
+      "instruction": "Membaca cerita berseri bergambar",
+      "choices": [
+        "Benar",
+        "Salah"
+      ],
+      "correctAnswer": [
+        "Benar"
+      ],
+      "hint": "Baca pernyataan dengan teliti",
+      "difficulty": 5
+    }
+  ]
+}

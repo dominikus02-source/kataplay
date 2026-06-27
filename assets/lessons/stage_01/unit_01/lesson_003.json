@@ -1,0 +1,70 @@
+{
+  "id": "stage_01_unit_01_lesson_03",
+  "title": "Pilih Huruf yang Sama",
+  "steps": [
+    {
+      "id": "s1u1l3_01",
+      "type": "wordChoice",
+      "level": 1,
+      "world": "hutan_kata",
+      "prompt": "Pilih huruf yang sama dengan A!",
+      "instruction": "Cari huruf A",
+      "choices": ["A", "E", "I", "O"],
+      "correctAnswer": ["A"],
+      "hint": "A bentuknya seperti segitiga",
+      "difficulty": 1,
+      "xpReward": 10
+    },
+    {
+      "id": "s1u1l3_02",
+      "type": "wordChoice",
+      "level": 1,
+      "world": "hutan_kata",
+      "prompt": "Pilih huruf yang sama dengan B!",
+      "instruction": "Cari huruf B",
+      "choices": ["D", "P", "B", "R"],
+      "correctAnswer": ["B"],
+      "hint": "B memiliki dua perut",
+      "difficulty": 1,
+      "xpReward": 10
+    },
+    {
+      "id": "s1u1l3_03",
+      "type": "wordChoice",
+      "level": 1,
+      "world": "hutan_kata",
+      "prompt": "Pilih huruf yang sama dengan C!",
+      "instruction": "Cari huruf C",
+      "choices": ["C", "G", "O", "Q"],
+      "correctAnswer": ["C"],
+      "hint": "C bentuknya seperti bulan sabit",
+      "difficulty": 1,
+      "xpReward": 10
+    },
+    {
+      "id": "s1u1l3_04",
+      "type": "wordChoice",
+      "level": 1,
+      "world": "hutan_kata",
+      "prompt": "Pilih huruf yang sama dengan A!",
+      "instruction": "A adalah yang pertama",
+      "choices": ["B", "C", "A", "D"],
+      "correctAnswer": ["A"],
+      "difficulty": 1,
+      "xpReward": 10
+    },
+    {
+      "id": "s1u1l3_05",
+      "type": "trueFalse",
+      "level": 1,
+      "world": "hutan_kata",
+      "prompt": "Apakah B sama dengan D?",
+      "instruction": "Benar atau salah?",
+      "choices": ["Benar", "Salah"],
+      "correctAnswer": ["Salah"],
+      "hint": "B dan D berbeda bentuk",
+      "difficulty": 1,
+      "xpReward": 10
+    }
+  ]
+}

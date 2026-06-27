@@ -1,0 +1,71 @@
+{
+  "id": "stage_01_unit_01_lesson_01",
+  "title": "Mengenal A",
+  "steps": [
+    {
+      "id": "s1u1l1_01",
+      "type": "wordChoice",
+      "level": 1,
+      "world": "hutan_kata",
+      "prompt": "Huruf apa ini?",
+      "instruction": "Pilih huruf A",
+      "choices": ["E", "U", "A", "I"],
+      "correctAnswer": ["A"],
+      "hint": "A seperti ayam",
+      "difficulty": 1,
+      "xpReward": 10
+    },
+    {
+      "id": "s1u1l1_02",
+      "type": "wordChoice",
+      "level": 1,
+      "world": "hutan_kata",
+      "prompt": "Cari huruf A!",
+      "instruction": "Pilih huruf yang benar",
+      "choices": ["B", "A", "C", "D"],
+      "correctAnswer": ["A"],
+      "hint": "A adalah huruf pertama",
+      "difficulty": 1,
+      "xpReward": 10
+    },
+    {
+      "id": "s1u1l1_03",
+      "type": "pictureChoice",
+      "level": 1,
+      "world": "hutan_kata",
+      "prompt": "Pilih gambar apel!",
+      "instruction": "Cari benda yang cocok",
+      "choices": ["apel", "bola", "cicak", "domba"],
+      "correctAnswer": ["apel"],
+      "hint": "Apel dimulai dengan A",
+      "difficulty": 1,
+      "xpReward": 10
+    },
+    {
+      "id": "s1u1l1_04",
+      "type": "wordChoice",
+      "level": 1,
+      "world": "hutan_kata",
+      "prompt": "Huruf apa ini?",
+      "instruction": "Pilih huruf A",
+      "choices": ["M", "A", "N", "O"],
+      "correctAnswer": ["A"],
+      "hint": "A berbunyi 'a'",
+      "difficulty": 1,
+      "xpReward": 10
+    },
+    {
+      "id": "s1u1l1_05",
+      "type": "trueFalse",
+      "level": 1,
+      "world": "hutan_kata",
+      "prompt": "Apel diawali dengan A?",
+      "instruction": "Benar atau salah?",
+      "choices": ["Benar", "Salah"],
+      "correctAnswer": ["Benar"],
+      "hint": "A untuk apel",
+      "difficulty": 1,
+      "xpReward": 10
+    }
+  ]
+}
