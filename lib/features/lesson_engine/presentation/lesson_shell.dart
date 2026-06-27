@@ -168,7 +168,7 @@ class LessonShell extends StatelessWidget {
         child: Image.asset(
           characterAsset,
           fit: BoxFit.contain,
-          errorBuilder: (_, _, _) => const Icon(
+          errorBuilder: (context, error, stackTrace) => const Icon(
             Icons.auto_awesome_rounded,
             color: AppColors.zelbyColor,
             size: 32,

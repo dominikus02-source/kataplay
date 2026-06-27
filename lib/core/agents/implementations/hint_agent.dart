@@ -55,17 +55,33 @@ class HintAgent extends KataPlayAgent<HintSpec, Map<String, dynamic>> {
       case LessonType.wordChoice:
         return 'Coba lihat huruf awalnya...';
       case LessonType.imageChoice:
+      case LessonType.pictureChoice:
         return 'Apa ya nama benda ini?';
       case LessonType.trueFalse:
         return 'Coba dibaca pelan-pelan...';
       case LessonType.arrangeWord:
+      case LessonType.wordOrder:
         return 'Huruf pertama adalah ${input.correctAnswer[0].toUpperCase()}';
       case LessonType.fillBlank:
         return 'Kata ini punya ${input.correctAnswer.length} huruf';
       case LessonType.matching:
+      case LessonType.matchPair:
         return 'Cocokkan yang mirip ya';
       case LessonType.readSentence:
+      case LessonType.readingComprehension:
         return 'Baca satu-satu ya';
+      case LessonType.listenChoose:
+        return 'Dengar baik-baik ya';
+      case LessonType.missingWord:
+        return 'Ada huruf yang hilang nih';
+      case LessonType.sentenceChoice:
+        return 'Pilih kalimat yang tepat';
+      case LessonType.storyReading:
+      case LessonType.storyComprehension:
+        return 'Ingat ceritanya ya';
+      case LessonType.recordVoice:
+      case LessonType.speakingPractice:
+        return 'Ucapkan dengan jelas ya';
     }
   }
 

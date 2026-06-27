@@ -30,7 +30,7 @@ class WordChoiceRenderer extends StatelessWidget {
                 width: 120,
                 height: 120,
                 fit: BoxFit.contain,
-                errorBuilder: (_, _, _) => Container(
+                errorBuilder: (context, error, stackTrace) => Container(
                   width: 120,
                   height: 120,
                   decoration: BoxDecoration(

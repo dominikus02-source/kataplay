@@ -120,7 +120,7 @@ class _AvatarPickerScreenState extends ConsumerState<AvatarPickerScreen> {
             scrollDirection: Axis.horizontal,
             padding: const EdgeInsets.symmetric(horizontal: 16),
             itemCount: _categoryTabs.length,
-            separatorBuilder: (_, _) => const SizedBox(width: 8),
+            separatorBuilder: (context, index) => const SizedBox(width: 8),
             itemBuilder: (context, index) {
               final tab = _categoryTabs[index];
               final isActive = tab.category == _selectedCategory;

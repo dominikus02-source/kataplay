@@ -103,17 +103,33 @@ class QuestionAgent extends KataPlayAgent<QuestionSpec, LessonQuestion> {
       case LessonType.wordChoice:
         return _generateWordChoice(input, difficultyMultiplier, rng);
       case LessonType.imageChoice:
+      case LessonType.pictureChoice:
         return _generateImageChoice(input, difficultyMultiplier, rng);
       case LessonType.trueFalse:
         return _generateTrueFalse(input, difficultyMultiplier, rng);
       case LessonType.arrangeWord:
+      case LessonType.wordOrder:
         return _generateArrangeWord(input, difficultyMultiplier, rng);
       case LessonType.fillBlank:
         return _generateFillBlank(input, difficultyMultiplier, rng);
       case LessonType.matching:
+      case LessonType.matchPair:
         return _generateMatching(input, difficultyMultiplier, rng);
       case LessonType.readSentence:
+      case LessonType.readingComprehension:
         return _generateReadSentence(input, difficultyMultiplier, rng);
+      case LessonType.listenChoose:
+        return _generateImageChoice(input, difficultyMultiplier, rng);
+      case LessonType.missingWord:
+        return _generateFillBlank(input, difficultyMultiplier, rng);
+      case LessonType.sentenceChoice:
+        return _generateReadSentence(input, difficultyMultiplier, rng);
+      case LessonType.storyReading:
+      case LessonType.storyComprehension:
+        return _generateReadSentence(input, difficultyMultiplier, rng);
+      case LessonType.recordVoice:
+      case LessonType.speakingPractice:
+        return _generateWordChoice(input, difficultyMultiplier, rng);
     }
   }
 

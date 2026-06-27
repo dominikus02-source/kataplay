@@ -168,12 +168,23 @@ class KataPlayBrain {
   }) {
     if (question.type == LessonType.readSentence ||
         question.type == LessonType.arrangeWord ||
+        question.type == LessonType.wordOrder ||
+        question.type == LessonType.storyReading ||
+        question.type == LessonType.storyComprehension ||
+        question.type == LessonType.readingComprehension ||
+        question.type == LessonType.recordVoice ||
+        question.type == LessonType.speakingPractice ||
         levelNumber >= 7) {
       return BrainDifficulty.challenge;
     }
 
     if (question.type == LessonType.matching ||
+        question.type == LessonType.matchPair ||
         question.type == LessonType.fillBlank ||
+        question.type == LessonType.listenChoose ||
+        question.type == LessonType.missingWord ||
+        question.type == LessonType.sentenceChoice ||
+        question.type == LessonType.pictureChoice ||
         levelNumber >= 4 ||
         questionIndex >= 2 ||
         progress.currentLevelIndex >= 2) {
@@ -219,12 +230,23 @@ class KataPlayBrain {
 
     final suffix = switch (question.type) {
       LessonType.imageChoice => 'Pilih gambar atau huruf yang paling cocok.',
+      LessonType.pictureChoice => 'Pilih gambar yang paling tepat.',
       LessonType.wordChoice => 'Cari jawaban yang paling tepat.',
       LessonType.trueFalse => 'Tentukan apakah pernyataannya benar atau salah.',
       LessonType.arrangeWord => 'Susun bagian kata sampai menjadi lengkap.',
+      LessonType.wordOrder => 'Urutkan kata-kata dengan benar.',
       LessonType.fillBlank => 'Cari huruf yang hilang supaya kata jadi benar.',
       LessonType.matching => 'Hubungkan petunjuk dengan jawaban yang sesuai.',
+      LessonType.matchPair => 'Pasangkan sebelah kiri dan kanan.',
       LessonType.readSentence => 'Baca dulu kalimatnya, lalu jawab dengan tenang.',
+      LessonType.readingComprehension => 'Baca teksnya dengan saksama.',
+      LessonType.listenChoose => 'Dengar baik-baik, lalu pilih jawaban.',
+      LessonType.missingWord => 'Temukan huruf yang hilang.',
+      LessonType.sentenceChoice => 'Pilih kalimat yang paling cocok.',
+      LessonType.storyReading => 'Nikmati ceritanya dengan saksama.',
+      LessonType.storyComprehension => 'Jawab pertanyaan tentang cerita.',
+      LessonType.recordVoice => 'Rekam suaramu dengan percaya diri.',
+      LessonType.speakingPractice => 'Ucapkan kata-kata dengan jelas.',
     };
 
     return '$prefix $suffix';
@@ -233,12 +255,23 @@ class KataPlayBrain {
   String _microGoalFor(LessonQuestion question) {
     return switch (question.type) {
       LessonType.imageChoice => 'Kenali bentuk dan simbol utama.',
+      LessonType.pictureChoice => 'Kenali gambar dan maknanya.',
       LessonType.wordChoice => 'Latih fokus memilih kata yang tepat.',
       LessonType.trueFalse => 'Bandingkan petunjuk dan jawaban dengan cepat.',
       LessonType.arrangeWord => 'Susun pola kata secara runtut.',
+      LessonType.wordOrder => 'Urutkan kata dengan benar.',
       LessonType.fillBlank => 'Lengkapi huruf yang hilang.',
       LessonType.matching => 'Cocokkan petunjuk dengan maknanya.',
+      LessonType.matchPair => 'Pasangkan dengan tepat.',
       LessonType.readSentence => 'Pahami isi kalimat sebelum memilih jawaban.',
+      LessonType.readingComprehension => 'Pahami bacaan sebelum menjawab.',
+      LessonType.listenChoose => 'Dengar dengan seksama.',
+      LessonType.missingWord => 'Isi huruf yang hilang dengan tepat.',
+      LessonType.sentenceChoice => 'Pilih kalimat yang sesuai.',
+      LessonType.storyReading => 'Baca cerita dengan saksama.',
+      LessonType.storyComprehension => 'Pahami cerita sebelum menjawab.',
+      LessonType.recordVoice => 'Rekam dengan percaya diri.',
+      LessonType.speakingPractice => 'Berlatih pengucapan.',
     };
   }
 
@@ -250,12 +283,23 @@ class KataPlayBrain {
 
     return switch (question.type) {
       LessonType.imageChoice => 'Lihat bentuk huruf atau gambar yang paling mirip dengan jawaban benar.',
+      LessonType.pictureChoice => 'Perhatikan detail gambar dengan saksama.',
       LessonType.wordChoice => 'Baca semua pilihan pelan-pelan dan cari kata yang paling pas.',
       LessonType.trueFalse => 'Cek lagi apakah petunjuk mendukung jawaban Benar atau Salah.',
       LessonType.arrangeWord => 'Susun dari bunyi atau bagian kata yang paling familiar dulu.',
+      LessonType.wordOrder => 'Urutkan berdasarkan pola yang paling mudah dikenali.',
       LessonType.fillBlank => 'Bayangkan kata lengkapnya, lalu cari huruf yang hilang.',
       LessonType.matching => 'Perhatikan hubungan antara simbol, kata, dan petunjuk.',
+      LessonType.matchPair => 'Hubungkan yang paling berpasangan.',
       LessonType.readSentence => 'Cari kata kunci penting di dalam kalimat sebelum menjawab.',
+      LessonType.readingComprehension => 'Baca teks pelan-pelan, cari informasi penting.',
+      LessonType.listenChoose => 'Dengar dengan saksama, ulangi dalam hati jika perlu.',
+      LessonType.missingWord => 'Coba baca kata utuhnya dan cari huruf yang kurang.',
+      LessonType.sentenceChoice => 'Baca setiap pilihan dan pilih yang paling sesuai konteks.',
+      LessonType.storyReading => 'Nikmati cerita langkah demi langkah.',
+      LessonType.storyComprehension => 'Ingat kembali detail cerita sebelum menjawab.',
+      LessonType.recordVoice => 'Latih dulu dalam hati, lalu rekam dengan percaya diri.',
+      LessonType.speakingPractice => 'Ucapkan pelan-pelan dulu, lalu lebih cepat.',
     };
   }
 }

@@ -17,6 +17,23 @@ import 'widgets/answer_option_card.dart';
 import 'widgets/streak_indicator.dart';
 import 'widgets/question_transition_wrapper.dart';
 import 'widgets/shimmer_loading.dart';
+import '../../lesson_engine/domain/lesson_step.dart' as engine;
+import '../../lesson_engine/domain/lesson_type.dart' as engine;
+import '../../lesson_engine/application/lesson_state.dart' as engine;
+import '../../lesson_engine/presentation/renderers/listen_choose_renderer.dart';
+import '../../lesson_engine/presentation/renderers/missing_word_renderer.dart';
+import '../../lesson_engine/presentation/renderers/sentence_choice_renderer.dart';
+import '../../lesson_engine/presentation/renderers/story_reading_renderer.dart';
+import '../../lesson_engine/presentation/renderers/story_comprehension_renderer.dart';
+import '../../lesson_engine/presentation/renderers/record_voice_renderer.dart';
+import '../../lesson_engine/presentation/renderers/speaking_practice_renderer.dart';
+import '../../lesson_engine/presentation/renderers/picture_choice_renderer.dart';
+import '../../lesson_engine/presentation/renderers/word_order_renderer.dart';
+import '../../lesson_engine/presentation/renderers/match_pair_renderer.dart';
+import '../../lesson_engine/presentation/renderers/reading_comprehension_renderer.dart';
+import '../../lesson_engine/presentation/renderers/true_false_renderer.dart';
+import '../../lesson_engine/presentation/renderers/fill_blank_renderer.dart';
+import '../../lesson_engine/presentation/renderers/word_choice_renderer.dart';
 
 class LessonScreen extends ConsumerStatefulWidget {
   const LessonScreen({super.key});
@@ -103,6 +120,71 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
 
   bool _isLessonCompleted(String id) {
     return ref.read(progressProvider).isLessonCompleted(id);
+  }
+
+  bool _isEngineType(LessonType type) {
+    switch (type) {
+      case LessonType.imageChoice:
+      case LessonType.wordChoice:
+      case LessonType.trueFalse:
+      case LessonType.arrangeWord:
+      case LessonType.fillBlank:
+      case LessonType.matching:
+      case LessonType.readSentence:
+        return false;
+      default:
+        return true;
+    }
+  }
+
+  engine.LessonType _mapToEngineType(LessonType type) {
+    switch (type) {
+      case LessonType.pictureChoice: return engine.LessonType.pictureChoice;
+      case LessonType.wordChoice: return engine.LessonType.wordChoice;
+      case LessonType.listenChoose: return engine.LessonType.listenChoose;
+      case LessonType.wordOrder: return engine.LessonType.wordOrder;
+      case LessonType.missingWord: return engine.LessonType.missingWord;
+      case LessonType.sentenceChoice: return engine.LessonType.sentenceChoice;
+      case LessonType.matchPair: return engine.LessonType.matchPair;
+      case LessonType.storyReading: return engine.LessonType.storyReading;
+      case LessonType.storyComprehension: return engine.LessonType.storyComprehension;
+      case LessonType.readingComprehension: return engine.LessonType.readingComprehension;
+      case LessonType.recordVoice: return engine.LessonType.recordVoice;
+      case LessonType.speakingPractice: return engine.LessonType.speakingPractice;
+      case LessonType.trueFalse: return engine.LessonType.trueFalse;
+      case LessonType.fillBlank: return engine.LessonType.fillBlank;
+      default: return engine.LessonType.wordChoice;
+    }
+  }
+
+  engine.LessonStep _toEngineStep(LessonQuestion question) {
+    final brainQ = _activeBrainQuestion;
+    return engine.LessonStep(
+      id: 'q_$_currentIndex',
+      type: _mapToEngineType(question.type),
+      prompt: brainQ.prompt,
+      instruction: question.instruction,
+      choices: brainQ.options,
+      correctAnswer: [question.correctAnswer],
+      imageAsset: question.imageAsset,
+      hint: question.hint,
+      matchPairs: question.matchLeft != null && question.matchRight != null
+          ? {question.matchLeft!: question.matchRight!}
+          : null,
+      xpReward: 10,
+    );
+  }
+
+  engine.LessonState _buildEngineState({bool showFeedback = false}) {
+    return engine.LessonState(
+      status: showFeedback ? engine.LessonStatus.feedback : engine.LessonStatus.playing,
+      selectedAnswers: _selectedAnswer != null
+          ? [_activeBrainQuestion.options[_selectedAnswer!]]
+          : [],
+      isCorrect: _isCorrect,
+      currentStepIndex: _currentIndex,
+      totalSteps: _questions.length,
+    );
   }
 
   void _selectAnswer(int index) {
@@ -272,12 +354,23 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
     if (q.instruction.isNotEmpty) return q.instruction;
     switch (q.type) {
       case LessonType.imageChoice: return 'Pilih yang tepat!';
+      case LessonType.pictureChoice: return 'Pilih gambar yang tepat!';
       case LessonType.wordChoice: return 'Pilih kata yang benar!';
       case LessonType.trueFalse: return 'Benar atau salah?';
       case LessonType.arrangeWord: return 'Susun kata!';
+      case LessonType.wordOrder: return 'Urutkan kata!';
       case LessonType.fillBlank: return 'Lengkapi huruf!';
       case LessonType.matching: return 'Cocokkan!';
+      case LessonType.matchPair: return 'Pasangkan!';
       case LessonType.readSentence: return 'Baca baik-baik!';
+      case LessonType.readingComprehension: return 'Baca dan jawab!';
+      case LessonType.listenChoose: return 'Dengar dan pilih!';
+      case LessonType.missingWord: return 'Isi huruf yang hilang!';
+      case LessonType.sentenceChoice: return 'Pilih kalimat yang tepat!';
+      case LessonType.storyReading: return 'Baca ceritanya!';
+      case LessonType.storyComprehension: return 'Jawab tentang cerita!';
+      case LessonType.recordVoice: return 'Rekam suaramu!';
+      case LessonType.speakingPractice: return 'Ucapkan dengan lantang!';
     }
   }
 
@@ -647,6 +740,9 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
   }
 
   Widget _buildQuestionDisplay(LessonQuestion question) {
+    if (_isEngineType(question.type)) {
+      return const SizedBox.shrink();
+    }
     switch (question.type) {
       case LessonType.imageChoice:
         return _buildImageDisplay(question);
@@ -662,6 +758,8 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
         return _buildMatchingDisplay(question);
       case LessonType.readSentence:
         return _buildReadingDisplay(question);
+      default:
+        return const SizedBox.shrink();
     }
   }
 
@@ -1051,6 +1149,9 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
   }
 
   Widget _buildAnswerArea(LessonQuestion question) {
+    if (_isEngineType(question.type)) {
+      return _buildEngineAnswerArea(question);
+    }
     switch (question.type) {
       case LessonType.imageChoice:
       case LessonType.wordChoice:
@@ -1065,7 +1166,105 @@ class _LessonScreenState extends ConsumerState<LessonScreen>
         return _buildGameOptions(question);
       case LessonType.readSentence:
         return _buildGameOptions(question);
+      default:
+        return const SizedBox.shrink();
     }
+  }
+
+  Widget _buildEngineAnswerArea(LessonQuestion question) {
+    final step = _toEngineStep(question);
+    final state = _buildEngineState();
+    final engineType = step.type;
+
+    switch (engineType) {
+      case engine.LessonType.wordChoice:
+        return WordChoiceRenderer(
+          step: step, state: state,
+          onSelect: _onEngineSelect,
+        );
+      case engine.LessonType.pictureChoice:
+        return PictureChoiceRenderer(
+          step: step, state: state,
+          onSelect: _onEngineSelect,
+        );
+      case engine.LessonType.trueFalse:
+        return TrueFalseRenderer(
+          step: step, state: state,
+          onSelect: _onEngineSelect,
+        );
+      case engine.LessonType.fillBlank:
+        return FillBlankRenderer(
+          step: step, state: state,
+          onSelect: _onEngineSelect,
+        );
+      case engine.LessonType.listenChoose:
+        return ListenChooseRenderer(
+          step: step, state: state,
+          onSelect: _onEngineSelect,
+        );
+      case engine.LessonType.missingWord:
+        return MissingWordRenderer(
+          step: step, state: state,
+          onSelect: _onEngineSelect,
+        );
+      case engine.LessonType.sentenceChoice:
+        return SentenceChoiceRenderer(
+          step: step, state: state,
+          onSelect: _onEngineSelect,
+        );
+      case engine.LessonType.wordOrder:
+        return WordOrderRenderer(
+          step: step, state: state,
+          onSelect: _onEngineSelect,
+        );
+      case engine.LessonType.matchPair:
+        return MatchPairRenderer(
+          step: step, state: state,
+          onSelect: _onEngineSelect,
+        );
+      case engine.LessonType.storyReading:
+        return StoryReadingRenderer(
+          step: step, state: state,
+          onContinue: _onEngineContinue,
+        );
+      case engine.LessonType.storyComprehension:
+        return StoryComprehensionRenderer(
+          step: step, state: state,
+          onSelect: _onEngineSelect,
+        );
+      case engine.LessonType.readingComprehension:
+        return ReadingComprehensionRenderer(
+          step: step, state: state,
+          onSelect: _onEngineSelect,
+        );
+      case engine.LessonType.recordVoice:
+        return RecordVoiceRenderer(
+          step: step, state: state,
+          onRecord: _onEngineRecord,
+        );
+      case engine.LessonType.speakingPractice:
+        return SpeakingPracticeRenderer(
+          step: step, state: state,
+          onRecord: _onEngineRecord,
+        );
+      default:
+        return const SizedBox.shrink();
+    }
+  }
+
+  void _onEngineSelect(String answer) {
+    setState(() {
+      _selectedAnswer = _activeBrainQuestion.options.indexOf(answer);
+      _showFeedback = false;
+    });
+  }
+
+  void _onEngineContinue() {
+    setState(() {});
+  }
+
+  void _onEngineRecord() {
+    setState(() {});
   }
 
   Widget _buildGameOptions(LessonQuestion question) {

@@ -42,7 +42,7 @@ class StoryReadingRenderer extends StatelessWidget {
                 width: 160,
                 height: 120,
                 fit: BoxFit.contain,
-                errorBuilder: (_, _, _) => Container(
+                errorBuilder: (context, error, stackTrace) => Container(
                   width: 160,
                   height: 120,
                   decoration: BoxDecoration(

@@ -413,6 +413,13 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
             trailing: Icon(Icons.chevron_right_rounded, size: 20, color: AppColors.textLight),
             onTap: () => _showExitDialog(context),
           ),
+          _settingsTileDivider(),
+          _settingsTile(
+            icon: Icons.tune_rounded,
+            title: 'Pengaturan Lengkap',
+            trailing: Icon(Icons.open_in_new_rounded, size: 18, color: AppColors.primary),
+            onTap: () => context.go('/settings'),
+          ),
           const SizedBox(height: 4),
         ],
       ),

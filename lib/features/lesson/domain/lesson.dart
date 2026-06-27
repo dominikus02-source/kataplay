@@ -1,11 +1,22 @@
 enum LessonType {
   imageChoice,
+  pictureChoice,
   wordChoice,
   trueFalse,
   arrangeWord,
+  wordOrder,
   fillBlank,
   matching,
+  matchPair,
   readSentence,
+  listenChoose,
+  missingWord,
+  sentenceChoice,
+  storyReading,
+  storyComprehension,
+  readingComprehension,
+  recordVoice,
+  speakingPractice,
 }
 
 class LessonQuestion {
