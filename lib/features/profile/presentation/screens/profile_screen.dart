@@ -432,9 +432,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     Widget? trailing,
     VoidCallback? onTap,
   }) {
-    return InkWell(
+    return GestureDetector(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(0),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
         child: Row(

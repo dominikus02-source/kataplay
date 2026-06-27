@@ -50,9 +50,10 @@ flutter:
     - assets/icon_kataplay.png
     - assets/onboarding_kataplay.png
     - assets/images/
-    - assets/images/characters/
+    - assets/characters/
     - assets/animations/
     - assets/sample_lessons/
+    - assets/curriculum/
 
   # Note: For production, download Fredoka & Nunito fonts and add to assets/fonts
   # For MVP we use google_fonts package (easy & beautiful)

@@ -244,7 +244,7 @@ class UnitDetailScreen extends ConsumerWidget {
       children: [
         if (index > 0)
           Divider(height: 1, thickness: 1, indent: 16, endIndent: 16, color: AppColors.textLight.withValues(alpha: 0.08)),
-        InkWell(
+        GestureDetector(
           onTap: isUnlocked
               ? () => context.push('/lesson-engine', extra: {'lessonId': lesson.id})
               : null,
